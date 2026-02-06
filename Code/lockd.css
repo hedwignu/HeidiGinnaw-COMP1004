@@ -1,20 +1,20 @@
 * {
     color: black;
     font-family: 'Times New Roman';
-    text-align: center;
     font-size: 18px;
 }
 
 html {
-    background-color: rgb(165, 193, 167);
+    background-color: rgb(196, 215, 198);
 }
 
 body {
-    background-color: rgb(165, 193, 167);
+    background-color: rgb(196, 215, 198);
 }
 
 
 h1 {
+    text-align: center;
     font-size: 50px;
     padding: 10px;
 }
@@ -42,14 +42,23 @@ label {
 }
 
 form {
+    text-align: center;
     background-color: white;
 }
 
 button {
+    text-align: center;
     padding: 5px 24px;
     border-radius: 4px;
     background-color: rgb(70, 117, 73);
     color: white;
+}
+button:disabled{
+    background-color: rgb(134, 168, 136) ;
+    color: rgba(255, 255, 255, 0.858);
+}
+button:active{
+    border-color: rgb(168, 168, 168);
 }
 
 #loginBox{
@@ -59,12 +68,50 @@ button {
     background-color: white;
     border: 2px solid #555;
     border-radius: 6px;
-    margin-top: 40px;
+    margin-top: 60px;
 }
 
 button.clickableText{
     background:none;
     border:none;
     color: black;
+}
+
+.custom-select{
+    background-color: rgb(70, 117, 73);
+    border-color: #555;
+    color: white;
+}
+
+.custom-select:focus{
+    border-color: grey;
+    
+}
+
+#signUpButton{
     font-size: 12px;
+}
+
+nav{
+    background-color:rgb(134, 168, 136) ;
+    border-top: 2px solid rgb(179, 179, 179);;
+    border-bottom: 2px solid rgb(179, 179, 179);;
+    margin: 0;
+    padding: 0;
+}
+
+nav .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/*
+#navItem{
+    border-left: 2px solid rgb(179, 179, 179);
+    border-right: 2px solid rgb(179, 179, 179);
+}*/
+
+footer{
+    text-align: center;
+
 }

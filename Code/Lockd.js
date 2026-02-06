@@ -12,6 +12,10 @@ function validateLogin(){
             if(passwordIn.value == password){
                 // successful log in
                 alert('Logged in!');
+                document.getElementById("loginBox").remove();
+                var logOut = document.createElement("option");
+                logOut.text = "Log Out";
+                document.getElementById("settingsButton").appendChild(logOut);
             }else{
                 // incorrect password
                 alert('Username or Password is incorrect');
@@ -25,7 +29,9 @@ function validateLogin(){
 };
 
 function signUpPage(){
-    document.getElementById('signUpButton').addEventListener('click',function(){
-        alert("button clicked");
+        document.addEventListener('DOMContentLoaded', function(){
+            document.getElementById('signUpButton').addEventListener('click',function(){
+            
+        })
     }
 )};
