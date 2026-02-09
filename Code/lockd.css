@@ -105,6 +105,16 @@ nav .container-fluid {
     padding-right: 0;
 }
 
+#settingsBar{
+    position: sticky;
+    top:10;
+    right:0;
+    display: flex;
+    background-color: rgb(134, 168, 136);
+    text-align: left;
+    padding: 15px;
+}
+
 /*
 #navItem{
     border-left: 2px solid rgb(179, 179, 179);
