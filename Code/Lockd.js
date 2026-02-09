@@ -1,4 +1,7 @@
-
+document.addEventListener('DOMContentLoaded', function(){
+    var settingsBar = document.getElementById("settingsBar");
+    settingsBar.style.display = "none";
+})
 
 // function for when login button clicked
 function validateLogin(){
@@ -35,3 +38,15 @@ function signUpPage(){
         })
     }
 )};
+
+// opens drop down for settings
+function settingsDropdown(){
+    console.log("Settings button was clicked");
+    var settingsBar = document.getElementById("settingsBar");
+    if (settingsBar.style.display === "none"){
+        settingsBar.style.display = "block";
+    }else {
+        settingsBar.style.display = "none";
+    }
+}
+

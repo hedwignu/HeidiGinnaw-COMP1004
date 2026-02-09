@@ -69,6 +69,7 @@ button:active{
     border: 2px solid #555;
     border-radius: 6px;
     margin-top: 60px;
+    z-index: 0;
 }
 
 button.clickableText{
@@ -107,12 +108,12 @@ nav .container-fluid {
 
 #settingsBar{
     position: sticky;
-    top:10;
     right:0;
-    display: flex;
-    background-color: rgb(134, 168, 136);
+    width:300px;
+    background-color: white ;
     text-align: left;
     padding: 15px;
+    z-index: 1;
 }
 
 /*
