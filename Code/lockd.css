@@ -1,18 +1,13 @@
-* {
-    /* default light theme and font size */
+body {
+    background-color: rgb(196, 215, 198);/* default light theme and font size */
     color: black;
     font-family: 'Times New Roman';
     font-size: 18px;
 }
 
-*.darkTheme
-
-html {
-    background-color: rgb(196, 215, 198);
-}
-
-body {
-    background-color: rgb(196, 215, 198);
+body.darkTheme{
+    background-color: rgb(70, 117, 73);
+    color: white;
 }
 
 
@@ -41,12 +36,10 @@ input:focus {
 
 label {
     padding: 5px;
-    background-color: white;
 }
 
 form {
     text-align: center;
-    background-color: white;
 }
 
 button {
@@ -55,6 +48,11 @@ button {
     border-radius: 4px;
     background-color: rgb(70, 117, 73);
     color: white;
+}
+
+button.darkTheme {
+    background-color: rgb(196, 215, 198);
+    color: black;
 }
 
 button.smallButton {
@@ -83,10 +81,19 @@ button:active{
     z-index: 0;
 }
 
+#loginBox.darkTheme {
+    background-color: rgb(28, 70, 31);
+    border: 2px solid #efefef;
+}
+
 button.clickableText{
     background:none;
     border:none;
     color: black;
+}
+
+button.clickableText.darkTheme{
+    color: white;
 }
 
 .custom-select{
@@ -112,6 +119,10 @@ nav{
     padding: 0;
 }
 
+nav.darkTheme {
+    background-color: rgb(35, 69, 37);
+}
+
 nav .container-fluid {
     padding-left: 0;
     padding-right: 0;
@@ -125,6 +136,10 @@ nav .container-fluid {
     text-align: left;
     padding: 15px;
     z-index: 1;
+}
+
+#settingsBar.darkTheme{
+    background-color: rgb(28, 70, 31);
 }
 
 footer{

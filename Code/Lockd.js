@@ -60,9 +60,26 @@ function settingsDropdown(){
 }
 
 // change theme
-function changeTheme(){
+document.getElementById('themeButton').addEventListener('click', function(){
+    // main body
+    document.body.classList.toggle('darkTheme');
+    // login box
+    const loginBox = document.getElementById('loginBox');
+    loginBox.classList.toggle('darkTheme');
+    // settings box
+    const settingsBox = document.getElementById('settingsBar');
+    settingsBox.classList.toggle('darkTheme');
+})
+
+    /*
+    document.button.style.backgroundColor = 'green';
+    document.button.classList.toggle('darkTheme');
+    document.button.clickableText.classList.toggle('darkTheme', true);
+    document.nav.classList.toggle('darkTheme',true);
+*/
     
-}
+
+
 
 // function to hash the password
 function passwordHash(password){
