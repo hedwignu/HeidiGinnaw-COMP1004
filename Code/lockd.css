@@ -1,8 +1,11 @@
 * {
+    /* default light theme and font size */
     color: black;
     font-family: 'Times New Roman';
     font-size: 18px;
 }
+
+*.darkTheme
 
 html {
     background-color: rgb(196, 215, 198);
@@ -53,10 +56,18 @@ button {
     background-color: rgb(70, 117, 73);
     color: white;
 }
+
+button.smallButton {
+    padding: 1px 5px;
+    font-size: 8px;
+
+}
+
 button:disabled{
     background-color: rgb(134, 168, 136) ;
     color: rgba(255, 255, 255, 0.858);
 }
+
 button:active{
     border-color: rgb(168, 168, 168);
 }
@@ -116,8 +127,13 @@ nav .container-fluid {
     z-index: 1;
 }
 
-
 footer{
     text-align: center;
 
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }

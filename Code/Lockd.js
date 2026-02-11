@@ -1,3 +1,12 @@
+// so i can encrypt
+/*
+let crypto;
+try {
+    crypto = require('crypto');
+} catch (err) {
+    console.error('crypto support is disabled!');
+}*/
+
 document.addEventListener('DOMContentLoaded', function(){
     var settingsBar = document.getElementById("settingsBar");
     settingsBar.style.display = "none";
@@ -7,12 +16,12 @@ document.addEventListener('DOMContentLoaded', function(){
 function validateLogin(){
     document.getElementById('loginButton').addEventListener('click', function(){
         var username = "admin";
-        var password = "pwd123";
+        var password = passwordHash("pwd123");
         // retreiving user inputted data
         var usernameIn = document.getElementById('username');
         var passwordIn = document.getElementById('password');
         if (usernameIn.value == username){
-            if(passwordIn.value == password){
+            if(checkPassword(passwordIn)){
                 // successful log in
                 alert('Logged in!');
                 document.getElementById("loginBox").remove();
@@ -50,3 +59,31 @@ function settingsDropdown(){
     }
 }
 
+// change theme
+function changeTheme(){
+    
+}
+
+// function to hash the password
+function passwordHash(password){
+    // generate random salt w/ approved random generator
+    const salt = crypto.randomBytes(16);
+
+    // hashing the password
+    var hash = crypto.scrypt(password, salt, 64, (err, derivedKey) => {
+        if (err) throw err;
+        console.log(derivedKey.toString('hex'));
+    });
+
+    return hash;
+}
+
+// function to check password
+function checkPassword(inputPassword){
+    var inputHash = passwordHash(inputPassword);
+    if (inputHash === password){
+        return true;
+    }else{
+        return false;
+    }
+}

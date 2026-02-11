@@ -25,14 +25,22 @@
 
         
     <div id="main">
-            <div class="d-flex flex-column"></div>
             <div class="justify-content-center ms-auto" id="settingsBar">
-                <h2>Settings</h2>
-                <ul>
-                    <li>Theme</li>
-                    <li>Font Size</li>
-                    <li>Language</li>
-                </ul>
+                
+                    <h2>Settings</h2>
+                <div class="d-flex flex-row">
+                <div class="p-2" id="textColumn">
+                    <ul>
+                        <li>Theme</li>
+                        <li>Font Size</li>
+                        <li>Language</li>
+                    </ul>
+                </div>
+                <div class="p-2" id="buttonColumn">
+                    <button type="button" class="smallButton" id="themeButton" onClick="changeTheme()">Light</button>
+                    <button type="button" class="smallButton" id="fontButton" onClick="changeFontSize()">Medium</button>
+                    <button type="button" class="smallButton" id="languageButton" onClick="changeLanguage()">English</button>
+                </div></div>
             </div>
         </div>
 
