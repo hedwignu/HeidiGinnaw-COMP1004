@@ -53,7 +53,6 @@ function signUpPage(){
 
 // opens drop down for settings
 function settingsDropdown(){
-    console.log("Settings button was clicked");
     var settingsBar = document.getElementById("settingsBar");
     if (settingsBar.style.display === "none"){
         settingsBar.style.display = "block";
@@ -62,8 +61,7 @@ function settingsDropdown(){
     }
 }
 
-// change theme
-//document.getElementById('themeButton').addEventListener('click', function(){ 
+// change theme 
 function themeButton(){
     // main body
     document.body.classList.toggle('darkTheme');
@@ -90,7 +88,6 @@ function themeButton(){
 
     // disabled buttons
     var disabledButtons = document.querySelectorAll('button:disabled');
-    console.log(disabledButtons);
     // looping round all disabled buttons
     for (var i = 0; i < disabledButtons.length; i++){
         disabledButtons[i].classList.toggle('darkTheme');
@@ -103,15 +100,17 @@ function themeButton(){
     // setting preference in local storage
     if (document.body.classList.contains('darkTheme')){
         localStorage.setItem('theme','dark');
+        document.querySelector('#themeButton').innerHTML = 'Change to Light';
     }else{
         localStorage.setItem('theme', 'light');
+        document.querySelector('#themeButton').innerHTML = 'Change to Dark';
     }
 }
 
-    
-    
-
-
+// change font size
+function changeFontSize(){
+    document.body.style.fontSize = "10px";
+}
 
 // function to hash the password
 function passwordHash(password){
