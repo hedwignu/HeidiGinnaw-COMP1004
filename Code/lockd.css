@@ -63,6 +63,10 @@ button.smallButton {
 
 }
 
+p.smallText{
+    font-size: 8px;
+}
+
 button:disabled{
     background-color: rgb(134, 168, 136) ;
     color: rgb(154, 179, 156);
@@ -138,7 +142,7 @@ nav .container-fluid {
 #settingsBar{
     position: sticky;
     right:0;
-    width:200px;
+    width:300px;
     background-color: white ;
     text-align: left;
     padding: 15px;
