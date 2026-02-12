@@ -10,6 +10,9 @@ body.darkTheme{
     color: white;
 }
 
+.darkTheme{
+    color-scheme: dark;
+}
 
 h1 {
     text-align: center;
@@ -31,7 +34,6 @@ input {
 input:focus {
     outline: none;
     border: 2px solid rgb(70, 117, 73);
-    background-color: white;
 }
 
 label {
@@ -63,7 +65,12 @@ button.smallButton {
 
 button:disabled{
     background-color: rgb(134, 168, 136) ;
-    color: rgba(255, 255, 255, 0.858);
+    color: rgb(154, 179, 156);
+}
+
+button.darkTheme:disabled{
+    background-color: rgb(2, 8, 2) !important;
+    color: rgb(154, 179, 156) !important;
 }
 
 button:active{
