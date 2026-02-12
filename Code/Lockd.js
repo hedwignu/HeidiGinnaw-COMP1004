@@ -10,6 +10,9 @@ try {
 document.addEventListener('DOMContentLoaded', function(){
     var settingsBar = document.getElementById("settingsBar");
     settingsBar.style.display = "none";
+    if (localStorage.getItem('theme') === 'dark'){
+        themeButton();
+    }
 })
 
 // function for when login button clicked
@@ -60,7 +63,8 @@ function settingsDropdown(){
 }
 
 // change theme
-document.getElementById('themeButton').addEventListener('click', function(){
+//document.getElementById('themeButton').addEventListener('click', function(){ 
+function themeButton(){
     // main body
     document.body.classList.toggle('darkTheme');
     // login box
@@ -72,12 +76,14 @@ document.getElementById('themeButton').addEventListener('click', function(){
 
     // normal buttons
     var buttons = document.getElementsByClassName('button')
+    // looping round all buttons
     for (var i = 0; i < buttons.length; i++){
         buttons[i].classList.toggle('darkTheme');
     }
 
     //clickable text buttons
     var clickableButtons = document.getElementsByClassName('clickableText')
+    // looping round all clickable buttons
     for (var i = 0; i < clickableButtons.length; i++){
         clickableButtons[i].classList.toggle('darkTheme');
     }
@@ -85,32 +91,22 @@ document.getElementById('themeButton').addEventListener('click', function(){
     // disabled buttons
     var disabledButtons = document.querySelectorAll('button:disabled');
     console.log(disabledButtons);
+    // looping round all disabled buttons
     for (var i = 0; i < disabledButtons.length; i++){
         disabledButtons[i].classList.toggle('darkTheme');
     }
-    
 
     // nav bar
     var nav1 = document.getElementsByTagName('nav');
     nav1[0].classList.toggle('darkTheme');
 
-    //console.log(document.nav.classList());
-    //console.log(document.nav.outerHTML)
-    //var button1 = document.getElementsByTagName('button');
-    //console.log(button1);
-    //document.button1.classList.add('darkTheme');
-    /*
-    
-    document.nav1.classList.add('darkTheme');
-    
-    document.button1.classList.toggle('darkTheme');
-    
-    document.button.style.backgroundColor = 'green';
-    document.button.classList.toggle('darkTheme');
-    document.button.clickableText.classList.toggle('darkTheme', true);
-    document.nav.classList.toggle('darkTheme',true);
-*/
-})
+    // setting preference in local storage
+    if (document.body.classList.contains('darkTheme')){
+        localStorage.setItem('theme','dark');
+    }else{
+        localStorage.setItem('theme', 'light');
+    }
+}
 
     
     
