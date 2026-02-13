@@ -65,6 +65,8 @@ button.smallButton {
 
 p.smallText{
     font-size: 8px;
+    margin-top: 1rem;
+    margin-bottom: 0;
 }
 
 button:disabled{
@@ -82,9 +84,9 @@ button:active{
 }
 
 #loginBox{
-    width: 300px;
-    height: 425px;
-    padding: 20px;
+    width: fit-content;
+    height: fit-content;
+    padding: 60px;
     background-color: white;
     border: 2px solid #555;
     border-radius: 6px;
@@ -142,7 +144,7 @@ nav .container-fluid {
 #settingsBar{
     position: sticky;
     right:0;
-    width:300px;
+    width:fit-content;
     background-color: white ;
     text-align: left;
     padding: 15px;

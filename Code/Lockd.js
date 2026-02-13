@@ -108,10 +108,151 @@ function themeButton(){
 }
 
 // change font size
-function changeFontSize(){
-    document.body.style.fontSize = "10px";
+function increaseFontSize(){
+    if (document.querySelector('#fontSize').innerHTML == 'Small'){
+        document.body.style.fontSize = "18px";
+
+        // h1
+        var h1 = document.getElementsByTagName('h1');
+        h1[0].style.fontSize = "50px";
+
+        // inputs
+        var input = document.getElementsByClassName('input')
+        // looping round all inputs
+        for (var i = 0; i < input.length; i++){
+            input[i].style.fontSize = "15px";
+        }
+
+        // small button
+        var smallButton = document.getElementsByClassName('smallButton');
+        // looping round all small buttons
+        for (var i = 0; i < smallButton.length; i++){
+            smallButton[i].style.fontSize = "8px";
+        }
+
+        // sign up button
+        var signUpButton = document.getElementById('signUpButton');
+        signUpButton.style.fontSize = "12px";
+        
+        // small text
+        var smallText = document.getElementsByClassName('smallText');
+        // looping round all small text
+        for (var i = 0; i < smallText.length; i++){
+            smallText[i].style.fontSize = "8px";
+        }
+        
+        // change display text
+        document.querySelector('#fontSize').innerHTML = 'Medium';
+    }else if (document.querySelector('#fontSize').innerHTML == 'Medium'){
+        // main body
+        document.body.style.fontSize = "24px";
+
+        // h1
+        var h1 = document.getElementsByTagName('h1');
+        h1[0].style.fontSize = "60px";
+
+        // inputs
+        var input = document.getElementsByClassName('input')
+        // looping round all inputs
+        for (var i = 0; i < input.length; i++){
+            input[i].style.fontSize = "20px";
+        }
+
+        // small button
+        var smallButton = document.getElementsByClassName('smallButton');
+        // looping round all small buttons
+        for (var i = 0; i < smallButton.length; i++){
+            smallButton[i].style.fontSize = "12px";
+        }
+
+        // sign up button
+        var signUpButton = document.getElementById('signUpButton');
+        signUpButton.style.fontSize = "16px";
+        
+        // small text
+        var smallText = document.getElementsByClassName('smallText');
+        // looping round all small text
+        for (var i = 0; i < smallText.length; i++){
+            smallText[i].style.fontSize = "12px";
+        }
+        
+        // change display text
+        document.querySelector('#fontSize').innerHTML = 'Large';
+    }
 }
 
+function decreaseFontSize(){
+    console.log(document.querySelector('#fontSize').innerHTML);
+    if (document.querySelector('#fontSize').innerHTML == 'Medium'){
+        document.body.style.fontSize = "12px";
+
+        // h1
+        var h1 = document.getElementsByTagName('h1');
+        h1[0].style.fontSize = "40px";
+
+        // inputs
+        var input = document.getElementsByClassName('input')
+        // looping round all inputs
+        for (var i = 0; i < input.length; i++){
+            input[i].style.fontSize = "11px";
+        }
+
+        // small button
+        var smallButton = document.getElementsByClassName('smallButton');
+        // looping round all small buttons
+        for (var i = 0; i < smallButton.length; i++){
+            smallButton[i].style.fontSize = "6px";
+        }
+
+        // sign up button
+        var signUpButton = document.getElementById('signUpButton');
+        signUpButton.style.fontSize = "8px";
+        
+        // small text
+        var smallText = document.getElementsByClassName('smallText');
+        // looping round all small text
+        for (var i = 0; i < smallText.length; i++){
+            smallText[i].style.fontSize = "6px";
+        }
+        
+        // change display text
+        document.querySelector('#fontSize').innerHTML = 'Small';
+    }else if (document.querySelector('#fontSize').innerHTML == 'Large'){
+        document.body.style.fontSize = "18px";
+
+        // h1
+        var h1 = document.getElementsByTagName('h1');
+        h1[0].style.fontSize = "50px";
+
+        // inputs
+        var input = document.getElementsByClassName('input')
+        // looping round all inputs
+        for (var i = 0; i < input.length; i++){
+            input[i].style.fontSize = "15px";
+        }
+
+        // small button
+        var smallButton = document.getElementsByClassName('smallButton');
+        // looping round all small buttons
+        for (var i = 0; i < smallButton.length; i++){
+            smallButton[i].style.fontSize = "8px";
+        }
+
+        // sign up button
+        var signUpButton = document.getElementById('signUpButton');
+        signUpButton.style.fontSize = "12px";
+        
+        // small text
+        var smallText = document.getElementsByClassName('smallText');
+        // looping round all small text
+        for (var i = 0; i < smallText.length; i++){
+            smallText[i].style.fontSize = "8px";
+        }
+        
+        // change display text
+        document.querySelector('#fontSize').innerHTML = 'Medium';
+    }
+}
 // function to hash the password
 function passwordHash(password){
     // generate random salt w/ approved random generator
