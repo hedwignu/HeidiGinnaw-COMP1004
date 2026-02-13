@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', function(){
     if (localStorage.getItem('theme') === 'dark'){
         themeButton();
     }
+    if (localStorage.getItem('fontSize') === 'Large'){
+        increaseFontSize()
+    }
+    if (localStorage.getItem('fontSize') === 'Small'){
+        decreaseFontSize()
+    }
 })
 
 // function for when login button clicked
@@ -110,6 +116,7 @@ function themeButton(){
 // change font size
 function increaseFontSize(){
     if (document.querySelector('#fontSize').innerHTML == 'Small'){
+        localStorage.setItem('fontSize','Medium');
         document.body.style.fontSize = "18px";
 
         // h1
@@ -144,6 +151,7 @@ function increaseFontSize(){
         // change display text
         document.querySelector('#fontSize').innerHTML = 'Medium';
     }else if (document.querySelector('#fontSize').innerHTML == 'Medium'){
+        localStorage.setItem('fontSize','Large');
         // main body
         document.body.style.fontSize = "24px";
 
@@ -184,6 +192,7 @@ function increaseFontSize(){
 function decreaseFontSize(){
     console.log(document.querySelector('#fontSize').innerHTML);
     if (document.querySelector('#fontSize').innerHTML == 'Medium'){
+        localStorage.setItem('fontSize','Small');
         document.body.style.fontSize = "12px";
 
         // h1
@@ -218,6 +227,7 @@ function decreaseFontSize(){
         // change display text
         document.querySelector('#fontSize').innerHTML = 'Small';
     }else if (document.querySelector('#fontSize').innerHTML == 'Large'){
+        localStorage.setItem('fontSize','Medium');
         document.body.style.fontSize = "18px";
 
         // h1
