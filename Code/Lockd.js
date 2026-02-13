@@ -14,10 +14,21 @@ document.addEventListener('DOMContentLoaded', function(){
         themeButton();
     }
     if (localStorage.getItem('fontSize') === 'Large'){
-        increaseFontSize()
+        increaseFontSize();
     }
     if (localStorage.getItem('fontSize') === 'Small'){
-        decreaseFontSize()
+        decreaseFontSize();
+    }
+    if (localStorage.getItem('language') === 'Svenska'){
+        var textElements = document.querySelectorAll('[lang="en"]');
+        for (var i = 0; i < textElements.length; i++){
+            textElements[i].style.display = "none";
+        }
+    }else{
+        var textElements = document.querySelectorAll('[lang="sv"]');
+        for (var i = 0; i < textElements.length; i++){
+            textElements[i].style.display = "none";
+        }
     }
 })
 
@@ -190,7 +201,6 @@ function increaseFontSize(){
 }
 
 function decreaseFontSize(){
-    console.log(document.querySelector('#fontSize').innerHTML);
     if (document.querySelector('#fontSize').innerHTML == 'Medium'){
         localStorage.setItem('fontSize','Small');
         document.body.style.fontSize = "12px";
@@ -263,6 +273,34 @@ function decreaseFontSize(){
         document.querySelector('#fontSize').innerHTML = 'Medium';
     }
 }
+
+function changeLanguage(){
+    // translate page to english
+    if (document.querySelector('#languageButton').innerHTML == 'Svenska'){
+        var textElements = document.querySelectorAll('[lang="sv"]');
+        for (var i = 0; i < textElements.length; i++){
+            textElements[i].style.display = "none";
+        }
+        var newTextElements = document.querySelectorAll('[lang="en"]');
+        for (var i = 0; i < newTextElements.length; i++){
+            newTextElements[i].style.display = "";
+        }
+        document.querySelector('#languageButton').innerHTML = 'English';
+        localStorage.setItem('language','English');
+    }else{ // translate page to swedish
+        var textElements = document.querySelectorAll('[lang="en"]');
+        for (var i = 0; i < textElements.length; i++){
+            textElements[i].style.display = "none";
+        }
+        var newTextElements = document.querySelectorAll('[lang="sv"]');
+        for (var i = 0; i < newTextElements.length; i++){
+            newTextElements[i].style.display = "";
+        }
+        document.querySelector('#languageButton').innerHTML = 'Svenska';
+        localStorage.setItem('language','Svenska');
+    }
+}
+
 // function to hash the password
 function passwordHash(password){
     // generate random salt w/ approved random generator

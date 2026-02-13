@@ -13,7 +13,8 @@
             <div class = "shadow container-fluid"> 
                     <div class = "d-flex bd-highlight">
                         <div class="me-auto p-2 bd-highlight" id="navItem">
-                            <button type="button" class="button" id="newNoteButton" disabled="true">New Note</button>
+                            <button lang="en" type="button" class="button" id="newNoteButton" disabled="true">New Note</button>
+                            <button lang="sv" type="button" class="button" id="newNoteButton" disabled="true">Ny Anteckning</button>
                         </div>
                         <div class="ms-auto p-2 bd-highlight" id="navItem">
                             <button class="button" type="button" id="settingsButton" onclick="settingsDropdown()">Settings</button>
@@ -50,13 +51,13 @@
 
         <div class="row h-100 justify-content-center align-items-center">
             <form id="loginBox">
-                <h1>Log in</h1><br>
-                <label for="username">Username:</label><br>
+                <h1 lang="en">Log in</h1><h1 lang="sv">Logg inn</h1><br>
+                <label lang="en" for="username">Username:</label><label lang="sv" for="username"> Användarnamn:</label><br>
                 <input type="text" id="username" name="username"><br>
-                <label for="password">Password:</label><br>
+                <label lang="en" for="password">Password:</label><label lang="sv" for="password">Lösenord:</label><br>
                 <input type="password" id="password" name="password"><br>
-                <button type="button" class="button" id="loginButton" onClick="validateLogin()">Log in</button><br>
-                <button type="button" class="clickableText" id="signUpButton" onClick="signUpPage()">No account? Click here.</button>
+                <button lang="en" type="button" class="button" id="loginButton" onClick="validateLogin()">Log in</button><button lang="sv" type="button" class="button" id="loginButton" onClick="validateLogin()">Logg inn</button><br>
+                <button lang="en" type="button" class="clickableText" id="signUpButton" onClick="signUpPage()">No account? Click here.</button><button lang="sv" type="button" class="clickableText" id="signUpButton" onClick="signUpPage()">Inget Konto? Klicka här.</button>
             </form>
         </div>
     </div>
