@@ -115,12 +115,22 @@ function themeButton(){
     nav1[0].classList.toggle('darkTheme');
 
     // setting preference in local storage
-    if (document.body.classList.contains('darkTheme')){
-        localStorage.setItem('theme','dark');
-        document.querySelector('#themeButton').innerHTML = 'Change to Light';
+    if (localStorage.getItem('language') == 'Svenska'){
+        if (document.body.classList.contains('darkTheme')){
+            localStorage.setItem('theme','dark');
+            document.querySelector('#themeButton').innerHTML = 'Byt till Ljus';
+        }else{
+            localStorage.setItem('theme', 'light');
+            document.querySelector('#themeButton').innerHTML = 'Byt till Mörkt';
+        }
     }else{
-        localStorage.setItem('theme', 'light');
-        document.querySelector('#themeButton').innerHTML = 'Change to Dark';
+        if (document.body.classList.contains('darkTheme')){
+            localStorage.setItem('theme','dark');
+            document.querySelector('#themeButton').innerHTML = 'Change to Light';
+        }else{
+            localStorage.setItem('theme', 'light');
+            document.querySelector('#themeButton').innerHTML = 'Change to Dark';
+        }
     }
 }
 

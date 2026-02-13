@@ -17,7 +17,8 @@
                             <button lang="sv" type="button" class="button" id="newNoteButton" disabled="true">Ny Anteckning</button>
                         </div>
                         <div class="ms-auto p-2 bd-highlight" id="navItem">
-                            <button class="button" type="button" id="settingsButton" onclick="settingsDropdown()">Settings</button>
+                            <button lang="en" class="button" type="button" id="settingsButton" onclick="settingsDropdown()">Settings</button>
+                            <button lang="sv" class="button" type="button" id="settingsButton" onclick="settingsDropdown()">Inställninghar</button>
                         </div>
                         
                     </div>
@@ -28,23 +29,23 @@
     <div id="main">
             <div class="justify-content-center ms-auto" id="settingsBar">
                 
-                    <h2>Settings</h2>
+                    <h2 lang="en">Settings</h2><h2 lang="sv">Inställninghar</h2>
                 <div class="d-flex flex-row">
                 <div class="p-2" id="textColumn">
                     <ul>
-                        <li>Theme</li>
-                        <li>Font Size</li>
-                        <li>Language</li>
+                        <li lang="en">Theme</li><li lang="sv">Tema</li>
+                        <li lang="en">Font Size</li><li lang="sv">Fontstorlek</li>
+                        <li lang="en">Language</li><li lang="sv">Sprak</li>
                     </ul>
                 </div>
                 <div class="p-2" id="buttonColumn">
-                    <button type="button" class="button smallButton" id="themeButton" onclick="themeButton()">Change to Dark</button>
+                    <button lang="en" type="button" class="button smallButton" id="themeButton" onclick="themeButton()">Change to Dark</button><button lang="sv" type="button" class="button smallButton" id="themeButton" onclick="themeButton()">Byt till Mörkt</button>
                     <div class="d-flex justify-content-between">
                         <div class="order-1"><button type="button" class="button smallButton" id="fontButtonDown" onclick="decreaseFontSize()">-</button></div>
-                        <div class="order-2"><p class="smallText" id="fontSize">Medium</p></div>
+                        <div class="order-2"><p lang="en" class="smallText" id="fontSize">Medium</p><p lang="sv" class="smallText" id="fontSize">Medium</p></div>
                         <div class="order-3"><button type="button" class="button smallButton" id="fontButtonUp" onclick="increaseFontSize()">+</button></div>
                     </div>
-                    <button type="button" class="button smallButton" id="languageButton" onclick="changeLanguage()">English</button>
+                    <button lang="en" type="button" class="button smallButton" id="languageButton" onclick="changeLanguage()">English</button><button lang="sv" type="button" class="button smallButton" id="languageButton" onclick="changeLanguage()">Svenska</button>
                 </div></div>
             </div>
         </div>
