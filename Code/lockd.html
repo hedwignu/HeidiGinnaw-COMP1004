@@ -27,7 +27,7 @@
 
         
     <div id="main">
-            <div class="justify-content-center ms-auto" id="settingsBar">
+            <div class="order-2 justify-content-center ms-auto" id="settingsBar">
                 
                     <h2 lang="en">Settings</h2><h2 lang="sv">Inställninghar</h2>
                 <div class="d-flex flex-row">
@@ -39,10 +39,10 @@
                     </ul>
                 </div>
                 <div class="p-2" id="buttonColumn">
-                    <button lang="en" type="button" class="button smallButton" id="themeButton" onclick="themeButton()">Change to Dark</button><button lang="sv" type="button" class="button smallButton" id="themeButton" onclick="themeButton()">Byt till Mörkt</button>
+                    <button lang="en" type="button" class="button smallButton" id="themeButton" onclick="themeButton()">Change to Dark</button><button lang="sv" type="button" class="button smallButton" id="themeButton1" onclick="themeButton()">Byt till Mörkt</button>
                     <div class="d-flex justify-content-between">
                         <div class="order-1"><button type="button" class="button smallButton" id="fontButtonDown" onclick="decreaseFontSize()">-</button></div>
-                        <div class="order-2"><p lang="en" class="smallText" id="fontSize">Medium</p><p lang="sv" class="smallText" id="fontSize">Medium</p></div>
+                        <div class="order-2"><p lang="en" class="smallText" id="fontSize">Medium</p><p lang="sv" class="smallText" id="fontSize1">Medium</p></div>
                         <div class="order-3"><button type="button" class="button smallButton" id="fontButtonUp" onclick="increaseFontSize()">+</button></div>
                     </div>
                     <button lang="en" type="button" class="button smallButton" id="languageButton" onclick="changeLanguage()">English</button><button lang="sv" type="button" class="button smallButton" id="languageButton" onclick="changeLanguage()">Svenska</button>
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <div class="row h-100 justify-content-center align-items-center">
+        <div class="order-1 row justify-content-center align-items-center">
             <form id="loginBox">
                 <h1 lang="en">Log in</h1><h1 lang="sv">Logg inn</h1><br>
                 <label lang="en" for="username">Username:</label><label lang="sv" for="username"> Användarnamn:</label><br>

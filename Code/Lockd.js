@@ -8,17 +8,16 @@ try {
 }*/
 
 document.addEventListener('DOMContentLoaded', function(){
+    // making sure settings drop down is not visible
     var settingsBar = document.getElementById("settingsBar");
     settingsBar.style.display = "none";
+
+    // setting theme based on local storage
     if (localStorage.getItem('theme') === 'dark'){
         themeButton();
     }
-    if (localStorage.getItem('fontSize') === 'Large'){
-        increaseFontSize();
-    }
-    if (localStorage.getItem('fontSize') === 'Small'){
-        decreaseFontSize();
-    }
+
+    // setting language based on local storage
     if (localStorage.getItem('language') === 'Svenska'){
         var textElements = document.querySelectorAll('[lang="en"]');
         for (var i = 0; i < textElements.length; i++){
@@ -29,6 +28,14 @@ document.addEventListener('DOMContentLoaded', function(){
         for (var i = 0; i < textElements.length; i++){
             textElements[i].style.display = "none";
         }
+    }
+
+    // setting font based on local storage
+    if (localStorage.getItem('fontSize') === 'Large'){
+        increaseFontSize();
+    }
+    if (localStorage.getItem('fontSize') === 'Small'){
+        decreaseFontSize();
     }
 })
 
@@ -114,6 +121,16 @@ function themeButton(){
     var nav1 = document.getElementsByTagName('nav');
     nav1[0].classList.toggle('darkTheme');
 
+    if (document.body.classList.contains('darkTheme')){
+        localStorage.setItem('theme','dark');
+        document.querySelector('#themeButton').innerHTML = 'Change to Light';
+        document.querySelector('#themeButton1').innerHTML = 'Byt till Ljus';
+    }else{
+        localStorage.setItem('theme', 'light');
+        document.querySelector('#themeButton').innerHTML = 'Change to Dark';
+        document.querySelector('#themeButton1').innerHTML = 'Byt till Mörkt';
+    }
+/*
     // setting preference in local storage
     if (localStorage.getItem('language') == 'Svenska'){
         if (document.body.classList.contains('darkTheme')){
@@ -131,12 +148,12 @@ function themeButton(){
             localStorage.setItem('theme', 'light');
             document.querySelector('#themeButton').innerHTML = 'Change to Dark';
         }
-    }
+    }*/
 }
 
 // change font size
 function increaseFontSize(){
-    if (document.querySelector('#fontSize').innerHTML == 'Small'){
+    if (document.querySelector('#fontSize').innerHTML == 'Small' ||document.querySelector('#fontSize1').innerHTML == 'Små'){
         localStorage.setItem('fontSize','Medium');
         document.body.style.fontSize = "18px";
 
@@ -171,6 +188,7 @@ function increaseFontSize(){
         
         // change display text
         document.querySelector('#fontSize').innerHTML = 'Medium';
+        document.querySelector('#fontSize1').innerHTML = 'Medium';
     }else if (document.querySelector('#fontSize').innerHTML == 'Medium'){
         localStorage.setItem('fontSize','Large');
         // main body
@@ -206,7 +224,8 @@ function increaseFontSize(){
         }
         
         // change display text
-        document.querySelector('#fontSize').innerHTML = 'Large';
+            document.querySelector('#fontSize1').innerHTML = 'Stor';
+            document.querySelector('#fontSize').innerHTML = 'Large';
     }
 }
 
@@ -243,10 +262,14 @@ function decreaseFontSize(){
         for (var i = 0; i < smallText.length; i++){
             smallText[i].style.fontSize = "6px";
         }
-        
+        /*
         // change display text
         document.querySelector('#fontSize').innerHTML = 'Small';
-    }else if (document.querySelector('#fontSize').innerHTML == 'Large'){
+*/
+        // change display text
+        document.querySelector('#fontSize1').innerHTML = 'Små';
+        document.querySelector('#fontSize').innerHTML = 'Small';
+    }else if (document.querySelector('#fontSize').innerHTML == 'Large' || document.querySelector('#fontSize1').innerHTML == 'Stor'){
         localStorage.setItem('fontSize','Medium');
         document.body.style.fontSize = "18px";
 
@@ -281,20 +304,28 @@ function decreaseFontSize(){
         
         // change display text
         document.querySelector('#fontSize').innerHTML = 'Medium';
+        document.querySelector('#fontSize1').innerHTML = 'Medium';
     }
 }
 
 function changeLanguage(){
+    var currFontSize = document.querySelector('#fontSize').innerHTML;
+    console.log(currFontSize);
     // translate page to english
     if (document.querySelector('#languageButton').innerHTML == 'Svenska'){
+        // collect all text elements that are in swedish
         var textElements = document.querySelectorAll('[lang="sv"]');
+        // iterate and hide swedish text
         for (var i = 0; i < textElements.length; i++){
             textElements[i].style.display = "none";
         }
+        // collect all text elements that are in english
         var newTextElements = document.querySelectorAll('[lang="en"]');
+        // iterate and display english text
         for (var i = 0; i < newTextElements.length; i++){
             newTextElements[i].style.display = "";
         }
+
         document.querySelector('#languageButton').innerHTML = 'English';
         localStorage.setItem('language','English');
     }else{ // translate page to swedish
@@ -306,6 +337,7 @@ function changeLanguage(){
         for (var i = 0; i < newTextElements.length; i++){
             newTextElements[i].style.display = "";
         }
+
         document.querySelector('#languageButton').innerHTML = 'Svenska';
         localStorage.setItem('language','Svenska');
     }
