@@ -149,6 +149,7 @@ nav .container-fluid {
     text-align: left;
     padding: 15px;
     z-index: 1;
+    border-radius: 6px;
 }
 
 #settingsBar.darkTheme{

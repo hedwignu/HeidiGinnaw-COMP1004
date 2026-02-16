@@ -130,25 +130,6 @@ function themeButton(){
         document.querySelector('#themeButton').innerHTML = 'Change to Dark';
         document.querySelector('#themeButton1').innerHTML = 'Byt till Mörkt';
     }
-/*
-    // setting preference in local storage
-    if (localStorage.getItem('language') == 'Svenska'){
-        if (document.body.classList.contains('darkTheme')){
-            localStorage.setItem('theme','dark');
-            document.querySelector('#themeButton').innerHTML = 'Byt till Ljus';
-        }else{
-            localStorage.setItem('theme', 'light');
-            document.querySelector('#themeButton').innerHTML = 'Byt till Mörkt';
-        }
-    }else{
-        if (document.body.classList.contains('darkTheme')){
-            localStorage.setItem('theme','dark');
-            document.querySelector('#themeButton').innerHTML = 'Change to Light';
-        }else{
-            localStorage.setItem('theme', 'light');
-            document.querySelector('#themeButton').innerHTML = 'Change to Dark';
-        }
-    }*/
 }
 
 // change font size
@@ -309,10 +290,10 @@ function decreaseFontSize(){
 }
 
 function changeLanguage(){
-    var currFontSize = document.querySelector('#fontSize').innerHTML;
-    console.log(currFontSize);
     // translate page to english
-    if (document.querySelector('#languageButton').innerHTML == 'Svenska'){
+    console.log("hii");
+    if (localStorage.getItem('language') == 'Svenska'){
+        console.log("hi");
         // collect all text elements that are in swedish
         var textElements = document.querySelectorAll('[lang="sv"]');
         // iterate and hide swedish text
@@ -326,9 +307,9 @@ function changeLanguage(){
             newTextElements[i].style.display = "";
         }
 
-        document.querySelector('#languageButton').innerHTML = 'English';
         localStorage.setItem('language','English');
     }else{ // translate page to swedish
+        console.log("hiii");
         var textElements = document.querySelectorAll('[lang="en"]');
         for (var i = 0; i < textElements.length; i++){
             textElements[i].style.display = "none";
@@ -338,7 +319,6 @@ function changeLanguage(){
             newTextElements[i].style.display = "";
         }
 
-        document.querySelector('#languageButton').innerHTML = 'Svenska';
         localStorage.setItem('language','Svenska');
     }
 }
