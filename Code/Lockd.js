@@ -321,12 +321,26 @@ function changeLanguage(){
 // function to hash the password
 function passwordHash(password){
     // generate random salt w/ approved random generator
-    const salt = 10;
+    const salt = generateSalt();
 
     // hashing the password - my own algorithm
     var hash = 15;
 
     return hash;
+}
+
+function generateSalt(){
+    var salt = "";
+    // generate 16 char long salt
+    for (var i = 0; i<16; i++){
+        // generating random number
+        var asciiCode = Math.floor(Math.random()*(126-33+1)) + 33;
+        // retrieving corresponding character
+        var randChar = String.fromCharCode(asciiCode);
+        // adding current char to salt string
+        salt = salt.concat(randChar);
+    }
+    return salt;
 }
 
 // function to check password
