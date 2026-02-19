@@ -323,8 +323,25 @@ function passwordHash(password){
     // generate random salt w/ approved random generator
     const salt = generateSalt();
 
+    // add salt to the inputted password
+    var saltedPassword = salt.concat(password);
+    console.log(saltedPassword);
+
     // hashing the password - my own algorithm
-    var hash = 15;
+    var hash = 0;
+
+    // adding padding so password fits the block size
+    var saltPwdLen = saltedPassword.length;
+    saltPwdLen = saltPwdLen.concat('1');
+    // 32 bits is 4 bytes/characters
+    // looping until salted password is a multiple of 4
+    while ((saltPwdLen.length % 4) != 0){
+        saltPwdLen = saltPwdLen.concat('0');
+    }
+
+    for (var i = 0; i < saltPwdLen.length; i += 4){
+        
+    }
 
     return hash;
 }
