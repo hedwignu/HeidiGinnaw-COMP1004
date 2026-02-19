@@ -1,12 +1,3 @@
-// so i can encrypt
-/*
-let crypto;
-try {
-    crypto = require('crypto');
-} catch (err) {
-    console.error('crypto support is disabled!');
-}*/
-
 document.addEventListener('DOMContentLoaded', function(){
     // making sure settings drop down is not visible
     var settingsBar = document.getElementById("settingsBar");
@@ -48,13 +39,15 @@ function validateLogin(){
         var usernameIn = document.getElementById('username');
         var passwordIn = document.getElementById('password');
         if (usernameIn.value == username){
-            if(checkPassword(passwordIn)){
+            if(checkPassword(passwordIn, password)){
                 // successful log in
                 alert('Logged in!');
                 document.getElementById("loginBox").remove();
+                /*
                 var logOut = document.createElement("option");
                 logOut.text = "Log Out";
                 document.getElementById("settingsButton").appendChild(logOut);
+                */
             }else{
                 // incorrect password
                 alert('Username or Password is incorrect');
@@ -132,7 +125,7 @@ function themeButton(){
     }
 }
 
-// change font size
+// increase font size
 function increaseFontSize(){
     if (document.querySelector('#fontSize').innerHTML == 'Small' ||document.querySelector('#fontSize1').innerHTML == 'Små'){
         localStorage.setItem('fontSize','Medium');
@@ -210,6 +203,7 @@ function increaseFontSize(){
     }
 }
 
+// decrease font size
 function decreaseFontSize(){
     if (document.querySelector('#fontSize').innerHTML == 'Medium'){
         localStorage.setItem('fontSize','Small');
@@ -289,6 +283,7 @@ function decreaseFontSize(){
     }
 }
 
+// change apps language
 function changeLanguage(){
     // translate page to english
     console.log("hii");
@@ -326,20 +321,18 @@ function changeLanguage(){
 // function to hash the password
 function passwordHash(password){
     // generate random salt w/ approved random generator
-    const salt = crypto.randomBytes(16);
+    const salt = 10;
 
-    // hashing the password
-    var hash = crypto.scrypt(password, salt, 64, (err, derivedKey) => {
-        if (err) throw err;
-        console.log(derivedKey.toString('hex'));
-    });
+    // hashing the password - my own algorithm
+    var hash = 15;
 
     return hash;
 }
 
 // function to check password
-function checkPassword(inputPassword){
+function checkPassword(inputPassword, password){
     var inputHash = passwordHash(inputPassword);
+    console.log(password)
     if (inputHash === password){
         return true;
     }else{

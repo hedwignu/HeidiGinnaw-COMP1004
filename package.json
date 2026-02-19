@@ -1,0 +1,24 @@
+{
+  "name": "spa",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "description": "I will develop a notes application that will use the necessary encryption to ensure all notes will be stored securely and will be unaccessable by unauthorised users. Each users username and password will also be stored securely, so that all users can feel safe in the knowledge that, when they are creating and editing notes, their data is safe from any unauthorised access. Users will be able to, once logged in, see the titles of all their notes, but not the actual data stored so shoulder surfers won't be able to see files that aren't opened by the user.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hedwignu/HeidiGinnaw-COMP1004.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hedwignu/HeidiGinnaw-COMP1004/issues"
+  },
+  "homepage": "https://github.com/hedwignu/HeidiGinnaw-COMP1004#readme",
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  }
+}
