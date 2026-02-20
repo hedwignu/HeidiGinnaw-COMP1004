@@ -330,20 +330,100 @@ function passwordHash(password){
     // hashing the password - my own algorithm
     var hash = 0;
 
+    var binaryPassword = stringToBinary(saltedPassword);
     // adding padding so password fits the block size
-    var saltPwdLen = saltedPassword.length;
-    saltPwdLen = saltPwdLen.concat('1');
+    binaryPassword = binaryPassword.concat('1');
     // 32 bits is 4 bytes/characters
     // looping until salted password is a multiple of 4
-    while ((saltPwdLen.length % 4) != 0){
-        saltPwdLen = saltPwdLen.concat('0');
+    while ((binaryPassword.length % 512) != 0){
+        binaryPassword = binaryPassword.concat('0');
     }
 
-    for (var i = 0; i < saltPwdLen.length; i += 4){
-        
+    // hex values
+    var A = '67452301';
+    var B = 'efcdab89';
+    var C = '98badcfe';
+    var E = '10325476';
+
+    // converting the hex values to binary so they can be computed
+    A = hexToBin(A);
+    B = hexToBin(B);
+    C = hexToBin(C);
+    D = hexToBin(D);
+
+    var M = [];
+    var j = 0;
+    // looping round the binary password 32 bits at a time
+    for (var i = 0; i < binaryPassword.length; i += 32){
+        // splitting the binary password into 32 bit blocks
+        M[j] = binaryPassword.slice(i,i+32);
+        j++;
     }
+
+    // looping 4 times
+    for (var i = 0; i < 4; i++){
+        // looping each block of the binary password
+        for (var k = 0; k < 16; k++){
+            // swapping values
+            var A1 = D;
+            var C1 = B;
+            var D1 = C;
+
+            // checking which block should be used 
+            if (i == 0){
+                var MD = M[k%16];
+            }else if(i == 1){
+                var MD = M[(5 * k + 1)%16];
+            }else if(i == 2){
+                var MD = M[(3 * k + 5)%16];
+            }else if(i == 3){
+                var MD = M[(7 * k)%16];
+            }
+
+            // doing the calculation
+            var sum = f(B,C,D,k);
+
+            // adding the calculation to A and the block from the password
+            sum += A + MD;
+
+            // assigning the values to their new ones
+            B = sum;
+            A = A1;
+            C = C1;
+            D = D1;
+
+        }
+    }
+
+    console.log(M);
+
+    hash = A.concat(B,C,D);
 
     return hash;
+};
+
+function f(B,C,D,i){
+    if (i >= 0 && i <= 15){
+        return (B & C) | ((~B) & D);
+    }else{
+        return B;
+    }
+}
+
+function stringToBinary(str){
+    var binary = "";
+    for (var i = 0; i<str.length; i++){
+        const charBin = str[i].charCodeAt().toString(2);
+
+        binary += charBin.padStart(8, '0');
+    }
+    return binary;
+};
+
+function hexToBin(hex){
+    const dec = parseInt(hex, 16);
+    const bin = dec.toString(2);
+    console.log(bin);
 }
 
 function generateSalt(){
@@ -358,7 +438,7 @@ function generateSalt(){
         salt = salt.concat(randChar);
     }
     return salt;
-}
+};
 
 // function to check password
 function checkPassword(inputPassword, password){
