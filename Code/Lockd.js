@@ -34,12 +34,13 @@ document.addEventListener('DOMContentLoaded', function(){
 function validateLogin(){
     document.getElementById('loginButton').addEventListener('click', function(){
         var username = "admin";
-        var password = passwordHash("pwd123");
+        var salt = "pUas%6Wz3f<>~?[c";
+        var password = passwordHash("pwd123",salt);
         // retreiving user inputted data
         var usernameIn = document.getElementById('username');
         var passwordIn = document.getElementById('password');
         if (usernameIn.value == username){
-            if(checkPassword(passwordIn, password)){
+            if(checkPassword(passwordIn, password, salt)){
                 // successful log in
                 alert('Logged in!');
                 document.getElementById("loginBox").remove();
@@ -286,9 +287,7 @@ function decreaseFontSize(){
 // change apps language
 function changeLanguage(){
     // translate page to english
-    console.log("hii");
     if (localStorage.getItem('language') == 'Svenska'){
-        console.log("hi");
         // collect all text elements that are in swedish
         var textElements = document.querySelectorAll('[lang="sv"]');
         // iterate and hide swedish text
@@ -319,9 +318,9 @@ function changeLanguage(){
 }
 
 // function to hash the password
-function passwordHash(password){
+function passwordHash(password,salt){
     // generate random salt w/ approved random generator
-    const salt = generateSalt();
+    //const salt = generateSalt();
 
     // add salt to the inputted password
     var saltedPassword = salt.concat(password);
@@ -343,20 +342,25 @@ function passwordHash(password){
     var A = '67452301';
     var B = 'efcdab89';
     var C = '98badcfe';
-    var E = '10325476';
+    var D = '10325476';
 
-    // converting the hex values to binary so they can be computed
-    A = hexToBin(A);
-    B = hexToBin(B);
-    C = hexToBin(C);
-    D = hexToBin(D);
+    // converting the hex values to decimal so they can be computed
+    A = hexToDec(A);
+    B = hexToDec(B);
+    C = hexToDec(C);
+    D = hexToDec(D);
 
     var M = [];
     var j = 0;
-    // looping round the binary password 32 bits at a time
+    // looping round the binary password 4 characters at a time
     for (var i = 0; i < binaryPassword.length; i += 32){
         // splitting the binary password into 32 bit blocks
-        M[j] = binaryPassword.slice(i,i+32);
+        binSlice = binaryPassword.slice(i,i+32);
+
+        //converting binary slices to decimal
+        decSlice = binToDec(binSlice);
+
+        M[j] = binToDec(binSlice);
         j++;
     }
 
@@ -381,7 +385,8 @@ function passwordHash(password){
             }
 
             // doing the calculation
-            var sum = f(B,C,D,k);
+            var sum = Math.abs(f(B,C,D,k));
+            
 
             // adding the calculation to A and the block from the password
             sum += A + MD;
@@ -395,13 +400,20 @@ function passwordHash(password){
         }
     }
 
-    console.log(M);
+    
+    A = A.toString(16);
+    B = B.toString(16);
+    C = C.toString(16);
+    D = D.toString(16);
 
     hash = A.concat(B,C,D);
+
+    console.log(hash);
 
     return hash;
 };
 
+// does bitwise calculation depending on what iteration it is
 function f(B,C,D,i){
     if (i >= 0 && i <= 15){
         return (B & C) | ((~B) & D);
@@ -420,10 +432,28 @@ function stringToBinary(str){
     return binary;
 };
 
-function hexToBin(hex){
-    const dec = parseInt(hex, 16);
-    const bin = dec.toString(2);
-    console.log(bin);
+function hexToDec(hex){
+    var dec = parseInt(hex, 16);
+    // converting to a string
+    /*
+    dec = dec.toFixed()
+    const bin = stringToBinary(dec);
+    return bin;
+    */
+   return dec;
+}
+
+function decToHex(dec){
+    var hex = dec.toString(16);
+    console.log(hex);
+    return hex;
+}
+
+function binToDec(binary){
+    binary = binary;
+    var dec = parseInt(binary, 2);
+
+    return dec;
 }
 
 function generateSalt(){
@@ -437,13 +467,18 @@ function generateSalt(){
         // adding current char to salt string
         salt = salt.concat(randChar);
     }
+
+    console.log(salt);
     return salt;
 };
 
 // function to check password
-function checkPassword(inputPassword, password){
-    var inputHash = passwordHash(inputPassword);
-    console.log(password)
+function checkPassword(inputPassword, password, salt){
+    var inputHash = passwordHash(inputPassword, salt);
+    console.log("test");
+    console.log(inputHash);
+    console.log(password);
+    //console.log(password)
     if (inputHash === password){
         return true;
     }else{
