@@ -32,14 +32,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
 // function for when login button clicked
 function validateLogin(){
-    document.getElementById('loginButton').addEventListener('click', function(){
         var username = "admin";
         var salt = "pUas%6Wz3f<>~?[c";
         var password = passwordHash("pwd123",salt);
         // retreiving user inputted data
-        var usernameIn = document.getElementById('username');
-        var passwordIn = document.getElementById('password');
-        if (usernameIn.value == username){
+        var usernameIn = document.getElementById('username').value;
+        var passwordIn = document.getElementById('password').value;
+        if (usernameIn == username){
             if(checkPassword(passwordIn, password, salt)){
                 // successful log in
                 alert('Logged in!');
@@ -51,14 +50,16 @@ function validateLogin(){
                 */
             }else{
                 // incorrect password
+                console.log('incorrect password');
                 alert('Username or Password is incorrect');
             }
         }else{
             // incorrect username
+            console.log('incorrect username');
             alert('Username or Password is incorrect');
         }
         
-    })
+    
 };
 
 function signUpPage(){
