@@ -33,10 +33,6 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-    // hiding sign in page
-    document.querySelector('#loginText').style.display = "none";
-    document.querySelector('#createAccountButton').style.display = "none";
-
     // setting font based on local storage
     if (localStorage.getItem('fontSize') === 'Large'){
         increaseFontSize();
@@ -54,11 +50,13 @@ function validateLogin(){
         var password = passwordHash("pwd123",salt);
         */
         // retreiving user inputted data
+        console.log(Object.keys(localStorage));
         var usernameIn = document.getElementById('username').value;
         var passwordIn = document.getElementById('password').value;
         if (localStorage.getItem(usernameIn) != null){
             // retrieving users stored data
             var userInfo = localStorage.getItem(usernameIn);
+            console.log(userInfo);
             var password = userInfo[0];
             var salt = userInfo[1];
             if(checkPassword(passwordIn, password, salt)){
@@ -102,6 +100,7 @@ function signUpPage(){
     sections.forEach(item => {
         item.style.display = 'none';
     });
+
     document.getElementById('allPages').style.display = '';
     document.getElementById('signUpSection').style.display = '';
     
@@ -121,6 +120,7 @@ function createAccount(){
         var usernameIn = document.getElementById('username').value;
         var passwordIn = document.getElementById('password').value;
 
+        console.log(localStorage.getItem(usernameIn));
         // check if username already exists
         if (localStorage.getItem(usernameIn) != null){
             alert('username already exists');
@@ -128,28 +128,31 @@ function createAccount(){
         }
 
         // creating salt for this user
-        var salt = createSalt();
+        var salt = generateSalt();
 
         // hashing password for user
         var password = passwordHash(passwordIn, salt);
 
         // storing in local storage
-        localStorage.setItem('usernameIn', [password, salt]);
+        localStorage.setItem(usernameIn, [password, salt]);
+        console.log(localStorage.getItem(usernameIn));
+
+        alert('account created');
 }
 
 function loginPage(){
-    pageDisplayed = 'log in';
-    // changing text to say sign up etc
-    document.querySelector("#logInEn").innerHTML = 'Log in';
-    document.querySelector('#logInSv').innerHTML = 'Logga in';
+    localStorage.setItem('pageDisplayed','log in');
+    
 
-    // hiding sign in page
-    document.querySelector('#loginText').style.display = "none";
-    document.querySelector('#createAccountButton').style.display = "none";
+    const sections = document.querySelectorAll('section');
+    
 
-    // displaying log in elements
-    document.querySelector('#signUpText').style.display = "";
-    document.querySelector('#loginButton').style.display = "";
+    sections.forEach(item => {
+        item.style.display = 'none';
+    });
+
+    document.getElementById('allPages').style.display = '';
+    document.getElementById('logInSection').style.display = '';
 }
 
 
@@ -374,13 +377,13 @@ function changeLanguage(){
     // translate page to english
     if (localStorage.getItem('language') == 'Svenska'){
         // collect all text elements that are in swedish
-        var textElements = document.querySelectorAll('[lang="sv"][section=currSection]');
+        var textElements = document.querySelectorAll('[lang="sv"]');
         // iterate and hide swedish text
         for (var i = 0; i < textElements.length; i++){
             textElements[i].style.display = "none";
         }
         // collect all text elements that are in english
-        var newTextElements = document.querySelectorAll('[lang="en"][section=currSection]');
+        var newTextElements = document.querySelectorAll('[lang="en"]');
         // iterate and display english text
         for (var i = 0; i < newTextElements.length; i++){
             newTextElements[i].style.display = "";
@@ -388,18 +391,18 @@ function changeLanguage(){
 
         localStorage.setItem('language','English');
     }else{ // translate page to swedish
-        var textElements = document.querySelectorAll('[lang="en"][section=currSection]');
+        var textElements = document.querySelectorAll('[lang="en"]');
         for (var i = 0; i < textElements.length; i++){
             textElements[i].style.display = "none";
         }
-        var newTextElements = document.querySelectorAll('[lang="sv"][section=currSection]');
+        var newTextElements = document.querySelectorAll('[lang="sv"]');
         for (var i = 0; i < newTextElements.length; i++){
             newTextElements[i].style.display = "";
         }
 
         localStorage.setItem('language','Svenska');
     }
-
+/*
     switch (pageDisplayed){
         case 'log in':
             loginPage();
@@ -412,7 +415,7 @@ function changeLanguage(){
             alert("an error has occured");
             break;
     }
-    
+    */
 }
 
 // function to hash the password
