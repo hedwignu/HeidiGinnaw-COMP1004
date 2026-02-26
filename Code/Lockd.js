@@ -1,3 +1,6 @@
+// creating variable to keep track of what page is being displayed
+var pageDisplayed = 'login';
+
 document.addEventListener('DOMContentLoaded', function(){
     // making sure settings drop down is not visible
     var settingsBar = document.getElementById("settingsBar");
@@ -20,6 +23,10 @@ document.addEventListener('DOMContentLoaded', function(){
             textElements[i].style.display = "none";
         }
     }
+
+    // hiding sign in page
+    document.querySelector('#loginText').style.display = "none";
+    document.querySelector('#createAccountButton').style.display = "none";
 
     // setting font based on local storage
     if (localStorage.getItem('fontSize') === 'Large'){
@@ -50,7 +57,7 @@ function validateLogin(){
                 */
             }else{
                 // incorrect password
-                console.log('incorrect password');
+                //console.log('incorrect password');
                 alert('Username or Password is incorrect');
             }
         }else{
@@ -63,12 +70,35 @@ function validateLogin(){
 };
 
 function signUpPage(){
-        document.addEventListener('DOMContentLoaded', function(){
-            document.getElementById('signUpButton').addEventListener('click',function(){
-            
-        })
-    }
-)};
+    pageDisplayed = 'sign up'
+    // changing text to say sign up etc
+    document.querySelector("#logInEn").innerHTML = 'Sign Up';
+    document.querySelector('#logInSv').innerHTML = 'Skapa Konto';
+
+    // displaying sign in page
+    document.querySelector('#loginText').style.display = "";
+    document.querySelector('#createAccountButton').style.display = "";
+
+    // hiding log in elements
+    document.querySelector('#signUpText').style.display = "none";
+    document.querySelector('#loginButton').style.display = "none";
+}
+
+function loginPage(){
+    pageDisplayed = 'log in';
+    // changing text to say sign up etc
+    document.querySelector("#logInEn").innerHTML = 'Log in';
+    document.querySelector('#logInSv').innerHTML = 'Logga in';
+
+    // hiding sign in page
+    document.querySelector('#loginText').style.display = "none";
+    document.querySelector('#createAccountButton').style.display = "none";
+
+    // displaying log in elements
+    document.querySelector('#signUpText').style.display = "";
+    document.querySelector('#loginButton').style.display = "";
+}
+
 
 // opens drop down for settings
 function settingsDropdown(){
@@ -304,7 +334,6 @@ function changeLanguage(){
 
         localStorage.setItem('language','English');
     }else{ // translate page to swedish
-        console.log("hiii");
         var textElements = document.querySelectorAll('[lang="en"]');
         for (var i = 0; i < textElements.length; i++){
             textElements[i].style.display = "none";
@@ -316,6 +345,20 @@ function changeLanguage(){
 
         localStorage.setItem('language','Svenska');
     }
+
+    switch (pageDisplayed){
+        case 'log in':
+            loginPage();
+            break;
+        case 'sign up':
+            signUpPage();
+            break;
+        default:
+            //errorPage();
+            alert("an error has occured");
+            break;
+    }
+    
 }
 
 // function to hash the password
@@ -325,7 +368,6 @@ function passwordHash(password,salt){
 
     // add salt to the inputted password
     var saltedPassword = salt.concat(password);
-    console.log(saltedPassword);
 
     // hashing the password - my own algorithm
     var hash = 0;
@@ -409,8 +451,6 @@ function passwordHash(password,salt){
 
     hash = A.concat(B,C,D);
 
-    console.log(hash);
-
     return hash;
 };
 
@@ -446,7 +486,6 @@ function hexToDec(hex){
 
 function decToHex(dec){
     var hex = dec.toString(16);
-    console.log(hex);
     return hex;
 }
 
@@ -469,17 +508,12 @@ function generateSalt(){
         salt = salt.concat(randChar);
     }
 
-    console.log(salt);
     return salt;
 };
 
 // function to check password
 function checkPassword(inputPassword, password, salt){
     var inputHash = passwordHash(inputPassword, salt);
-    console.log("test");
-    console.log(inputHash);
-    console.log(password);
-    //console.log(password)
     if (inputHash === password){
         return true;
     }else{
