@@ -8,6 +8,7 @@
         <title>Lockd</title>
     </head>
     <body>
+        <section id="allPages">
         <!-- my navigation bar for the application -->
         <nav>
             <div class = "shadow container-fluid"> 
@@ -26,7 +27,6 @@
         </nav>
 
         
-    <div id="main">
             <div class="order-2 justify-content-center ms-auto" id="settingsBar">
                 
                     <h2 lang="en">Settings</h2><h2 lang="sv">Inställninghar</h2>
@@ -50,6 +50,8 @@
             </div>
         </div>
 
+    </section>
+    <section id="logInSection">
         <div class="order-1 row justify-content-center align-items-center">
             <form id="loginBox">
                 <h1 id="logInEn" lang="en">Log in</h1><h1 id="logInSv" lang="sv">Logga in</h1><br>
@@ -58,12 +60,26 @@
                 <label lang="en" for="password">Password:</label><label lang="sv" for="password">Lösenord:</label><br>
                 <input type="password" id="password" name="password"><br>
                 <button lang="en" type="button" class="button" id="loginButton" onClick="validateLogin()">Log in</button><button lang="sv" type="button" class="button" id="loginButton" onClick="validateLogin()">Logga in</button><br>
+                <button lang="en" type="button" class="clickableText" id="signUpText" onClick="signUpPage()">No account? Click here.</button><button lang="sv" type="button" class="clickableText" id="signUpText" onClick="signUpPage()">Inget Konto? Klicka här.</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="signUpSection">
+        <div class="order-1 row justify-content-center align-items-center">
+            <form id="loginBox">
+                <h1 lang="en">Sign Up</h1><h1 id="logInSv" lang="sv">Skapa Konto</h1><br>
+                <label lang="en" for="username">Username:</label><label lang="sv" for="username"> Användarnamn:</label><br>
+                <input type="text" id="username" name="username"><br>
+                <label lang="en" for="password">Password:</label><label lang="sv" for="password">Lösenord:</label><br>
+                <input type="password" id="password" name="password"><br>
                 <button lang="en" type="button" class="button" id="createAccountButton" onClick="createAccount()">Sign up</button><button lang="sv" type="button" class="button" id="createAccountButton" onClick="createAccount()">Skapa Konto</button><br>
                 <button lang="en" type="button" class="clickableText" id="signUpText" onClick="signUpPage()">No account? Click here.</button><button lang="sv" type="button" class="clickableText" id="signUpText" onClick="signUpPage()">Inget Konto? Klicka här.</button>
                 <button lang="en" type="button" class="clickableText" id="loginText" onClick="loginPage()">Already have an account? Click here.</button><button lang="sv" type="button" class="clickableText" id="loginText" onClick="loginPage()">Här du redan ett konto? Klicka här.</button>
             </form>
         </div>
-    </div>
+    </section>
+
 <!--
     <div class="container">
         <div class="d-flex flex-column bd-highlight">

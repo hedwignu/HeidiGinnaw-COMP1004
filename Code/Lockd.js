@@ -1,6 +1,12 @@
 // creating variable to keep track of what page is being displayed
 var pageDisplayed = 'login';
 
+// all elements will start with a number to identify which page it belongs to:
+// 1 - all pages
+// 2 - log in page
+// 3 - sign up page
+// 4 - home page
+
 document.addEventListener('DOMContentLoaded', function(){
     // making sure settings drop down is not visible
     var settingsBar = document.getElementById("settingsBar");
