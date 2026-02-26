@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 // function for when login button clicked
 function validateLogin(){
+    console.log('validating log in');
     /*
         var username = "admin";
         var salt = "pUas%6Wz3f<>~?[c";
@@ -52,11 +53,13 @@ function validateLogin(){
         // retreiving user inputted data
         console.log(Object.keys(localStorage));
         var usernameIn = document.getElementById('username').value;
+        console.log(usernameIn);
         var passwordIn = document.getElementById('password').value;
         if (localStorage.getItem(usernameIn) != null){
             // retrieving users stored data
             var userInfo = localStorage.getItem(usernameIn);
-            console.log(userInfo);
+            console.log('hi');
+            console.log(userInfo[0]);
             var password = userInfo[0];
             var salt = userInfo[1];
             if(checkPassword(passwordIn, password, salt)){
@@ -117,10 +120,9 @@ function homePage(){
 //function to create account
 function createAccount(){
         // taking user inputs
-        var usernameIn = document.getElementById('username').value;
-        var passwordIn = document.getElementById('password').value;
+        var usernameIn = document.getElementById('username1').value;
+        var passwordIn = document.getElementById('password1').value;
 
-        console.log(localStorage.getItem(usernameIn));
         // check if username already exists
         if (localStorage.getItem(usernameIn) != null){
             alert('username already exists');
@@ -135,7 +137,6 @@ function createAccount(){
 
         // storing in local storage
         localStorage.setItem(usernameIn, [password, salt]);
-        console.log(localStorage.getItem(usernameIn));
 
         alert('account created');
 }
