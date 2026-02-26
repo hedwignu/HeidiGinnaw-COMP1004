@@ -1,5 +1,4 @@
-// creating variable to keep track of what page is being displayed
-var pageDisplayed = 'login';
+
 
 // all elements will start with a number to identify which page it belongs to:
 // 1 - all pages
@@ -8,6 +7,8 @@ var pageDisplayed = 'login';
 // 4 - home page
 
 document.addEventListener('DOMContentLoaded', function(){
+    var currSection = 'logInSection';
+    localStorage.setItem('pageDisplayed', currSection);
     // making sure settings drop down is not visible
     var settingsBar = document.getElementById("settingsBar");
     settingsBar.style.display = "none";
@@ -20,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function(){
     // setting language based on local storage
     if (localStorage.getItem('language') === 'Svenska'){
         var textElements = document.querySelectorAll('[lang="en"]');
+        console.log(document.querySelectorAll('[lang="en"]'));
+        console.log(document.querySelectorAll('#logInSection'));
         for (var i = 0; i < textElements.length; i++){
             textElements[i].style.display = "none";
         }
@@ -45,22 +48,24 @@ document.addEventListener('DOMContentLoaded', function(){
 
 // function for when login button clicked
 function validateLogin(){
+    /*
         var username = "admin";
         var salt = "pUas%6Wz3f<>~?[c";
         var password = passwordHash("pwd123",salt);
+        */
         // retreiving user inputted data
         var usernameIn = document.getElementById('username').value;
         var passwordIn = document.getElementById('password').value;
-        if (usernameIn == username){
+        if (localStorage.getItem(usernameIn) != null){
+            // retrieving users stored data
+            var userInfo = localStorage.getItem(usernameIn);
+            var password = userInfo[0];
+            var salt = userInfo[1];
             if(checkPassword(passwordIn, password, salt)){
                 // successful log in
                 alert('Logged in!');
-                document.getElementById("loginBox").remove();
-                /*
-                var logOut = document.createElement("option");
-                logOut.text = "Log Out";
-                document.getElementById("settingsButton").appendChild(logOut);
-                */
+                // call the home page
+                homePage();
             }else{
                 // incorrect password
                 //console.log('incorrect password');
@@ -76,7 +81,8 @@ function validateLogin(){
 };
 
 function signUpPage(){
-    pageDisplayed = 'sign up'
+    localStorage.setItem('pageDisplayed', 'signUpSection');
+    /*
     // changing text to say sign up etc
     document.querySelector("#logInEn").innerHTML = 'Sign Up';
     document.querySelector('#logInSv').innerHTML = 'Skapa Konto';
@@ -88,6 +94,47 @@ function signUpPage(){
     // hiding log in elements
     document.querySelector('#signUpText').style.display = "none";
     document.querySelector('#loginButton').style.display = "none";
+    */
+
+    const sections = document.querySelectorAll('section');
+    
+
+    sections.forEach(item => {
+        item.style.display = 'none';
+    });
+    document.getElementById('allPages').style.display = '';
+    document.getElementById('signUpSection').style.display = '';
+    
+}
+
+function homePage(){
+    document.getElementById("loginBox").remove();
+
+    // enabling new note button
+    document.getElementById("newNoteButton").disabled = "False";
+
+}
+
+//function to create account
+function createAccount(){
+        // taking user inputs
+        var usernameIn = document.getElementById('username').value;
+        var passwordIn = document.getElementById('password').value;
+
+        // check if username already exists
+        if (localStorage.getItem(usernameIn) != null){
+            alert('username already exists');
+            return;
+        }
+
+        // creating salt for this user
+        var salt = createSalt();
+
+        // hashing password for user
+        var password = passwordHash(passwordIn, salt);
+
+        // storing in local storage
+        localStorage.setItem('usernameIn', [password, salt]);
 }
 
 function loginPage(){
@@ -323,16 +370,17 @@ function decreaseFontSize(){
 
 // change apps language
 function changeLanguage(){
+    var currSection = localStorage.getItem('pageDisplayed');
     // translate page to english
     if (localStorage.getItem('language') == 'Svenska'){
         // collect all text elements that are in swedish
-        var textElements = document.querySelectorAll('[lang="sv"]');
+        var textElements = document.querySelectorAll('[lang="sv"][section=currSection]');
         // iterate and hide swedish text
         for (var i = 0; i < textElements.length; i++){
             textElements[i].style.display = "none";
         }
         // collect all text elements that are in english
-        var newTextElements = document.querySelectorAll('[lang="en"]');
+        var newTextElements = document.querySelectorAll('[lang="en"][section=currSection]');
         // iterate and display english text
         for (var i = 0; i < newTextElements.length; i++){
             newTextElements[i].style.display = "";
@@ -340,11 +388,11 @@ function changeLanguage(){
 
         localStorage.setItem('language','English');
     }else{ // translate page to swedish
-        var textElements = document.querySelectorAll('[lang="en"]');
+        var textElements = document.querySelectorAll('[lang="en"][section=currSection]');
         for (var i = 0; i < textElements.length; i++){
             textElements[i].style.display = "none";
         }
-        var newTextElements = document.querySelectorAll('[lang="sv"]');
+        var newTextElements = document.querySelectorAll('[lang="sv"][section=currSection]');
         for (var i = 0; i < newTextElements.length; i++){
             newTextElements[i].style.display = "";
         }
