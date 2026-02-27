@@ -58,8 +58,7 @@ function validateLogin(){
         if (localStorage.getItem(usernameIn) != null){
             // retrieving users stored data
             var userInfo = localStorage.getItem(usernameIn);
-            console.log('hi');
-            console.log(userInfo[0]);
+            userInfo = JSON.parse(userInfo);
             var password = userInfo[0];
             var salt = userInfo[1];
             if(checkPassword(passwordIn, password, salt)){
@@ -136,7 +135,7 @@ function createAccount(){
         var password = passwordHash(passwordIn, salt);
 
         // storing in local storage
-        localStorage.setItem(usernameIn, [password, salt]);
+        localStorage.setItem(usernameIn, JSON.stringify([password, salt]));
 
         alert('account created');
 }
