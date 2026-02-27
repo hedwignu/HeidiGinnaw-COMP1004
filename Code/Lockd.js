@@ -1,11 +1,3 @@
-
-
-// all elements will start with a number to identify which page it belongs to:
-// 1 - all pages
-// 2 - log in page
-// 3 - sign up page
-// 4 - home page
-
 document.addEventListener('DOMContentLoaded', function(){
     var currSection = 'logInSection';
     localStorage.setItem('pageDisplayed', currSection);
@@ -44,17 +36,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
 // function for when login button clicked
 function validateLogin(){
-    console.log('validating log in');
-    /*
-        var username = "admin";
-        var salt = "pUas%6Wz3f<>~?[c";
-        var password = passwordHash("pwd123",salt);
-        */
         // retreiving user inputted data
-        console.log(Object.keys(localStorage));
         var usernameIn = document.getElementById('username').value;
-        console.log(usernameIn);
         var passwordIn = document.getElementById('password').value;
+        // checking username exists
         if (localStorage.getItem(usernameIn) != null){
             // retrieving users stored data
             var userInfo = localStorage.getItem(usernameIn);
@@ -64,17 +49,19 @@ function validateLogin(){
             if(checkPassword(passwordIn, password, salt)){
                 // successful log in
                 alert('Logged in!');
+                document.getElementById("loginBox").reset();
                 // call the home page
                 homePage();
             }else{
                 // incorrect password
                 //console.log('incorrect password');
                 alert('Username or Password is incorrect');
+                document.getElementById("loginBox").reset();
             }
         }else{
             // incorrect username
-            console.log('incorrect username');
             alert('Username or Password is incorrect');
+            document.getElementById("loginBox").reset();
         }
         
     
@@ -108,11 +95,23 @@ function signUpPage(){
     
 }
 
+// brings up home page
 function homePage(){
-    document.getElementById("loginBox").remove();
+    localStorage.setItem('pageDisplayed', 'homePage');
 
     // enabling new note button
-    document.getElementById("newNoteButton").disabled = "False";
+    document.getElementById("newNoteButton").disabled = false;
+    document.getElementById("newNoteButton1").disabled = false;
+    
+    const sections = document.querySelectorAll('section');
+    
+
+    sections.forEach(item => {
+        item.style.display = 'none';
+    });
+
+    document.getElementById('allPages').style.display = '';
+    document.getElementById('homeSection').style.display = '';
 
 }
 
@@ -155,6 +154,19 @@ function loginPage(){
     document.getElementById('logInSection').style.display = '';
 }
 
+// brings up thing to write a new note in
+function createNote(){
+    console.log('opening note window');
+}
+
+function addNoteToList(){
+    var ul = document.getElementById("allNotes");
+    var li = document.createElement("li");
+    li.textContent = "test file";
+    li.setAttribute("id", "test");
+    li.classList.add("notes");
+    ul.appendChild(li);
+}
 
 // opens drop down for settings
 function settingsDropdown(){
@@ -238,8 +250,8 @@ function increaseFontSize(){
         }
 
         // sign up button
-        var signUpButton = document.getElementById('signUpButton');
-        signUpButton.style.fontSize = "12px";
+        //var signUpButton = document.getElementById('signUpButton');
+        //signUpButton.style.fontSize = "12px";
         
         // small text
         var smallText = document.getElementsByClassName('smallText');
@@ -275,8 +287,8 @@ function increaseFontSize(){
         }
 
         // sign up button
-        var signUpButton = document.getElementById('signUpButton');
-        signUpButton.style.fontSize = "16px";
+        //var signUpButton = document.getElementById('signUpButton');
+        //signUpButton.style.fontSize = "16px";
         
         // small text
         var smallText = document.getElementsByClassName('smallText');
@@ -316,8 +328,8 @@ function decreaseFontSize(){
         }
 
         // sign up button
-        var signUpButton = document.getElementById('signUpButton');
-        signUpButton.style.fontSize = "8px";
+       // var signUpButton = document.getElementById('signUpButton');
+        //signUpButton.style.fontSize = "8px";
         
         // small text
         var smallText = document.getElementsByClassName('smallText');
@@ -355,8 +367,8 @@ function decreaseFontSize(){
         }
 
         // sign up button
-        var signUpButton = document.getElementById('signUpButton');
-        signUpButton.style.fontSize = "12px";
+        //var signUpButton = document.getElementById('signUpButton');
+        //signUpButton.style.fontSize = "12px";
         
         // small text
         var smallText = document.getElementsByClassName('smallText');

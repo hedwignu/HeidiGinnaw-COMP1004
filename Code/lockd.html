@@ -14,8 +14,8 @@
             <div class = "shadow container-fluid"> 
                     <div class = "d-flex bd-highlight">
                         <div class="me-auto p-2 bd-highlight" id="navItem">
-                            <button lang="en" type="button" class="button" id="newNoteButton" disabled="true">New Note</button>
-                            <button lang="sv" type="button" class="button" id="newNoteButton" disabled="true">Ny Anteckning</button>
+                            <button lang="en" type="button" class="button" id="newNoteButton" disabled="true" onclick="addNoteToList()">New Note</button>
+                            <button lang="sv" type="button" class="button" id="newNoteButton1" disabled="true" onclick="createNote()">Ny Anteckning</button>
                         </div>
                         <div class="ms-auto p-2 bd-highlight" id="navItem">
                             <button lang="en" class="button" type="button" id="settingsButton" onclick="settingsDropdown()">Settings</button>
@@ -77,6 +77,15 @@
                 <button lang="en" type="button" class="clickableText" id="loginText" onClick="loginPage()">Already have an account? Click here.</button><button lang="sv" type="button" class="clickableText" id="loginText" onClick="loginPage()">Här du redan ett konto? Klicka här.</button>
             </form>
         </div>
+    </section>
+
+    <section id="homeSection">
+        <p>welcome to the home page</p>
+        <ul class="flex-row" id="allNotes">
+            <li id="welcomeNote" class="notes">Welcome To Lockd!</li>
+            <li id="welcomeNote2" class="notes">Welcome To Lockd!</li>
+            <li id="welcomeNote3" class="notes">Welcome To Lockd!</li>
+        </ul>
     </section>
 
 <!--
