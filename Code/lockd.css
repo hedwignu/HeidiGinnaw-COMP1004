@@ -173,11 +173,63 @@ ul {
 }
 
 .notes {
+    background-color: rgb(70, 117, 73);
     padding: 15px;
     margin: 20px;
+    border: solid;
     border-color: black;
     border-radius: 4px;
     border-width: 2px;
-    width: calc((100% - (4*20px))/3);
+    width: calc((100% - (6*20px))/3);
     text-align: center;
 }
+
+#noteForm {
+    width: fit-content;
+    height: 80%;
+    background-color: white;
+    border: 2px solid #555;
+    border-radius: 6px;
+    margin: 60px;
+    z-index: 0;
+}
+
+#noteData {
+    width: 350px;
+    height: 500px;
+    margin-right: 60px;
+    margin-left: 60px;
+    margin-bottom: 20px;
+}
+
+.noteTitle {
+    border: none;
+    font-size: 30px;
+    text-align: center;
+    margin: 20px;
+}
+
+.noteNavButton {
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: rgb(70, 117, 73);
+    color: white;
+}
+
+.noteNavBar {
+    justify-content: space-evenly;
+}
+
+#noteFontSize {
+    width: 60px;
+    border-color: #555;
+    height: 40px;
+}
+
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button{
+    opacity: 1;
+    background-color:rgb(70, 117, 73) ;
+}
+    

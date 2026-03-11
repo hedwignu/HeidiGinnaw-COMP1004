@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
-    var currSection = 'logInSection';
-    localStorage.setItem('pageDisplayed', currSection);
+    var currSection = localStorage.getItem('pageDisplayed');
     // making sure settings drop down is not visible
     var settingsBar = document.getElementById("settingsBar");
     settingsBar.style.display = "none";
@@ -31,6 +30,24 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     if (localStorage.getItem('fontSize') === 'Small'){
         decreaseFontSize();
+    }
+
+    switch(currSection){
+        case 'signUpSection':
+            signUpPage();
+            break;
+        case 'homePage':
+            homePage();
+            break;
+        case 'log in':
+            loginPage();
+            break;
+        case 'note':
+            noteClicked();
+            break;
+        default:
+            loginPage()
+            break;
     }
 })
 
@@ -69,19 +86,6 @@ function validateLogin(){
 
 function signUpPage(){
     localStorage.setItem('pageDisplayed', 'signUpSection');
-    /*
-    // changing text to say sign up etc
-    document.querySelector("#logInEn").innerHTML = 'Sign Up';
-    document.querySelector('#logInSv').innerHTML = 'Skapa Konto';
-
-    // displaying sign in page
-    document.querySelector('#loginText').style.display = "";
-    document.querySelector('#createAccountButton').style.display = "";
-
-    // hiding log in elements
-    document.querySelector('#signUpText').style.display = "none";
-    document.querySelector('#loginButton').style.display = "none";
-    */
 
     const sections = document.querySelectorAll('section');
     
@@ -154,17 +158,46 @@ function loginPage(){
     document.getElementById('logInSection').style.display = '';
 }
 
+function noteClicked(){
+    console.log("hello");
+    localStorage.setItem('pageDisplayed','note');
+    
+
+    const sections = document.querySelectorAll('section');
+    
+
+    sections.forEach(item => {
+        item.style.display = 'none';
+    });
+
+    document.getElementById('allPages').style.display = '';
+    document.getElementById('noteSection').style.display = '';
+}
+
 // brings up thing to write a new note in
 function createNote(){
     console.log('opening note window');
 }
 
+function shutNote(){
+    if (confirm("Exit without saving?")) {
+        // dont save file
+        homePage();
+        return;
+    } else {
+        // exit function as user selected cancel
+        return;
+    }
+}
+
 function addNoteToList(){
     var ul = document.getElementById("allNotes");
     var li = document.createElement("li");
-    li.textContent = "test file";
+    li.textContent = "test filetest";
     li.setAttribute("id", "test");
+    li.setAttribute("onclick", "noteClicked()");
     li.classList.add("notes");
+    li.classList.add("clickableText");
     ul.appendChild(li);
 }
 
@@ -429,6 +462,29 @@ function changeLanguage(){
     }
     */
 }
+
+document.getElementById('noteFontSize').addEventListener('change', () => {
+    var textArea = document.getElementById('noteData');
+    var selectedText = (textArea.value).substring(textArea.selectionStart, textArea.selectionEnd);
+    console.log(selectedText);
+    
+    var newFontSize = document.getElementById('noteFontSize').value;
+    console.log(newFontSize);
+
+    var newText = document.createElement('span');
+    newText.style = 'font-size:' + newFontSize + ';';
+    const node = document.createTextNode(selectedText);
+    newText.appendChild(node);
+
+    textArea.appendChild(newText);
+
+    console.log('ughhhh')
+    //selectedText.deleteFromDocument();
+
+
+})
+
+// --------------- security functions ----------------
 
 // function to hash the password
 function passwordHash(password,salt){

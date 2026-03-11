@@ -80,12 +80,45 @@
     </section>
 
     <section id="homeSection">
-        <p>welcome to the home page</p>
         <ul class="flex-row" id="allNotes">
-            <li id="welcomeNote" class="notes">Welcome To Lockd!</li>
-            <li id="welcomeNote2" class="notes">Welcome To Lockd!</li>
-            <li id="welcomeNote3" class="notes">Welcome To Lockd!</li>
+            <li id="welcomeNote" class="notes clickableText" onClick="noteClicked()">Welcome To Lockd!</li>
+            <li id="welcomeNote2" class="notes clickableText" onClick="noteClicked()">Welcome To Lockd!</li>
+            <li id="welcomeNote3" class="notes clickableText" onClick="noteClicked()">Welcome To Lockd!</li>
         </ul>
+    </section>
+
+    <section id="noteSection">
+        <div class="d-flex order-1 row justify-content-center gx-0"> 
+            <form id="noteForm">
+                <nav id="noteNavBar">
+                    <div class = "shadow container-fluid"> 
+                        <div class = "d-flex bd-highlight">
+                        <div class="p-2 bd-highlight noteNav">
+                            <button lang="en" type="button" class="noteNavButton" id="pinButton" onclick="pinNote()">Pin Note</button>
+                            <button lang="sv" type="button" class="noteNavButton" id="pinButton1" onclick="pinNote()">Fäst Anteckning</button>
+                        </div>
+                        <div class="p-2 bd-highlight noteNav">
+                            <input type="number" class="noteNavButton" id="noteFontSize" value="18">
+                        </div>
+                        <div class="p-2 bd-highlight noteNav">
+                            <button lang="en" class="button" type="noteNavButton" id="test" onclick="settingsDropdown()">Bullet</button>
+                            <button lang="sv" class="button" type="noteNavButton" id="test" onclick="settingsDropdown()">Inställninghar</button>
+                        </div>
+                        <div class="p-2 bd-highlight noteNav">
+                            <button lang="en" class="button" type="noteNavButton" id="test" onclick="settingsDropdown()">☐</button>
+                            <button lang="sv" class="button" type="noteNavButton" id="test" onclick="settingsDropdown()">Inställninghar</button>
+                        </div>
+                        <div class="p-2 bd-highlight noteNav">
+                            <button class="clickableText" type="button" id="shutNoteButton" onclick="shutNote()">X</button>
+                        </div>
+                    </div>
+                    </div>
+                </nav>
+
+                <input type="text" class="noteTitle" placeholder="Title Here"><br>
+                <textarea id="noteData" name="noteData"></textarea>
+            </form>
+        </div>
     </section>
 
 <!--
