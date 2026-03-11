@@ -67,6 +67,10 @@ function validateLogin(){
                 // successful log in
                 alert('Logged in!');
                 document.getElementById("loginBox").reset();
+                // get users id
+                const userId = userInfo[2];
+                // set logged in user in local storage
+                localStorage.setItem('currentUser', userId);
                 // call the home page
                 homePage();
             }else{
@@ -137,8 +141,11 @@ function createAccount(){
         // hashing password for user
         var password = passwordHash(passwordIn, salt);
 
+        var userId = 1;
+        //var userId = Math.floor(Math.random()*1000);
+
         // storing in local storage
-        localStorage.setItem(usernameIn, JSON.stringify([password, salt]));
+        localStorage.setItem(usernameIn, JSON.stringify([password, salt, userId]));
 
         alert('account created');
 }
@@ -172,6 +179,19 @@ function noteClicked(){
 
     document.getElementById('allPages').style.display = '';
     document.getElementById('noteSection').style.display = '';
+    // retrieved stored title of selected note
+    noteTitle = document.getElementById('noteTitle')
+
+    // append users id
+    
+    // retreived stored data based on selected note title
+
+    // add stored data into displayed note
+
+    // add stored data into displayed title
+
+    
+
 }
 
 // brings up thing to write a new note in
@@ -182,6 +202,23 @@ function createNote(){
 function shutNote(){
     if (confirm("Exit without saving?")) {
         // dont save file
+        var noteTitle = document.getElementById('noteTitle').value;
+        // retrieving current user's id
+        const userId = localStorage.getItem('currentUser')
+        // adding id to end of note title to create unique id
+        noteTitle = noteTitle.concat(userId);
+        // TO DO: encrypt note title here
+
+        var noteData = document.getElementById('noteData').value;
+        var preview = noteData.slice(0, 100);
+        preview = preview.concat('...');
+
+        // TO DO: encrypt everything
+        console.log(preview);
+        console.log(noteData);
+        console.log(noteTitle);
+        localStorage.setItem(noteTitle, [preview, noteData]);
+
         homePage();
         return;
     } else {
