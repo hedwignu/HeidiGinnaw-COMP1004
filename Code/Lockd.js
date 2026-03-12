@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function(){
     var currSection = localStorage.getItem('pageDisplayed');
+    console.log(currSection);
     // making sure settings drop down is not visible
     var settingsBar = document.getElementById("settingsBar");
     settingsBar.style.display = "none";
@@ -165,8 +166,20 @@ function loginPage(){
     document.getElementById('logInSection').style.display = '';
 }
 
-function noteClicked(){
-    console.log("hello");
+function noteClicked(selectedTitle){
+    // retreiving open note from local storage
+    var currentNote = localStorage.getItem('currentNote');
+
+    // if open note doesn't exist set it
+    if (currentNote == null){
+        localStorage.setItem('currentNote', selectedTitle);
+        currentNote = selectedTitle;
+    }
+        
+    // retrieving note title
+    var noteTitle = document.getElementById(currentNote).innerHTML;
+
+    // letting browser know note page is open
     localStorage.setItem('pageDisplayed','note');
     
 
@@ -179,18 +192,22 @@ function noteClicked(){
 
     document.getElementById('allPages').style.display = '';
     document.getElementById('noteSection').style.display = '';
-    // retrieved stored title of selected note
-    noteTitle = document.getElementById('noteTitle')
+
+    var title = noteTitle;
 
     // append users id
-    
+    noteTitle = noteTitle.concat(localStorage.getItem('currentUser'));
+
     // retreived stored data based on selected note title
+    var storedData = localStorage.getItem(noteTitle);
+    storedData = JSON.parse(storedData);
 
     // add stored data into displayed note
+    var note = storedData[1];
+    document.getElementById('noteData').value = note;
 
     // add stored data into displayed title
-
-    
+    document.getElementById('noteTitle').value = title;
 
 }
 
@@ -202,29 +219,36 @@ function createNote(){
 function shutNote(){
     if (confirm("Exit without saving?")) {
         // dont save file
-        var noteTitle = document.getElementById('noteTitle').value;
-        // retrieving current user's id
-        const userId = localStorage.getItem('currentUser')
-        // adding id to end of note title to create unique id
-        noteTitle = noteTitle.concat(userId);
-        // TO DO: encrypt note title here
-
-        var noteData = document.getElementById('noteData').value;
-        var preview = noteData.slice(0, 100);
-        preview = preview.concat('...');
-
-        // TO DO: encrypt everything
-        console.log(preview);
-        console.log(noteData);
-        console.log(noteTitle);
-        localStorage.setItem(noteTitle, [preview, noteData]);
-
+        
         homePage();
         return;
     } else {
         // exit function as user selected cancel
         return;
     }
+}
+
+function saveNote(){
+    var noteTitle = document.getElementById('noteTitle').value;
+    // retrieving current user's id
+    const userId = localStorage.getItem('currentUser')
+    // adding id to end of note title to create unique id
+    noteTitle = noteTitle.concat(userId);
+    // TO DO: encrypt note title here
+
+    var noteData = document.getElementById('noteData').value;
+    var preview = noteData.slice(0, 100);
+    preview = preview.concat('...');
+
+    // TO DO: encrypt everything
+    console.log(preview);
+    console.log(noteData);
+    console.log(noteTitle);
+
+    var test = JSON.stringify[preview, noteData];
+    console.log(test);
+    //localStorage.setItem(noteTitle, JSON.stringify[preview, noteData]);
+
 }
 
 function addNoteToList(){
@@ -501,20 +525,31 @@ function changeLanguage(){
 }
 
 document.getElementById('noteFontSize').addEventListener('change', () => {
+    // retreiving textarea element
     var textArea = document.getElementById('noteData');
+
+    // retreiving user selected data from textarea
     var selectedText = (textArea.value).substring(textArea.selectionStart, textArea.selectionEnd);
     console.log(selectedText);
     
+    // retrieving user inputted new font size
     var newFontSize = document.getElementById('noteFontSize').value;
     console.log(newFontSize);
 
+    // creating new element to change font
     var newText = document.createElement('span');
+    // adding font size to new element
     newText.style = 'font-size:' + newFontSize + ';';
+    // creating new node with selected text in it
     const node = document.createTextNode(selectedText);
+    // adding text to new span element
     newText.appendChild(node);
-
+    // adding new element to textarea
     textArea.appendChild(newText);
 
+    var range = selectedText.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(node);
     console.log('ughhhh')
     //selectedText.deleteFromDocument();
 

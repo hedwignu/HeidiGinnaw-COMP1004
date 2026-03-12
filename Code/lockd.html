@@ -81,7 +81,7 @@
 
     <section id="homeSection">
         <ul class="flex-row" id="allNotes">
-            <li id="welcomeNote" class="notes clickableText" onClick="noteClicked()">Welcome To Lockd!</li>
+            <li id="welcomeNote" class="notes clickableText" onclick='noteClicked("welcomeNote")''>Welcome To Lockd!</li>
             <li id="welcomeNote2" class="notes clickableText" onClick="noteClicked()">Welcome To Lockd!</li>
             <li id="welcomeNote3" class="notes clickableText" onClick="noteClicked()">Welcome To Lockd!</li>
         </ul>
@@ -116,7 +116,9 @@
                 </nav>
 
                 <input type="text" class="noteTitle" id="noteTitle" placeholder="Title Here"><br>
-                <textarea id="noteData" name="noteData"></textarea>
+                <textarea id="noteData" name="noteData"></textarea><br>
+                <button lang="en" id="saveButton" onclick="saveNote()">Save</button>
+                <button lang="sv" id="saveButton" onclick="saveNote()">Spara</button>
             </form>
         </div>
     </section>
