@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function(){
             loginPage();
             break;
         case 'note':
-            noteClicked();
+            notePage();
             break;
         default:
             loginPage()
@@ -166,6 +166,20 @@ function loginPage(){
     document.getElementById('logInSection').style.display = '';
 }
 
+function notePage(){
+    // letting browser know note page is open
+    localStorage.setItem('pageDisplayed','note');
+
+    const sections = document.querySelectorAll('section');
+
+    sections.forEach(item => {
+        item.style.display = 'none';
+    });
+
+    document.getElementById('allPages').style.display = '';
+    document.getElementById('noteSection').style.display = '';
+}
+
 function noteClicked(selectedTitle){
     // retreiving open note from local storage
     var currentNote = localStorage.getItem('currentNote');
@@ -179,19 +193,8 @@ function noteClicked(selectedTitle){
     // retrieving note title
     var noteTitle = document.getElementById(currentNote).innerHTML;
 
-    // letting browser know note page is open
-    localStorage.setItem('pageDisplayed','note');
-    
-
-    const sections = document.querySelectorAll('section');
-    
-
-    sections.forEach(item => {
-        item.style.display = 'none';
-    });
-
-    document.getElementById('allPages').style.display = '';
-    document.getElementById('noteSection').style.display = '';
+    // loading the 'page'
+    notePage();
 
     var title = noteTitle;
 
@@ -214,6 +217,10 @@ function noteClicked(selectedTitle){
 // brings up thing to write a new note in
 function createNote(){
     console.log('opening note window');
+    notePage();
+
+    localStorage.setItem('currentNote', 'Untitled');
+
 }
 
 function shutNote(){
@@ -229,11 +236,26 @@ function shutNote(){
 }
 
 function saveNote(){
+    
     var noteTitle = document.getElementById('noteTitle').value;
+    console.log('I hate you')
+    console.log(noteTitle);
+
+    if (noteTitle == ""){
+        alert("Please give your note a title before saving")
+        return;
+    }
+
     // retrieving current user's id
     const userId = localStorage.getItem('currentUser')
     // adding id to end of note title to create unique id
     noteTitle = noteTitle.concat(userId);
+
+    if (localStorage.getItem(noteTitle)){
+        alert("Please give your note a unique name")
+        return;
+    }
+
     // TO DO: encrypt note title here
 
     var noteData = document.getElementById('noteData').value;
