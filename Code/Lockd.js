@@ -528,18 +528,30 @@ document.getElementById('noteFontSize').addEventListener('change', () => {
     // retreiving textarea element
     var textArea = document.getElementById('noteData');
 
+    const selStart = textArea.selectionStart;
+    const selEnd = textArea.selectionEnd;
+    const text = textArea.value;
     // retreiving user selected data from textarea
-    var selectedText = (textArea.value).substring(textArea.selectionStart, textArea.selectionEnd);
-    console.log(selectedText);
-    
+    var selectedText = (textArea.value).substring(selStart,selEnd);
+    //console.log(selectedText);
+    //var selection = document.getSelection();
     // retrieving user inputted new font size
     var newFontSize = document.getElementById('noteFontSize').value;
+    newFontSize = newFontSize.concat("px");
     console.log(newFontSize);
-
     // creating new element to change font
-    var newText = document.createElement('span');
+    //var newText = document.createElement('span');
     // adding font size to new element
-    newText.style = 'font-size:' + newFontSize + ';';
+    //newText.style.fontSize = newFontSize ;
+
+    //newText.innerHTML = selectedText.toString();
+    var newText = '<span style="font-size:' + newFontSize + '">' + selectedText + '</span>';
+    console.log(newText);
+
+    textArea.value = text.substring(0, selStart) + newText + text.substring(selEnd);
+    
+    //console.log(selection.toString());
+    /*
     // creating new node with selected text in it
     const node = document.createTextNode(selectedText);
     // adding text to new span element
@@ -547,12 +559,13 @@ document.getElementById('noteFontSize').addEventListener('change', () => {
     // adding new element to textarea
     textArea.appendChild(newText);
 
-    var range = selectedText.getRangeAt(0);
+
+    var range = selection.getRangeAt(0);
     range.deleteContents();
-    range.insertNode(node);
+    range.insertNode(newText);
     console.log('ughhhh')
     //selectedText.deleteFromDocument();
-
+    */
 
 })
 
