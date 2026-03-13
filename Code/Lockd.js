@@ -204,7 +204,7 @@ function noteClicked(selectedTitle){
 
     // add stored data into displayed note
     var note = storedData[1];
-    document.getElementById('noteData').innerHTML = note;
+    document.getElementById('noteData').value = note;
 
     // add stored data into displayed title
     document.getElementById('noteTitle').value = title;
@@ -241,14 +241,16 @@ function saveNote(){
     preview = preview.concat('...');
 
     // TO DO: encrypt everything
+    console.log('hi');
     console.log(preview);
     console.log(noteData);
     console.log(noteTitle);
 
-    var test = JSON.stringify[preview, noteData];
+    var test = JSON.stringify([preview, noteData]);
     console.log(test);
-    //localStorage.setItem(noteTitle, JSON.stringify[preview, noteData]);
+    localStorage.setItem(noteTitle, JSON.stringify([preview, noteData]));
 
+    homePage();
 }
 
 function addNoteToList(){
@@ -570,6 +572,28 @@ function setFontSize(){
     //console.log('ughhhh')
     //selectedText.deleteFromDocument();
    
+
+}
+
+function changeText(tag){
+    var textArea = document.getElementById('noteData');
+
+    const selStart = textArea.selectionStart;
+    const selEnd = textArea.selectionEnd;
+    const text = textArea.value;
+
+    var selectedText = text.substring(selStart,selEnd);
+
+    // creating new text to input with tags to change the display
+    selectedText = tag + selectedText + tag;   
+
+    console.log(text.substring(0, selStart));
+    textArea.value = text.substring(0, selStart) + selectedText + text.substring(selEnd);
+
+    textArea.focus();
+}
+
+function makeBold(){
 
 }
 
