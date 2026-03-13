@@ -94,30 +94,31 @@
                     <div class = "shadow container-fluid"> 
                         <div class = "d-flex bd-highlight">
                         <div class="p-2 bd-highlight noteNav">
-                            <button lang="en" type="button" class="noteNavButton" id="pinButton" onclick="pinNote()">Pin Note</button>
-                            <button lang="sv" type="button" class="noteNavButton" id="pinButton1" onclick="pinNote()">Fäst Anteckning</button>
+                            <button lang="en" type="button" class="noteNavButton" unselectable="on" id="pinButton" onclick="pinNote()">Pin Note</button>
+                            <button lang="sv" type="button" class="noteNavButton" unselectable="on" id="pinButton1" onclick="pinNote()">Fäst Anteckning</button>
                         </div>
                         <div class="p-2 bd-highlight noteNav">
-                            <input type="number" class="noteNavButton" id="noteFontSize" value="18">
+                            <input type="number" class="noteNavButton" unselectable="on" id="noteFontSize" value="18">
+                            <button class="button" type="noteNavButton" unselectable="on" id="noteFontButton" onclick="setFontSize()">Ok</button>
                         </div>
                         <div class="p-2 bd-highlight noteNav">
-                            <button lang="en" class="button" type="noteNavButton" id="test" onclick="settingsDropdown()">Bullet</button>
-                            <button lang="sv" class="button" type="noteNavButton" id="test" onclick="settingsDropdown()">Inställninghar</button>
+                            <button lang="en" class="button" type="noteNavButton" unselectable="on" id="test" onclick="settingsDropdown()">Bullet</button>
+                            <button lang="sv" class="button" type="noteNavButton" unselectable="on" id="test" onclick="settingsDropdown()">Inställninghar</button>
                         </div>
                         <div class="p-2 bd-highlight noteNav">
-                            <button lang="en" class="button" type="noteNavButton" id="test" onclick="settingsDropdown()">☐</button>
-                            <button lang="sv" class="button" type="noteNavButton" id="test" onclick="settingsDropdown()">Inställninghar</button>
+                            <button lang="en" class="button" type="noteNavButton" unselectable="on" id="test" onclick="settingsDropdown()">☐</button>
+                            <button lang="sv" class="button" type="noteNavButton" unselectable="on" id="test" onclick="settingsDropdown()">Inställninghar</button>
                         </div>
                         <div class="p-2 bd-highlight noteNav">
-                            <button class="clickableText" type="button" id="shutNoteButton" onclick="shutNote()">X</button>
+                            <button class="clickableText" type="button" unselectable="on" id="shutNoteButton" onclick="shutNote()">X</button>
                         </div>
                     </div>
                     </div>
                 </nav>
 
                 <input type="text" class="noteTitle" id="noteTitle" placeholder="Title Here"><br>
-                <textarea id="noteData" name="noteData"></textarea><br>
-                <button lang="en" id="saveButton" onclick="saveNote()">Save</button>
+                <div id="noteData" placeholder="Enter text here" contenteditable="true"></div><br>
+                <button lang="en" id="saveButton" unselectable="on" onclick="saveNote()">Save</button>
                 <button lang="sv" id="saveButton" onclick="saveNote()">Spara</button>
             </form>
         </div>

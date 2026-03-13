@@ -200,6 +200,8 @@ ul {
     margin-right: 60px;
     margin-left: 60px;
     margin-bottom: 20px;
+    border: 2px solid #555;
+    text-align: left;
 }
 
 .noteTitle {
@@ -233,3 +235,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     background-color:rgb(70, 117, 73) ;
 }
     
+*.unselectable {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}

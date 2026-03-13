@@ -204,7 +204,7 @@ function noteClicked(selectedTitle){
 
     // add stored data into displayed note
     var note = storedData[1];
-    document.getElementById('noteData').value = note;
+    document.getElementById('noteData').innerHTML = note;
 
     // add stored data into displayed title
     document.getElementById('noteTitle').value = title;
@@ -524,50 +524,54 @@ function changeLanguage(){
     */
 }
 
-document.getElementById('noteFontSize').addEventListener('change', () => {
+//document.getElementById('noteFontSize').addEventListener('change', () => {
+function setFontSize(){
     // retreiving textarea element
     var textArea = document.getElementById('noteData');
+    textArea.getSelection();
 
     const selStart = textArea.selectionStart;
     const selEnd = textArea.selectionEnd;
-    const text = textArea.value;
+    const text = textArea.innerHTML;
     // retreiving user selected data from textarea
-    var selectedText = (textArea.value).substring(selStart,selEnd);
+    var selectedText = (textArea.innerHTML).substring(selStart,selEnd);
+    console.log(selectedText);
     //console.log(selectedText);
-    //var selection = document.getSelection();
+    var selection = document.getSelection();
+    console.log(selection)
     // retrieving user inputted new font size
     var newFontSize = document.getElementById('noteFontSize').value;
     newFontSize = newFontSize.concat("px");
     console.log(newFontSize);
     // creating new element to change font
-    //var newText = document.createElement('span');
+    var newText = document.createElement('span');
     // adding font size to new element
-    //newText.style.fontSize = newFontSize ;
+    newText.style.fontSize = newFontSize ;
 
     //newText.innerHTML = selectedText.toString();
     var newText = '<span style="font-size:' + newFontSize + '">' + selectedText + '</span>';
     console.log(newText);
 
-    textArea.value = text.substring(0, selStart) + newText + text.substring(selEnd);
+    textArea.innerHTML = text.substring(0, selStart) + newText + text.substring(selEnd);
     
     //console.log(selection.toString());
-    /*
+    
     // creating new node with selected text in it
-    const node = document.createTextNode(selectedText);
+    //const node = document.createTextNode(selectedText);
     // adding text to new span element
-    newText.appendChild(node);
+    //newText.appendChild(node);
     // adding new element to textarea
-    textArea.appendChild(newText);
+    //textArea.appendChild(newText);
+    
 
-
-    var range = selection.getRangeAt(0);
-    range.deleteContents();
-    range.insertNode(newText);
-    console.log('ughhhh')
+    //var range = selection.getRangeAt(0);
+    //range.deleteContents();
+    //range.insertNode(node);
+    //console.log('ughhhh')
     //selectedText.deleteFromDocument();
-    */
+   
 
-})
+}
 
 // --------------- security functions ----------------
 
