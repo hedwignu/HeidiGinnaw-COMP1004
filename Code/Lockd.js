@@ -185,7 +185,7 @@ function noteClicked(selectedTitle){
     var currentNote = localStorage.getItem('currentNote');
 
     // if open note doesn't exist set it
-    if (currentNote == null){
+    if (currentNote ==  null || currentNote == ''){
         localStorage.setItem('currentNote', selectedTitle);
         currentNote = selectedTitle;
     }
@@ -225,8 +225,9 @@ function createNote(){
 
 function shutNote(){
     if (confirm("Exit without saving?")) {
-        // dont save file
-        
+        // clearing local storage for current note value
+        localStorage.setItem('currentNote', '');
+        // returning to the home page
         homePage();
         return;
     } else {
@@ -235,16 +236,22 @@ function shutNote(){
     }
 }
 
-function saveNote(){
-    
+function checkValidSave(){
     var noteTitle = document.getElementById('noteTitle').value;
     console.log('I hate you')
     console.log(noteTitle);
 
     if (noteTitle == ""){
-        alert("Please give your note a title before saving")
-        return;
+        var dialogue = document.getElementById('noTitleAlert');
+        dialogue.showModal();
+    }else {
+        saveNote();
     }
+}
+
+function saveNote(){
+
+    var noteTitle = document.getElementById('noteTitle').value;
 
     // retrieving current user's id
     const userId = localStorage.getItem('currentUser')
@@ -273,6 +280,15 @@ function saveNote(){
     localStorage.setItem(noteTitle, JSON.stringify([preview, noteData]));
 
     homePage();
+}
+
+var promote;
+
+async function showDialogue(dialogueId){
+    var dialogue =  document.getElementById(dialogueId)
+    dialogue.showModal();
+    var promise = new Promise((resolve) => {promote = resolve});
+    await promise.then((result) => {var type = result})
 }
 
 function addNoteToList(){
@@ -615,8 +631,10 @@ function changeText(tag){
     textArea.focus();
 }
 
-function makeBold(){
-
+function closeDialog(dialogId){
+    const dialogue = document.getElementById(dialogId);
+    dialogue.close();
+    return
 }
 
 // --------------- security functions ----------------

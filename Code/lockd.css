@@ -234,9 +234,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     opacity: 1;
     background-color:rgb(70, 117, 73) ;
 }
-    
+/*   
 *.unselectable {
     -moz-user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
-}
+}*/

@@ -112,11 +112,17 @@
 
                 <input type="text" class="noteTitle" id="noteTitle" placeholder="Title Here"><br>
                 <textarea id="noteData" placeholder="Enter text here" contenteditable="true"></textarea><br>
-                <button lang="en" id="saveButton" unselectable="on" onclick="saveNote()">Save</button>
-                <button lang="sv" id="saveButton" onclick="saveNote()">Spara</button>
+                <button lang="en" type="button" id="saveButton" unselectable="on" onclick="checkValidSave()">Save</button>
+                <button lang="sv" type="button" id="saveButton" onclick="checkValidSave()">Spara</button>
             </form>
         </div>
     </section>
+
+    <dialog id="noTitleAlert">
+        <p>Please give your note a title before saving</p>
+        <button lang="en" type="button" onclick="closeDialog('noTitleAlert')" autofocus>Okay</button>
+        <button lang="sv" type="button" onclick="closeDialog('noTitleAlert')" autofocus>Okej</button>
+    </dialog>
 
 <!--
     <div class="container">
