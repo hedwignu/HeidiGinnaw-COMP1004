@@ -81,7 +81,7 @@
 
     <section id="homeSection">
         <ul class="flex-row" id="allNotes">
-            <li id="welcomeNote" class="notes clickableText" onclick='noteClicked("welcomeNote")'>Welcome To Lockd!</li>
+            <!--<li id="welcomeNote" class="notes clickableText" onclick='noteClicked("welcomeNote")'>Welcome To Lockd!</li>-->
         </ul>
     </section>
 
@@ -122,6 +122,12 @@
         <p>Please give your note a title before saving</p>
         <button lang="en" type="button" onclick="closeDialog('noTitleAlert')" autofocus>Okay</button>
         <button lang="sv" type="button" onclick="closeDialog('noTitleAlert')" autofocus>Okej</button>
+    </dialog>
+
+    <dialog id="duplicateTitleAlert">
+        <p>Please give your note a unique title</p>
+        <button lang="en" type="button" onclick="closeDialog('duplicateTitleAlert')" autofocus>Okay</button>
+        <button lang="sv" type="button" onclick="closeDialog('duplicateTitleAlert')" autofocus>Okej</button>
     </dialog>
 
 <!--

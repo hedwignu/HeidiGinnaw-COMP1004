@@ -122,6 +122,15 @@ function homePage(){
     document.getElementById('allPages').style.display = '';
     document.getElementById('homeSection').style.display = '';
 
+    // adding all notes
+    var notesArray = localStorage.getItem('notes');
+    notesArray = JSON.parse(notesArray);
+    
+    for (i = 0; i < notesArray.length; i ++){
+        var noteTitle = notesArray[i];
+        addNoteToList(noteTitle);
+    }
+
 }
 
 //function to create account
@@ -147,6 +156,9 @@ function createAccount(){
 
         // storing in local storage
         localStorage.setItem(usernameIn, JSON.stringify([password, salt, userId]));
+        
+        // creating note array in local storage
+        localStorage.setItem('notes', JSON.stringify(['Welcome To Lockd']))
 
         alert('account created');
 }
@@ -185,13 +197,15 @@ function noteClicked(selectedTitle){
     var currentNote = localStorage.getItem('currentNote');
 
     // if open note doesn't exist set it
-    if (currentNote ==  null || currentNote == ''){
+    if (currentNote ==  null || currentNote == '' || currentNote == 'undefined'){
         localStorage.setItem('currentNote', selectedTitle);
         currentNote = selectedTitle;
     }
+
+    var currentNoteId = currentNote.replaceAll(" ", "");
         
     // retrieving note title
-    var noteTitle = document.getElementById(currentNote).innerHTML;
+    var noteTitle = document.getElementById(currentNoteId).innerHTML;
 
     // loading the 'page'
     notePage();
@@ -205,9 +219,12 @@ function noteClicked(selectedTitle){
     var storedData = localStorage.getItem(noteTitle);
     storedData = JSON.parse(storedData);
 
-    // add stored data into displayed note
-    var note = storedData[1];
-    document.getElementById('noteData').value = note;
+    // checking data is stored
+    if (storedData != null){
+        // add stored data into displayed note
+        var note = storedData[1];
+        document.getElementById('noteData').value = note;
+    }
 
     // add stored data into displayed title
     document.getElementById('noteTitle').value = title;
@@ -243,7 +260,13 @@ function checkValidSave(){
 
     if (noteTitle == ""){
         var dialogue = document.getElementById('noTitleAlert');
+        dialogue.showModal()
+        return;
+    // checking if note is already in local storage
+    }else if (localStorage.getItem(noteTitle) == true && localStorage.getItem('currentNote') != noteTitle){
+        var dialogue = document.getElementById('duplicateTitleAlert');
         dialogue.showModal();
+        return;
     }else {
         saveNote();
     }
@@ -252,16 +275,12 @@ function checkValidSave(){
 function saveNote(){
 
     var noteTitle = document.getElementById('noteTitle').value;
+    localStorage.setItem('currentItem',noteTitle);
 
     // retrieving current user's id
     const userId = localStorage.getItem('currentUser')
     // adding id to end of note title to create unique id
-    noteTitle = noteTitle.concat(userId);
-
-    if (localStorage.getItem(noteTitle)){
-        alert("Please give your note a unique name")
-        return;
-    }
+    var noteTitleId = noteTitle.concat(userId);
 
     // TO DO: encrypt note title here
 
@@ -273,13 +292,34 @@ function saveNote(){
     console.log('hi');
     console.log(preview);
     console.log(noteData);
-    console.log(noteTitle);
+    console.log(noteTitleId);
 
     var test = JSON.stringify([preview, noteData]);
     console.log(test);
-    localStorage.setItem(noteTitle, JSON.stringify([preview, noteData]));
+    localStorage.setItem(noteTitleId, JSON.stringify([preview, noteData]));
 
     homePage();
+
+    // setting note name on home page
+    
+    // retrieving note title
+    var currentNote = localStorage.getItem('currentNote');
+    currentNote = currentNote.replaceAll(" ", "");
+    // checking if note already on home page
+    try {
+        document.getElementById(currentNote).innerHTML = noteTitle;
+    } catch (error) {
+        addNoteToList(noteTitle);
+    }
+
+    var notesArray = localStorage.getItem('notes');
+    notesArray = JSON.parse(notesArray);
+    notesArray.push(noteTitle);
+
+    localStorage.setItem('notes',JSON.stringify(notesArray));
+
+    // clearing local storage
+    localStorage.removeItem('currentNote');
 }
 
 var promote;
@@ -291,12 +331,17 @@ async function showDialogue(dialogueId){
     await promise.then((result) => {var type = result})
 }
 
-function addNoteToList(){
+function addNoteToList(title){
+    // retrieving unordered list element
     var ul = document.getElementById("allNotes");
+    // creating a new list element
     var li = document.createElement("li");
-    li.textContent = "test filetest";
-    li.setAttribute("id", "test");
-    li.setAttribute("onclick", "noteClicked()");
+    // making it display the given title
+    li.textContent = title;
+    li.setAttribute("onclick", `noteClicked(${JSON.stringify(title)})`);
+    // remove spaces from title
+    title = title.replaceAll(" ", "");
+    li.setAttribute("id", title);
     li.classList.add("notes");
     li.classList.add("clickableText");
     ul.appendChild(li);
@@ -631,10 +676,11 @@ function changeText(tag){
     textArea.focus();
 }
 
+// closes chosen dialogue box
 function closeDialog(dialogId){
     const dialogue = document.getElementById(dialogId);
     dialogue.close();
-    return
+    return;
 }
 
 // --------------- security functions ----------------
