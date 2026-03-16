@@ -33,6 +33,15 @@ document.addEventListener('DOMContentLoaded', function(){
         decreaseFontSize();
     }
 
+    // adding all notes from storage as html elements
+    var notesArray = localStorage.getItem('notes');
+    notesArray = JSON.parse(notesArray);
+    
+    for (i = 0; i < notesArray.length; i ++){
+        var noteTitle = notesArray[i];
+        addNoteToList(noteTitle);
+    }
+
     switch(currSection){
         case 'signUpSection':
             signUpPage();
@@ -122,14 +131,7 @@ function homePage(){
     document.getElementById('allPages').style.display = '';
     document.getElementById('homeSection').style.display = '';
 
-    // adding all notes
-    var notesArray = localStorage.getItem('notes');
-    notesArray = JSON.parse(notesArray);
     
-    for (i = 0; i < notesArray.length; i ++){
-        var noteTitle = notesArray[i];
-        addNoteToList(noteTitle);
-    }
 
 }
 
