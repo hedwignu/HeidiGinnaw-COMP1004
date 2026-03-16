@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function(){
     
     for (i = 0; i < notesArray.length; i ++){
         var noteTitle = notesArray[i];
-        addNoteToList(noteTitle);
+        addNoteToList(noteTitle, 'allNotes');
     }
 
     switch(currSection){
@@ -337,7 +337,7 @@ function saveNote(){
     // if not in notes array then adds it
     if (inArray == false){
         notesArray.push(noteTitle);
-        addNoteToList(noteTitle);
+        addNoteToList(noteTitle, 'allNotes');
     }
 
     localStorage.setItem('notes',JSON.stringify(notesArray));
@@ -355,9 +355,9 @@ async function showDialogue(dialogueId){
     await promise.then((result) => {var type = result})
 }
 
-function addNoteToList(title){
+function addNoteToList(title, list){
     // retrieving unordered list element
-    var ul = document.getElementById("allNotes");
+    var ul = document.getElementById(list);
     // creating a new list element
     var li = document.createElement("li");
     // making it display the given title
@@ -374,9 +374,20 @@ function addNoteToList(title){
 function changeNoteTitle(originalTitle, newTitle){
     var originalTitleId = originalTitle.replaceAll(" ", "");
     var li = document.getElementById(originalTitleId);
-    addNoteToList(newTitle);
+    addNoteToList(newTitle, 'allNotes');
     li.remove();
 
+}
+
+function pinNote(){
+    var title = localStorage.getItem('currentNote');
+    // remove note from other list
+    var titleId = title.replaceAll(" ", "");
+    var li = document.getElementById(titleId);
+    li.remove();
+
+    // pins the note to the top of the list
+    addNoteToList(title, 'pinnedNotes');
 }
 
 // opens drop down for settings

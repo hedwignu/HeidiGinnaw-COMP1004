@@ -167,7 +167,7 @@ ul {
     margin: 0;
 }
 
-#allNotes{
+.noteList{
     flex-wrap: wrap;
     display: flex;
 }
