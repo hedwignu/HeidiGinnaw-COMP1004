@@ -275,9 +275,10 @@ function checkValidSave(){
 }
 
 function saveNote(){
+    var originalTitle = localStorage.getItem('currentNote');
 
     var noteTitle = document.getElementById('noteTitle').value;
-    localStorage.setItem('currentItem',noteTitle);
+    localStorage.setItem('currentNote', noteTitle);
 
     // retrieving current user's id
     const userId = localStorage.getItem('currentUser')
@@ -308,15 +309,36 @@ function saveNote(){
     var currentNote = localStorage.getItem('currentNote');
     currentNote = currentNote.replaceAll(" ", "");
     // checking if note already on home page
+    /*
     try {
-        document.getElementById(currentNote).innerHTML = noteTitle;
+        document.getElementById(currentNote).innerHTML = originalTitle;
     } catch (error) {
         addNoteToList(noteTitle);
-    }
+    }*/
 
     var notesArray = localStorage.getItem('notes');
     notesArray = JSON.parse(notesArray);
-    notesArray.push(noteTitle);
+
+    var inArray = false;
+
+    // checking if in array
+    for (var i = 0; i < notesArray.length; i++){
+        if (noteTitle == notesArray[i]){
+            inArray = true;
+            break;
+        }else if (originalTitle == notesArray[i]){
+            notesArray[i] = noteTitle;
+            changeNoteTitle(originalTitle, noteTitle);
+            inArray = true;
+            break;
+        }
+    }
+
+    // if not in notes array then adds it
+    if (inArray == false){
+        notesArray.push(noteTitle);
+        addNoteToList(noteTitle);
+    }
 
     localStorage.setItem('notes',JSON.stringify(notesArray));
 
@@ -347,6 +369,14 @@ function addNoteToList(title){
     li.classList.add("notes");
     li.classList.add("clickableText");
     ul.appendChild(li);
+}
+
+function changeNoteTitle(originalTitle, newTitle){
+    var originalTitleId = originalTitle.replaceAll(" ", "");
+    var li = document.getElementById(originalTitleId);
+    addNoteToList(newTitle);
+    li.remove();
+
 }
 
 // opens drop down for settings
