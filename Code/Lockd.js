@@ -329,6 +329,9 @@ function saveNote(){
         }else if (originalTitle == notesArray[i]){
             notesArray[i] = noteTitle;
             changeNoteTitle(originalTitle, noteTitle);
+            // removing old note from local storage
+            originalTitle = originalTitle.concat(userId);
+            localStorage.removeItem(originalTitle);
             inArray = true;
             break;
         }
