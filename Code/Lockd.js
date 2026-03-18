@@ -548,6 +548,14 @@ function changePinStatus(){
     }
 }
 
+function clearNote(){
+    document.getElementById('noteForm').reset();
+
+    // add stored data into displayed title
+    //document.getElementById('noteTitle').reset();
+
+}
+
 // opens drop down for settings
 function settingsDropdown(){
     var settingsBar = document.getElementById("settingsBar");
