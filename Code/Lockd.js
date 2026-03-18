@@ -496,6 +496,9 @@ function changeNoteTitle(originalTitle, newTitle, list){
     }
     
     li.remove();
+    // removing old note from local storage
+    originalTitle = originalTitle.concat(userId);
+    localStorage.removeItem(originalTitle);
 
     // removing old note from local storage
     originalTitle = originalTitle.concat(localStorage.getItem('currentUser'));
