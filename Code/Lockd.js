@@ -42,6 +42,14 @@ document.addEventListener('DOMContentLoaded', function(){
         addNoteToList(noteTitle, 'allNotes');
     }
 
+    var PinnedNotesArr = localStorage.getItem('PinnedNotes');
+    PinnedNotesArr = JSON.parse(PinnedNotesArr);
+    
+    for (i = 0; i < PinnedNotesArr.length; i ++){
+        var noteTitle = PinnedNotesArr[i];
+        addNoteToList(noteTitle, 'pinnedNotes');
+    }
+
     switch(currSection){
         case 'signUpSection':
             signUpPage();
@@ -61,8 +69,110 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 })
 
-// function for when login button clicked
-function validateLogin(){
+class user{
+    #username;
+    #password;
+
+    constructor(username,password){
+        this.#username = username;
+        this.#password = password;
+    }
+
+    // function to hash the password
+    passwordHash(password,salt){
+    // generate random salt w/ approved random generator
+    //const salt = generateSalt();
+
+    // add salt to the inputted password
+    var saltedPassword = salt.concat(password);
+
+    // hashing the password - my own algorithm
+    var hash = 0;
+
+    var binaryPassword = stringToBinary(saltedPassword);
+    // adding padding so password fits the block size
+    binaryPassword = binaryPassword.concat('1');
+    // 32 bits is 4 bytes/characters
+    // looping until salted password is a multiple of 4
+    while ((binaryPassword.length % 512) != 0){
+        binaryPassword = binaryPassword.concat('0');
+    }
+
+    // hex values
+    var A = '67452301';
+    var B = 'efcdab89';
+    var C = '98badcfe';
+    var D = '10325476';
+
+    // converting the hex values to decimal so they can be computed
+    A = hexToDec(A);
+    B = hexToDec(B);
+    C = hexToDec(C);
+    D = hexToDec(D);
+
+    var M = [];
+    var j = 0;
+    // looping round the binary password 4 characters at a time
+    for (var i = 0; i < binaryPassword.length; i += 32){
+        // splitting the binary password into 32 bit blocks
+        binSlice = binaryPassword.slice(i,i+32);
+
+        //converting binary slices to decimal
+        decSlice = binToDec(binSlice);
+
+        M[j] = binToDec(binSlice);
+        j++;
+    }
+
+    // looping 4 times
+    for (var i = 0; i < 4; i++){
+        // looping each block of the binary password
+        for (var k = 0; k < 16; k++){
+            // swapping values
+            var A1 = D;
+            var C1 = B;
+            var D1 = C;
+
+            // checking which block should be used 
+            if (i == 0){
+                var MD = M[k%16];
+            }else if(i == 1){
+                var MD = M[(5 * k + 1)%16];
+            }else if(i == 2){
+                var MD = M[(3 * k + 5)%16];
+            }else if(i == 3){
+                var MD = M[(7 * k)%16];
+            }
+
+            // doing the calculation
+            var sum = Math.abs(f(B,C,D,k));
+            
+
+            // adding the calculation to A and the block from the password
+            sum += A + MD;
+
+            // assigning the values to their new ones
+            B = sum;
+            A = A1;
+            C = C1;
+            D = D1;
+
+        }
+    }
+
+    
+    A = A.toString(16);
+    B = B.toString(16);
+    C = C.toString(16);
+    D = D.toString(16);
+
+    hash = A.concat(B,C,D);
+
+    return hash;
+    };
+
+    // function for when login button clicked
+    validateLogin(){
         // retreiving user inputted data
         var usernameIn = document.getElementById('username').value;
         var passwordIn = document.getElementById('password').value;
@@ -96,7 +206,15 @@ function validateLogin(){
         }
         
     
-};
+    };
+}
+
+class userManager{
+    #salt;
+
+    
+
+}
 
 function signUpPage(){
     localStorage.setItem('pageDisplayed', 'signUpSection');
@@ -329,9 +447,6 @@ function saveNote(){
         }else if (originalTitle == notesArray[i]){
             notesArray[i] = noteTitle;
             changeNoteTitle(originalTitle, noteTitle);
-            // removing old note from local storage
-            originalTitle = originalTitle.concat(userId);
-            localStorage.removeItem(originalTitle);
             inArray = true;
             break;
         }
@@ -379,6 +494,9 @@ function changeNoteTitle(originalTitle, newTitle){
     var li = document.getElementById(originalTitleId);
     addNoteToList(newTitle, 'allNotes');
     li.remove();
+    // removing old note from local storage
+    originalTitle = originalTitle.concat(userId);
+    localStorage.removeItem(originalTitle);
 
 }
 
@@ -391,6 +509,8 @@ function pinNote(){
 
     // pins the note to the top of the list
     addNoteToList(title, 'pinnedNotes');
+
+
 }
 
 // opens drop down for settings
@@ -731,98 +851,7 @@ function closeDialog(dialogId){
 
 // --------------- security functions ----------------
 
-// function to hash the password
-function passwordHash(password,salt){
-    // generate random salt w/ approved random generator
-    //const salt = generateSalt();
 
-    // add salt to the inputted password
-    var saltedPassword = salt.concat(password);
-
-    // hashing the password - my own algorithm
-    var hash = 0;
-
-    var binaryPassword = stringToBinary(saltedPassword);
-    // adding padding so password fits the block size
-    binaryPassword = binaryPassword.concat('1');
-    // 32 bits is 4 bytes/characters
-    // looping until salted password is a multiple of 4
-    while ((binaryPassword.length % 512) != 0){
-        binaryPassword = binaryPassword.concat('0');
-    }
-
-    // hex values
-    var A = '67452301';
-    var B = 'efcdab89';
-    var C = '98badcfe';
-    var D = '10325476';
-
-    // converting the hex values to decimal so they can be computed
-    A = hexToDec(A);
-    B = hexToDec(B);
-    C = hexToDec(C);
-    D = hexToDec(D);
-
-    var M = [];
-    var j = 0;
-    // looping round the binary password 4 characters at a time
-    for (var i = 0; i < binaryPassword.length; i += 32){
-        // splitting the binary password into 32 bit blocks
-        binSlice = binaryPassword.slice(i,i+32);
-
-        //converting binary slices to decimal
-        decSlice = binToDec(binSlice);
-
-        M[j] = binToDec(binSlice);
-        j++;
-    }
-
-    // looping 4 times
-    for (var i = 0; i < 4; i++){
-        // looping each block of the binary password
-        for (var k = 0; k < 16; k++){
-            // swapping values
-            var A1 = D;
-            var C1 = B;
-            var D1 = C;
-
-            // checking which block should be used 
-            if (i == 0){
-                var MD = M[k%16];
-            }else if(i == 1){
-                var MD = M[(5 * k + 1)%16];
-            }else if(i == 2){
-                var MD = M[(3 * k + 5)%16];
-            }else if(i == 3){
-                var MD = M[(7 * k)%16];
-            }
-
-            // doing the calculation
-            var sum = Math.abs(f(B,C,D,k));
-            
-
-            // adding the calculation to A and the block from the password
-            sum += A + MD;
-
-            // assigning the values to their new ones
-            B = sum;
-            A = A1;
-            C = C1;
-            D = D1;
-
-        }
-    }
-
-    
-    A = A.toString(16);
-    B = B.toString(16);
-    C = C.toString(16);
-    D = D.toString(16);
-
-    hash = A.concat(B,C,D);
-
-    return hash;
-};
 
 // does bitwise calculation depending on what iteration it is
 function f(B,C,D,i){
