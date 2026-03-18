@@ -37,17 +37,22 @@ document.addEventListener('DOMContentLoaded', function(){
     var notesArray = localStorage.getItem('notes');
     notesArray = JSON.parse(notesArray);
     
-    for (i = 0; i < notesArray.length; i ++){
+    for (i = 0; i < notesArray.length; i++){
         var noteTitle = notesArray[i];
         addNoteToList(noteTitle, 'allNotes');
     }
 
-    var PinnedNotesArr = localStorage.getItem('PinnedNotes');
+    var PinnedNotesArr = localStorage.getItem('pinnedNotes');
     PinnedNotesArr = JSON.parse(PinnedNotesArr);
     
-    for (i = 0; i < PinnedNotesArr.length; i ++){
-        var noteTitle = PinnedNotesArr[i];
-        addNoteToList(noteTitle, 'pinnedNotes');
+    // checking there is a pinned notes array in local storage
+    if (localStorage.getItem('pinnedNotes') == null){
+        localStorage.setItem('pinnedNotes', JSON.stringify([]));
+    }else {
+        for (i = 0; i < PinnedNotesArr.length; i++){
+            var noteTitle = PinnedNotesArr[i];
+            addNoteToList(noteTitle, 'pinnedNotes');
+        }
     }
 
     switch(currSection){
@@ -69,17 +74,9 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 })
 
-class user{
-    #username;
-    #password;
-
-    constructor(username,password){
-        this.#username = username;
-        this.#password = password;
-    }
 
     // function to hash the password
-    passwordHash(password,salt){
+    function passwordHash(password,salt){
     // generate random salt w/ approved random generator
     //const salt = generateSalt();
 
@@ -172,7 +169,7 @@ class user{
     };
 
     // function for when login button clicked
-    validateLogin(){
+    function validateLogin(){
         // retreiving user inputted data
         var usernameIn = document.getElementById('username').value;
         var passwordIn = document.getElementById('password').value;
@@ -207,14 +204,6 @@ class user{
         
     
     };
-}
-
-class userManager{
-    #salt;
-
-    
-
-}
 
 function signUpPage(){
     localStorage.setItem('pageDisplayed', 'signUpSection');
@@ -361,7 +350,7 @@ function createNote(){
 }
 
 function shutNote(){
-    if (confirm("Exit without saving?")) {
+    if (confirm("Exit without saving? Note: to confirm pinning of a note please click save")) {
         // clearing local storage for current note value
         localStorage.setItem('currentNote', '');
         // returning to the home page
@@ -446,7 +435,22 @@ function saveNote(){
             break;
         }else if (originalTitle == notesArray[i]){
             notesArray[i] = noteTitle;
-            changeNoteTitle(originalTitle, noteTitle);
+            changeNoteTitle(originalTitle, noteTitle, 'notes');
+            inArray = true;
+            break;
+        }
+    }
+
+    var PinnedNotesArr = localStorage.getItem('pinnedNotes');
+    PinnedNotesArr = JSON.parse(PinnedNotesArr);
+
+    for (var i = 0; i < PinnedNotesArr.length; i++){
+        if (noteTitle == PinnedNotesArr[i]){
+            inArray = true;
+            break;
+        }else if (originalTitle == PinnedNotesArr[i]){
+            PinnedNotesArr[i] = noteTitle;
+            changeNoteTitle(originalTitle, noteTitle, 'pinned');
             inArray = true;
             break;
         }
@@ -459,18 +463,10 @@ function saveNote(){
     }
 
     localStorage.setItem('notes',JSON.stringify(notesArray));
+    localStorage.setItem('pinnedNotes',JSON.stringify(PinnedNotesArr));
 
     // clearing local storage
     localStorage.removeItem('currentNote');
-}
-
-var promote;
-
-async function showDialogue(dialogueId){
-    var dialogue =  document.getElementById(dialogueId)
-    dialogue.showModal();
-    var promise = new Promise((resolve) => {promote = resolve});
-    await promise.then((result) => {var type = result})
 }
 
 function addNoteToList(title, list){
@@ -489,28 +485,70 @@ function addNoteToList(title, list){
     ul.appendChild(li);
 }
 
-function changeNoteTitle(originalTitle, newTitle){
+function changeNoteTitle(originalTitle, newTitle, list){
     var originalTitleId = originalTitle.replaceAll(" ", "");
     var li = document.getElementById(originalTitleId);
-    addNoteToList(newTitle, 'allNotes');
+
+    if (list == 'notes'){
+        addNoteToList(newTitle, 'allNotes');
+    }else{
+        addNoteToList(newTitle, 'pinnedNotes');
+    }
+    
     li.remove();
     // removing old note from local storage
     originalTitle = originalTitle.concat(userId);
     localStorage.removeItem(originalTitle);
 
+    // removing old note from local storage
+    originalTitle = originalTitle.concat(localStorage.getItem('currentUser'));
+    localStorage.removeItem(originalTitle);
+
 }
 
-function pinNote(){
+function changePinStatus(){
     var title = localStorage.getItem('currentNote');
+    var notesArray = localStorage.getItem('notes');
+    notesArray = JSON.parse(notesArray);
+
+    var PinnedNotesArr = localStorage.getItem('pinnedNotes');
+    PinnedNotesArr = JSON.parse(PinnedNotesArr);
+
+    var pinned = true;
+
+    for (var i = 0; i < notesArray.length; i++){
+        if (notesArray[i] == title){
+            pinned = false;
+            break;
+        }
+    }
+
     // remove note from other list
     var titleId = title.replaceAll(" ", "");
     var li = document.getElementById(titleId);
     li.remove();
-
-    // pins the note to the top of the list
-    addNoteToList(title, 'pinnedNotes');
-
-
+    
+    if (pinned == false){
+        // pins the note to the top of the list
+        addNoteToList(title, 'pinnedNotes');
+        // removes from notes array
+        var index = notesArray.indexOf(title);
+        notesArray.splice(index, 1);
+        localStorage.setItem('notes', JSON.stringify(notesArray));
+        // add to pinned array
+        PinnedNotesArr.push(title);
+        localStorage.setItem('pinnedNotes', JSON.stringify(PinnedNotesArr));
+    }else {
+        // adds note to unpinned list
+        addNoteToList(title, 'allNotes');
+        // removes from pinned array
+        var index = PinnedNotesArr.indexOf(title);
+        PinnedNotesArr.splice(index, 1);
+        localStorage.setItem('pinnedNotes', JSON.stringify(PinnedNotesArr));
+        // add to unpinned array
+        notesArray.push(title);
+        localStorage.setItem('notes', JSON.stringify(notesArray));
+    }
 }
 
 // opens drop down for settings
