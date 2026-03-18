@@ -350,7 +350,7 @@ function createNote(){
 }
 
 function shutNote(){
-    if (confirm("Exit without saving? Note: to confirm pinning of a note please click save")) {
+    if (confirm("Exit without saving?")) {
         // clearing local storage for current note value
         localStorage.setItem('currentNote', '');
         // returning to the home page
@@ -552,12 +552,67 @@ function changePinStatus(){
 }
 
 function clearNote(){
+    // resetting the note form
     document.getElementById('noteForm').reset();
+}
 
-    // add stored data into displayed title
-    //document.getElementById('noteTitle').reset();
+function deleteNote(){
+    if (confirm("This action will permanently delete your note")) {
+        // clearing local storage for current note value
+        localStorage.setItem('currentNote', '');
+        // returning to the home page
+        homePage();
+    } else {
+        // exit function as user selected cancel
+        return;
+    }
+    // deletes note from storage 
+    // getting title of note to be deleted
+    var title = document.getElementById('noteTitle').value;
+    // getting current users id
+    var userId = localStorage.getItem('currentUser');
+    // adding id to end of note title to create unique id
+    var noteTitleId = title.concat(userId);
+
+    // removing item from local storage
+    localStorage.removeItem(noteTitleId);
+
+    //removing item from array
+    var PinnedNotesArr = localStorage.getItem('pinnedNotes');
+    PinnedNotesArr = JSON.parse(PinnedNotesArr);
+
+    var notesArray = localStorage.getItem('notes');
+    notesArray = JSON.parse(notesArray);
+
+    var pinned = true;
+
+    for (var i = 0; i < notesArray.length; i++){
+        if (notesArray[i] == title){
+            // removes from notes array
+            var index = notesArray.indexOf(title);
+            notesArray.splice(index, 1);
+            localStorage.setItem('notes', JSON.stringify(notesArray));
+            break;
+        }
+    }
+
+    for (var i = 0; i < PinnedNotesArr.length; i++){
+        if(PinnedNotesArr[i] == title){
+            // removes from pinned array
+            var index = PinnedNotesArr.indexOf(title);
+            PinnedNotesArr.splice(index, 1);
+            localStorage.setItem('pinnedNotes', JSON.stringify(PinnedNotesArr));
+        }
+    }
+
+    // remove note from list
+    var titleId = title.replaceAll(" ", "");
+    var li = document.getElementById(titleId);
+    li.remove();
+
 
 }
+
 
 // opens drop down for settings
 function settingsDropdown(){
