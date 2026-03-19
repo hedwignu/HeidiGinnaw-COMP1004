@@ -312,18 +312,75 @@ function notePage(){
     });
 
     document.getElementById('allPages').style.display = '';
+    document.getElementById('prevNoteSection').style.display = '';
     document.getElementById('noteSection').style.display = '';
+
+    if (localStorage.getItem('language') == 'English'){
+        document.getElementById('clearButton').style.display = '';
+    }else{
+        document.getElementById('clearButton1').style.display = '';
+    }
 }
 
-function noteClicked(selectedTitle){
+function previewPage(){
+    // letting browser know note page is open
+    localStorage.setItem('pageDisplayed','preview');
+
+    const sections = document.querySelectorAll('section');
+
+    sections.forEach(item => {
+        item.style.display = 'none';
+    });
+
+    document.getElementById('allPages').style.display = '';
+    document.getElementById('prevNoteSection').style.display = '';
+    document.getElementById('previewSection').style.display = '';
+
+    document.getElementById('clearButton').style.display = 'none';
+    document.getElementById('clearButton1').style.display = 'none';
+}
+
+function previewClicked(selectedTitle){
     // retreiving open note from local storage
     var currentNote = localStorage.getItem('currentNote');
-
+    
     // if open note doesn't exist set it
     if (currentNote ==  null || currentNote == '' || currentNote == 'undefined'){
         localStorage.setItem('currentNote', selectedTitle);
         currentNote = selectedTitle;
     }
+
+    var currentNoteId = currentNote.replaceAll(" ", "");
+
+    // retrieving note title
+    var noteTitle = document.getElementById(currentNoteId).innerHTML;
+
+    previewPage();
+
+    var title = noteTitle;
+
+    // append users id
+    noteTitle = noteTitle.concat(localStorage.getItem('currentUser'));
+
+    // retreived stored data based on selected note title
+    var storedData = localStorage.getItem(noteTitle);
+    storedData = JSON.parse(storedData);
+
+    // checking data is stored
+    if (storedData != null){
+        // add stored data into displayed note
+        var preview = storedData[0];
+        var note = storedData[1];
+        document.getElementById('previewData').value = preview;
+    }
+
+    // add stored data into displayed title
+    document.getElementById('noteTitle').value = title;
+}
+
+function noteClicked(){
+    // retreiving open note from local storage
+    var currentNote = localStorage.getItem('currentNote');
 
     var currentNoteId = currentNote.replaceAll(" ", "");
         
@@ -332,8 +389,6 @@ function noteClicked(selectedTitle){
 
     // loading the 'page'
     notePage();
-
-    var title = noteTitle;
 
     // append users id
     noteTitle = noteTitle.concat(localStorage.getItem('currentUser'));
@@ -349,9 +404,7 @@ function noteClicked(selectedTitle){
         document.getElementById('noteData').value = note;
     }
 
-    // add stored data into displayed title
-    document.getElementById('noteTitle').value = title;
-
+    document.getElementById('previewData').value = '';
 }
 
 // brings up thing to write a new note in
@@ -409,7 +462,7 @@ function saveNote(){
     // TO DO: encrypt note title here
 
     var noteData = document.getElementById('noteData').value;
-    var preview = noteData.slice(0, 100);
+    var preview = noteData.slice(0, 42);
     preview = preview.concat('...');
 
     // TO DO: encrypt everything
@@ -481,6 +534,9 @@ function saveNote(){
 
     // clearing local storage
     localStorage.removeItem('currentNote');
+
+    document.getElementById('noteTitle').value = '';
+    document.getElementById('noteData').value = '';
 }
 
 function addNoteToList(title, list){
@@ -490,7 +546,7 @@ function addNoteToList(title, list){
     var li = document.createElement("li");
     // making it display the given title
     li.textContent = title;
-    li.setAttribute("onclick", `noteClicked(${JSON.stringify(title)})`);
+    li.setAttribute("onclick", `previewClicked(${JSON.stringify(title)})`);
     // remove spaces from title
     title = title.replaceAll(" ", "");
     li.setAttribute("id", title);
