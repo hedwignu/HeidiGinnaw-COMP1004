@@ -25,28 +25,29 @@
                     </div>
             </div>
         </nav>
-
-        
             <div class="order-2 justify-content-center ms-auto" id="settingsBar">
-                
-                    <h2 lang="en">Settings</h2><h2 lang="sv">Inställninghar</h2>
+                <h2 lang="en">Settings</h2><h2 lang="sv">Inställninghar</h2>
                 <div class="d-flex flex-row">
-                <div class="p-2" id="textColumn">
-                    <ul>
-                        <li lang="en">Theme</li><li lang="sv">Tema</li>
-                        <li lang="en">Font Size</li><li lang="sv">Fontstorlek</li>
-                        <li lang="en">Language</li><li lang="sv">Språk</li>
-                    </ul>
-                </div>
-                <div class="p-2" id="buttonColumn">
-                    <button lang="en" type="button" class="button smallButton" id="themeButton" onclick="themeButton()">Change to Dark</button><button lang="sv" type="button" class="button smallButton" id="themeButton1" onclick="themeButton()">Byt till Mörkt</button>
-                    <div class="d-flex justify-content-between">
-                        <div class="order-1"><button type="button" class="button smallButton" id="fontButtonDown" onclick="decreaseFontSize()">-</button></div>
-                        <div class="order-2"><p lang="en" class="smallText" id="fontSize">Medium</p><p lang="sv" class="smallText" id="fontSize1">Medium</p></div>
-                        <div class="order-3"><button type="button" class="button smallButton" id="fontButtonUp" onclick="increaseFontSize()">+</button></div>
+                    <div class="p-2" id="textColumn">
+                        <ul>
+                            <li lang="en">Theme</li><li lang="sv">Tema</li>
+                            <li lang="en">Font Size</li><li lang="sv">Fontstorlek</li>
+                            <li lang="en">Language</li><li lang="sv">Språk</li>
+                            <hr>
+                            <li lang="en" type="button" class="clickableText" id="logOutButton" onclick="logOut()">Log Out</li>
+                            <li lang="sv" type="button" class="clickableText" id="logOutButton1" onclick="logOut()">Logga Ut</li>
+                        </ul>
                     </div>
-                    <button lang="en" type="button" class="button smallButton" id="languageButton" onclick="changeLanguage()">English</button><button lang="sv" type="button" class="button smallButton" id="languageButton1" onclick="changeLanguage()">Svenska</button>
-                </div></div>
+                    <div class="p-2" id="buttonColumn">
+                        <button lang="en" type="button" class="button smallButton" id="themeButton" onclick="themeButton()">Change to Dark</button><button lang="sv" type="button" class="button smallButton" id="themeButton1" onclick="themeButton()">Byt till Mörkt</button>
+                        <div class="d-flex justify-content-between">
+                            <div class="order-1"><button type="button" class="button smallButton" id="fontButtonDown" onclick="decreaseFontSize()">-</button></div>
+                            <div class="order-2"><p lang="en" class="smallText" id="fontSize">Medium</p><p lang="sv" class="smallText" id="fontSize1">Medium</p></div>
+                            <div class="order-3"><button type="button" class="button smallButton" id="fontButtonUp" onclick="increaseFontSize()">+</button></div>
+                        </div>
+                        <button lang="en" type="button" class="button smallButton" id="languageButton" onclick="changeLanguage()">English</button><button lang="sv" type="button" class="button smallButton" id="languageButton1" onclick="changeLanguage()">Svenska</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -109,8 +110,8 @@
                             <button lang="sv" class="button" type="noteNavButton" unselectable="on" id="clearButton1" onclick="clearNote()">Rensa</button>
                         </div>
                         <div class="p-2 bd-highlight noteNav">
-                            <button lang="en" class="button" type="noteNavButton" unselectable="on" id="deleteButton" onclick="deleteNote()">Delete</button>
-                            <button lang="sv" class="button" type="noteNavButton" unselectable="on" id="deleteButton" onclick="deleteNote()">Radera</button>
+                            <button lang="en" class="button noteNavButton" type="button" unselectable="on" id="deleteButton" onclick="checkValidDelete()">Delete</button>
+                            <button lang="sv" class="button noteNavButton" type="button" unselectable="on" id="deleteButton" onclick="checkValidDelete()">Radera</button>
                         </div>
                         <div class="p-2 bd-highlight noteNav">
                             <button class="clickableText" type="button" unselectable="on" id="shutNoteButton" onclick="shutNote()">X</button>
@@ -137,6 +138,14 @@
         <p>Please give your note a unique title</p>
         <button lang="en" type="button" onclick="closeDialog('duplicateTitleAlert')" autofocus>Okay</button>
         <button lang="sv" type="button" onclick="closeDialog('duplicateTitleAlert')" autofocus>Okej</button>
+    </dialog>
+
+    <dialog id="deleteAlert">
+        <p>This action will permanently delete your note. <br> You will not be able to get it back</p>
+        <button lang="en" type="button" onclick="confirmDelete('deleteAlert')" autofocus>Okay</button>
+        <button lang="sv" type="button" onclick="confirmDelete('deleteAlert')" autofocus>Okej</button>
+        <button lang="en" type="button" onclick="closeDialog('deleteAlert')" autofocus>Cancel</button>
+        <button lang="sv" type="button" onclick="closeDialog('deleteAlert')" autofocus>Avbryt</button>
     </dialog>
 
 <!--

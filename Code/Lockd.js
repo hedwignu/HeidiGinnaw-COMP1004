@@ -217,7 +217,16 @@ function signUpPage(){
 
     document.getElementById('allPages').style.display = '';
     document.getElementById('signUpSection').style.display = '';
+    document.getElementById('logOutButton').style.display = 'none';
+    document.getElementById('logOutButton1').style.display = 'none';
     
+}
+
+// logs user out
+function logOut(){
+    localStorage.setItem('currentNote', '');
+    localStorage.setItem('currentUser', '');
+    loginPage();
 }
 
 // brings up home page
@@ -229,7 +238,6 @@ function homePage(){
     document.getElementById("newNoteButton1").disabled = false;
     
     const sections = document.querySelectorAll('section');
-    
 
     sections.forEach(item => {
         item.style.display = 'none';
@@ -238,7 +246,11 @@ function homePage(){
     document.getElementById('allPages').style.display = '';
     document.getElementById('homeSection').style.display = '';
 
-    
+    if (localStorage.getItem('language') == 'English'){
+        document.getElementById('logOutButton').style.display = '';
+    }else{
+        document.getElementById('logOutButton1').style.display = '';
+    }
 
 }
 
@@ -285,6 +297,8 @@ function loginPage(){
 
     document.getElementById('allPages').style.display = '';
     document.getElementById('logInSection').style.display = '';
+    document.getElementById('logOutButton').style.display = 'none';
+    document.getElementById('logOutButton1').style.display = 'none';
 }
 
 function notePage(){
@@ -556,16 +570,20 @@ function clearNote(){
     document.getElementById('noteForm').reset();
 }
 
+// brings up dialog to confirm if user wants to delete
+function checkValidDelete(){
+    var dialogue = document.getElementById('deleteAlert');
+    dialogue.showModal();
+    return;
+}
+
+function confirmDelete(){
+    closeDialog('deleteAlert');
+    deleteNote();
+    return;
+}
+
 function deleteNote(){
-    if (confirm("This action will permanently delete your note")) {
-        // clearing local storage for current note value
-        localStorage.setItem('currentNote', '');
-        // returning to the home page
-        homePage();
-    } else {
-        // exit function as user selected cancel
-        return;
-    }
     // deletes note from storage 
     // getting title of note to be deleted
     var title = document.getElementById('noteTitle').value;
@@ -611,6 +629,9 @@ function deleteNote(){
     li.remove();
 
 
+    // clearing local storage for current note value
+    localStorage.setItem('currentNote', '');
+    homePage();
 }
 
 
