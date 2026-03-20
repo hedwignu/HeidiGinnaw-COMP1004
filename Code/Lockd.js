@@ -375,6 +375,10 @@ function previewClicked(selectedTitle){
         // add stored data into displayed note
         var preview = storedData[0];
         var note = storedData[1];
+        var key = storedData[2];
+
+        preview = encryptDecrypt(preview, key);
+        
         document.getElementById('previewData').value = preview;
     }
 
@@ -405,6 +409,10 @@ function noteClicked(){
     if (storedData != null){
         // add stored data into displayed note
         var note = storedData[1];
+        var key = storedData[2];
+
+        note = encryptDecrypt(note, key);
+
         document.getElementById('noteData').value = note;
     }
 
@@ -424,6 +432,9 @@ function shutNote(){
     if (confirm("Exit without saving?")) {
         // clearing local storage for current note value
         localStorage.setItem('currentNote', '');
+        // clearing notes input boxes
+        document.getElementById('noteTitle').value = '';
+        document.getElementById('noteData').value = '';
         // returning to the home page
         homePage();
         return;
@@ -463,11 +474,19 @@ function saveNote(){
     // adding id to end of note title to create unique id
     var noteTitleId = noteTitle.concat(userId);
 
-    // TO DO: encrypt note title here
-
+    // retreive inputted data
     var noteData = document.getElementById('noteData').value;
+
+    // split the data into a preview
     var preview = noteData.slice(0, 42);
     preview = preview.concat('...');
+
+    // encrypt note data
+    var key = generateSalt();
+    noteData = encryptDecrypt(noteData, key);
+
+    // encrypt preview
+    preview = encryptDecrypt(preview, key);
 
     // TO DO: encrypt everything
     console.log('hi');
@@ -475,9 +494,9 @@ function saveNote(){
     console.log(noteData);
     console.log(noteTitleId);
 
-    var test = JSON.stringify([preview, noteData]);
+    var test = JSON.stringify([preview, noteData, key]);
     console.log(test);
-    localStorage.setItem(noteTitleId, JSON.stringify([preview, noteData]));
+    localStorage.setItem(noteTitleId, JSON.stringify([preview, noteData, key]));
 
     homePage();
 
@@ -1049,14 +1068,36 @@ function f(B,C,D,i){
 }
 
 function stringToBinary(str){
+    //console.log(str);
     var binary = "";
+    // loopiing through each character at a time
     for (var i = 0; i<str.length; i++){
+        // converting the character to it's decimal code, then to binary
         const charBin = str[i].charCodeAt().toString(2);
 
+        // padding the binary so they're always 8 bits long
         binary += charBin.padStart(8, '0');
     }
     return binary;
 };
+
+function binaryToString(bin){
+    var string = "";
+    for (var i = 0; i<bin.length; i += 8){
+        // retreiving a byte of data from the binary
+        const binSlice = bin.substring(i, i + 8);
+        // converting the slice to decimal 
+        const charCode = binToDec(binSlice);
+       // console.log(charCode);
+       //converting the decimal character code to it's character
+        let char = String.fromCharCode(charCode);
+
+        // adding the converted character to the string
+        string += char;
+    }
+
+    return string;
+}
 
 function hexToDec(hex){
     var dec = parseInt(hex, 16);
@@ -1095,6 +1136,28 @@ function generateSalt(){
 
     return salt;
 };
+
+function encryptDecrypt(str, key){
+    // turn data into binary so bitwise operations can be done
+    str = stringToBinary(str);
+    key = stringToBinary(key);
+
+    var encryptedStr = "";
+
+    for (var i = 0; i < str.length; i++){
+        // xor 1 bit from string and 1 bit from key
+        var newchar = str[i] ^ key[i % key.length];
+        // adding new bit to the encrypted string
+        encryptedStr = encryptedStr.concat(newchar);
+    }
+
+    // converting encrypted/decrypted string to characters again
+    encryptedStr = binaryToString(encryptedStr);
+
+    //console.log(encryptedStr);
+
+    return encryptedStr;
+}
 
 // function to check password
 function checkPassword(inputPassword, password, salt){

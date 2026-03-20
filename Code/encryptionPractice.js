@@ -1,5 +1,5 @@
 function encryptDecrypt(str, key){
-    // turn data into binary
+    // turn data into binary so bitwise operations can be done
     str = stringToBinary(str);
     key = stringToBinary(key);
 
@@ -12,22 +12,23 @@ function encryptDecrypt(str, key){
         encryptedStr = encryptedStr.concat(newchar);
     }
 
-    
-    //console.log(encryptedStr);
     // converting encrypted/decrypted string to characters again
     encryptedStr = binaryToString(encryptedStr);
+
     //console.log(encryptedStr);
 
     return encryptedStr;
-
 }
 
-function stringToBinary(strings){
-    //console.log(strings);
+function stringToBinary(str){
+    //console.log(str);
     var binary = "";
-    for (var i = 0; i<strings.length; i++){
-        const charBin = strings[i].charCodeAt().toString(2);
+    // loopiing through each character at a time
+    for (var i = 0; i<str.length; i++){
+        // converting the character to it's decimal code, then to binary
+        const charBin = str[i].charCodeAt().toString(2);
 
+        // padding the binary so they're always 8 bits long
         binary += charBin.padStart(8, '0');
     }
     return binary;
@@ -36,14 +37,15 @@ function stringToBinary(strings){
 function binaryToString(bin){
     var string = "";
     for (var i = 0; i<bin.length; i += 8){
+        // retreiving a byte of data from the binary
         const binSlice = bin.substring(i, i + 8);
-        //console.log(binSlice);
+        // converting the slice to decimal 
         const charCode = binToDec(binSlice);
        // console.log(charCode);
+       //converting the decimal character code to it's character
         let char = String.fromCharCode(charCode);
-        //console.log(String.fromCharCode(65))
-        //console.log(char);
 
+        // adding the converted character to the string
         string += char;
     }
 
@@ -92,9 +94,12 @@ function binToDec(binary){
 //console.log(passwordHash('cheese','123456789'));
 
 var key = generateKey();
+/*
 var mystring = "bananarama is a funny word"
 var test = encryptDecrypt(mystring, key);
 console.log('hi');
 console.log(test);
 console.log('hi2');
 console.log(encryptDecrypt(test, key));
+*/
+console.log(key);
