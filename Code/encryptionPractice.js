@@ -1,7 +1,6 @@
-function encryptDecrypt(str){
+function encryptDecrypt(str, key){
     // turn data into binary
     str = stringToBinary(str);
-    key = generateKey();
     key = stringToBinary(key);
 
     var encryptedStr = "";
@@ -91,7 +90,11 @@ function binToDec(binary){
 }
 
 //console.log(passwordHash('cheese','123456789'));
+
+var key = generateKey();
 var mystring = "bananarama is a funny word"
-var test = encryptDecrypt(mystring);
+var test = encryptDecrypt(mystring, key);
+console.log('hi');
 console.log(test);
-console.log(encryptDecrypt(test));
+console.log('hi2');
+console.log(encryptDecrypt(test, key));
