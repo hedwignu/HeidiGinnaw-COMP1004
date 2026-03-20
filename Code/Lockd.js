@@ -1,9 +1,14 @@
 document.addEventListener('DOMContentLoaded', function(){
+    if (sessionStorage.getItem('currentUser') == null){
+        loginPage();
+    }
     var currSection = localStorage.getItem('pageDisplayed');
     console.log(currSection);
     // making sure settings drop down is not visible
     var settingsBar = document.getElementById("settingsBar");
     settingsBar.style.display = "none";
+
+    console.log(sessionStorage.getItem('currentUser'));
 
     // setting theme based on local storage
     if (localStorage.getItem('theme') === 'dark'){
@@ -76,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
     // function to hash the password
-    function passwordHash(password,salt){
+function passwordHash(password,salt){
     // generate random salt w/ approved random generator
     //const salt = generateSalt();
 
@@ -143,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
             // doing the calculation
             var sum = Math.abs(f(B,C,D,k));
-            
 
             // adding the calculation to A and the block from the password
             sum += A + MD;
@@ -187,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 // get users id
                 const userId = userInfo[2];
                 // set logged in user in local storage
-                localStorage.setItem('currentUser', userId);
+                sessionStorage.setItem('currentUser', userId);
                 // call the home page
                 homePage();
             }else{
@@ -225,7 +229,7 @@ function signUpPage(){
 // logs user out
 function logOut(){
     localStorage.setItem('currentNote', '');
-    localStorage.setItem('currentUser', '');
+    sessionStorage.removeItem('currentUser');
     loginPage();
 }
 
@@ -360,7 +364,7 @@ function previewClicked(selectedTitle){
     var title = noteTitle;
 
     // append users id
-    noteTitle = noteTitle.concat(localStorage.getItem('currentUser'));
+    noteTitle = noteTitle.concat(sessionStorage.getItem('currentUser'));
 
     // retreived stored data based on selected note title
     var storedData = localStorage.getItem(noteTitle);
@@ -391,7 +395,7 @@ function noteClicked(){
     notePage();
 
     // append users id
-    noteTitle = noteTitle.concat(localStorage.getItem('currentUser'));
+    noteTitle = noteTitle.concat(sessionStorage.getItem('currentUser'));
 
     // retreived stored data based on selected note title
     var storedData = localStorage.getItem(noteTitle);
@@ -455,7 +459,7 @@ function saveNote(){
     localStorage.setItem('currentNote', noteTitle);
 
     // retrieving current user's id
-    const userId = localStorage.getItem('currentUser')
+    const userId = sessionStorage.getItem('currentUser')
     // adding id to end of note title to create unique id
     var noteTitleId = noteTitle.concat(userId);
 
@@ -566,12 +570,16 @@ function changeNoteTitle(originalTitle, newTitle, list){
     }
     
     li.remove();
+
+    // retrieving current userid
+    const userId = sessionStorage.getItem('currentUser');
+
     // removing old note from local storage
     originalTitle = originalTitle.concat(userId);
     localStorage.removeItem(originalTitle);
 
     // removing old note from local storage
-    originalTitle = originalTitle.concat(localStorage.getItem('currentUser'));
+    originalTitle = originalTitle.concat(sessionStorage.getItem('currentUser'));
     localStorage.removeItem(originalTitle);
 
 }
@@ -644,7 +652,7 @@ function deleteNote(){
     // getting title of note to be deleted
     var title = document.getElementById('noteTitle').value;
     // getting current users id
-    var userId = localStorage.getItem('currentUser');
+    var userId = sessionStorage.getItem('currentUser');
     // adding id to end of note title to create unique id
     var noteTitleId = title.concat(userId);
 

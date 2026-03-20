@@ -20,6 +20,10 @@ h1 {
     padding: 10px;
 }
 
+h3 {
+    padding: 10px;
+}
+
 input {
     text-align: left;
     padding-top: 3px;
@@ -182,6 +186,7 @@ ul {
     border-width: 2px;
     width: calc((100% - (6*20px))/3);
     text-align: center;
+    color: white;
 }
 
 #noteForm {
