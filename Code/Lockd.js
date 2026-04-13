@@ -91,10 +91,57 @@ async function openFile(){
     });
     // getting file
     let data = await fileHandle.getFile();
-    // retreiving the text
+    // retreiving the data and name
     let text = await data.text();
+    let name = await data.name;
+
+    name = name.substring(0 , name.lastIndexOf('.'));
+
+    var notesArray = localStorage.getItem('notes');
+    notesArray = JSON.parse(notesArray);
+
+    var inArray = false;
+
+    // checking if in array
+    for (var i = 0; i < notesArray.length; i++){
+        if (name == notesArray[i]){
+            inArray = true;
+            break;
+        }
+    }
+
+    var PinnedNotesArr = localStorage.getItem('pinnedNotes');
+    PinnedNotesArr = JSON.parse(PinnedNotesArr);
+
+    for (var i = 0; i < PinnedNotesArr.length; i++){
+        if (noteTitle == PinnedNotesArr[i]){
+            inArray = true;
+            break;
+        }
+    }
+
+    // if not in notes array then adds it
+    if (inArray == false){
+        notesArray.push(name);
+        addNoteToList(name, 'allNotes');
+    } else {
+        console.log('file has already been uploaded')
+        return;
+    }
+    
+    // retrieving current user's id
+    const userId = sessionStorage.getItem('currentUser')
+    // adding id to end of note title to create unique id
+    var nameId = name.concat(userId);
+
+    // adding to local storage
+    localStorage.setItem(nameId, text);
+    localStorage.setItem('notes',JSON.stringify(notesArray));
+    localStorage.setItem('pinnedNotes',JSON.stringify(PinnedNotesArr));
+
 
     console.log(text);
+    console.log(name);
 }
 
 async function openSpecificFile(){
@@ -103,7 +150,7 @@ async function openSpecificFile(){
 
 async function saveFile(name, data){
     // suggesting name so is saved the same in local and computer storage
-    let [fileHandle] = await window.showSaveFilePicker({
+    let fileHandle = await window.showSaveFilePicker({
         suggestedName: name,
         types: [{
             accept: {
@@ -111,10 +158,11 @@ async function saveFile(name, data){
             },
         }],
     })
-/*
+
+    // writing to the new file and saving
     const writable = await fileHandle.createWritable();
     await writable.write(data);
-    await writable.close();*/
+    await writable.close();
 }
 
 
@@ -536,7 +584,7 @@ function saveNote(){
     localStorage.setItem(noteTitleId, JSON.stringify([preview, noteData, key]));
 
     // saving file to computer
-    saveFile();
+    saveFile(noteTitle, JSON.stringify([preview, noteData, key]));
 
     homePage();
 
@@ -754,6 +802,11 @@ function deleteNote(){
 
     // clearing local storage for current note value
     localStorage.setItem('currentNote', '');
+
+    // clearing the form
+    document.getElementById('noteTitle').value = '';
+    document.getElementById('noteData').value = '';
+
     homePage();
 }
 

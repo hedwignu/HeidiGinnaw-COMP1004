@@ -22,10 +22,6 @@
                             <button lang="en" type="button" class="button" id="testButton" onclick="openFile()">Upload</button>
                             <button lang="sv" type="button" class="button" id="testButton" onclick="openFile()">Upload</button>
                         </div>
-                        <div class="me-auto p-2 bd-highlight" id="navItem">
-                            <button lang="en" type="button" class="button" id="test1Button" onclick="saveFile('bob', 'ahhhhhhhhhhh')">save</button>
-                            <button lang="sv" type="button" class="button" id="test1Button" onclick="openFile()">Upload</button>
-                        </div>
                         <div class="ms-auto p-2 bd-highlight" id="navItem">
                             <button lang="en" class="button" type="button" id="settingsButton" onclick="settingsDropdown()">Settings</button>
                             <button lang="sv" class="button" type="button" id="settingsButton" onclick="settingsDropdown()">Inställninghar</button>
@@ -38,14 +34,14 @@
                 <h2 lang="en">Settings</h2><h2 lang="sv">Inställninghar</h2>
                 <div class="d-flex flex-row">
                     <div class="p-2" id="textColumn">
-                        <ul>
+                        <ol>
                             <li lang="en">Theme</li><li lang="sv">Tema</li>
                             <li lang="en">Font Size</li><li lang="sv">Fontstorlek</li>
                             <li lang="en">Language</li><li lang="sv">Språk</li>
                             <hr>
                             <li lang="en" type="button" class="clickableText" id="logOutButton" onclick="logOut()">Log Out</li>
                             <li lang="sv" type="button" class="clickableText" id="logOutButton1" onclick="logOut()">Logga Ut</li>
-                        </ul>
+                        </ol>
                     </div>
                     <div class="p-2" id="buttonColumn">
                         <button lang="en" type="button" class="button smallButton" id="themeButton" onclick="themeButton()">Change to Dark</button><button lang="sv" type="button" class="button smallButton" id="themeButton1" onclick="themeButton()">Byt till Mörkt</button>
@@ -92,15 +88,15 @@
     <section id="homeSection">
         <div>
             <h3>Pinned Notes</h3>
-            <ul class="flex-row noteList" id="pinnedNotes">
+            <ol class="flex-row noteList" id="pinnedNotes">
                 <!--<li id="welcomeNote" class="notes clickableText" onclick='noteClicked("welcomeNote")'>Welcome To Lockd!</li>-->
-            </ul>
+            </ol>
         </div><br>
         <div>
             <h3>Other Notes</h3>
-            <ul class="flex-row noteList" id="allNotes">
+            <ol class="flex-row noteList" id="allNotes">
                 <!--<li id="welcomeNote" class="notes clickableText" onclick='noteClicked("welcomeNote")'>Welcome To Lockd!</li>-->
-            </ul>
+            </ol>
         </div>
     </section>
 
@@ -219,7 +215,12 @@
     </dialog>
 
     <dialog id="deleteAlert">
-        <p>This action will permanently delete your note. <br> You will not be able to get it back</p>
+        <h2>File Deletion</h2>
+        <ul>
+            <li>This action will delete your note from local storage but it will still be on your device. </li>
+            <li> To delete it from your device you will need to do it through your file manager. </li>
+            <li> If you want to access this file unencrypted you will need to upload it to the website again. </li>
+        </ul>
         <button lang="en" type="button" onclick="confirmDelete('deleteAlert')" autofocus>Okay</button>
         <button lang="sv" type="button" onclick="confirmDelete('deleteAlert')" autofocus>Okej</button>
         <button lang="en" type="button" onclick="closeDialog('deleteAlert')" autofocus>Cancel</button>
