@@ -79,6 +79,45 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 })
 
+async function openFile(){
+    // user selects file
+    let [fileHandle] = await window.showOpenFilePicker({
+        // only allowing JSON files
+        types: [{
+                accept: {
+                   'application/json': ['.json'],
+                },
+            }],
+    });
+    // getting file
+    let data = await fileHandle.getFile();
+    // retreiving the text
+    let text = await data.text();
+
+    console.log(text);
+}
+
+async function openSpecificFile(){
+
+}
+
+async function saveFile(name, data){
+    // suggesting name so is saved the same in local and computer storage
+    let [fileHandle] = await window.showSaveFilePicker({
+        suggestedName: name,
+        types: [{
+            accept: {
+               'application/json': ['.json'],
+            },
+        }],
+    })
+/*
+    const writable = await fileHandle.createWritable();
+    await writable.write(data);
+    await writable.close();*/
+}
+
+
 
     // function to hash the password
 function passwordHash(password,salt){
@@ -119,7 +158,7 @@ function passwordHash(password,salt){
         // splitting the binary password into 32 bit blocks
         binSlice = binaryPassword.slice(i,i+32);
 
-        //converting binary slices to decimal
+        //converting binary slices to decimal TODO delete? maybe redundant
         decSlice = binToDec(binSlice);
 
         M[j] = binToDec(binSlice);
@@ -276,6 +315,7 @@ function createAccount(){
         // hashing password for user
         var password = passwordHash(passwordIn, salt);
 
+        // TODO generate unique random user ID
         var userId = 1;
         //var userId = Math.floor(Math.random()*1000);
 
@@ -488,15 +528,15 @@ function saveNote(){
     // encrypt preview
     preview = encryptDecrypt(preview, key);
 
-    // TO DO: encrypt everything
-    console.log('hi');
     console.log(preview);
     console.log(noteData);
     console.log(noteTitleId);
 
-    var test = JSON.stringify([preview, noteData, key]);
-    console.log(test);
+    // saving file in local storage
     localStorage.setItem(noteTitleId, JSON.stringify([preview, noteData, key]));
+
+    // saving file to computer
+    saveFile();
 
     homePage();
 
@@ -1065,6 +1105,15 @@ function f(B,C,D,i){
     }else{
         return B;
     }
+
+    /*
+    }else if (i >= 16 && i <= 31){
+        return (B & D) | (C & (~D));
+    }else if (i >= 32 && i >= 47){
+        return (B ^ C ^ D);
+    }else {
+        return C ^ (B | (~D));
+    }*/
 }
 
 function stringToBinary(str){
