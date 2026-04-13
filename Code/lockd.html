@@ -13,14 +13,13 @@
         <nav>
             <div class = "shadow container-fluid"> 
                     <div class = "d-flex bd-highlight">
-                        <div class="me-auto p-2 bd-highlight" id="navItem">
+                        <div class="p-2 bd-highlight" id="navItem">
                             <button lang="en" type="button" class="button" id="newNoteButton" disabled="true" onclick="createNote()">New Note</button>
                             <button lang="sv" type="button" class="button" id="newNoteButton1" disabled="true" onclick="createNote()">Ny Anteckning</button>
                         </div>
-                        <!-- TODO delete this -->
-                        <div class="me-auto p-2 bd-highlight" id="navItem">
-                            <button lang="en" type="button" class="button" id="testButton" onclick="openFile()">Upload</button>
-                            <button lang="sv" type="button" class="button" id="testButton" onclick="openFile()">Upload</button>
+                        <div class="p-2 bd-highlight" id="navItem">
+                            <button lang="en" type="button" class="button" id="uploadButton" onclick="openFile()">Upload</button>
+                            <button lang="sv" type="button" class="button" id="upload1Button" onclick="openFile()">Ladda Upp</button>
                         </div>
                         <div class="ms-auto p-2 bd-highlight" id="navItem">
                             <button lang="en" class="button" type="button" id="settingsButton" onclick="settingsDropdown()">Settings</button>
@@ -212,6 +211,24 @@
         <p>Please give your note a unique title</p>
         <button lang="en" type="button" onclick="closeDialog('duplicateTitleAlert')" autofocus>Okay</button>
         <button lang="sv" type="button" onclick="closeDialog('duplicateTitleAlert')" autofocus>Okej</button>
+    </dialog>
+
+    <dialog id="invalidLoginAlert">
+        <p>Username or Password is incorrect</p>
+        <button lang="en" type="button" onclick="closeDialog('invalidLoginAlert')" autofocus>Okay</button>
+        <button lang="sv" type="button" onclick="closeDialog('invalidLoginAlert')" autofocus>Okej</button>
+    </dialog>
+    
+    <dialog id="copiedUsernameAlert">
+        <p>Username already exists. Please try a new one</p>
+        <button lang="en" type="button" onclick="closeDialog('copiedUsernameAlert')" autofocus>Okay</button>
+        <button lang="sv" type="button" onclick="closeDialog('copiedUsernameAlert')" autofocus>Okej</button>
+    </dialog>
+
+    <dialog id="accountCreatedAlert">
+        <p>Account was successfully created</p>
+        <button lang="en" type="button" onclick="closeDialog('accountCreatedAlert')" autofocus>Okay</button>
+        <button lang="sv" type="button" onclick="closeDialog('accountCreatedAlert')" autofocus>Okej</button>
     </dialog>
 
     <dialog id="deleteAlert">

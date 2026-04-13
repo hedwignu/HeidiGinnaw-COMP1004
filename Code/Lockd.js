@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function(){
     var settingsBar = document.getElementById("settingsBar");
     settingsBar.style.display = "none";
 
-    console.log(sessionStorage.getItem('currentUser'));
+    var userId = sessionStorage.getItem('currentUser');
+    console.log(userId);
 
     // setting theme based on local storage
     if (localStorage.getItem('theme') === 'dark'){
@@ -39,20 +40,24 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     // adding all notes from storage as html elements
-    var notesArray = localStorage.getItem('notes');
+    var notesArray = localStorage.getItem(`notes${userId}`);
     notesArray = JSON.parse(notesArray);
     
-    for (i = 0; i < notesArray.length; i++){
-        var noteTitle = notesArray[i];
-        addNoteToList(noteTitle, 'allNotes');
+    if (localStorage.getItem(`notes${userId}`) == null){
+        localStorage.setItem(`notes${userId}`, JSON.stringify([]));
+    }else {
+        for (i = 0; i < notesArray.length; i++){
+            var noteTitle = notesArray[i];
+            addNoteToList(noteTitle, 'allNotes');
+        }
     }
 
-    var PinnedNotesArr = localStorage.getItem('pinnedNotes');
+    var PinnedNotesArr = localStorage.getItem(`pinnedNotes${userId}`);
     PinnedNotesArr = JSON.parse(PinnedNotesArr);
     
     // checking there is a pinned notes array in local storage
-    if (localStorage.getItem('pinnedNotes') == null){
-        localStorage.setItem('pinnedNotes', JSON.stringify([]));
+    if (localStorage.getItem(`pinnedNotes${userId}`) == null){
+        localStorage.setItem(`pinnedNotes${userId}`, JSON.stringify([]));
     }else {
         for (i = 0; i < PinnedNotesArr.length; i++){
             var noteTitle = PinnedNotesArr[i];
@@ -97,7 +102,7 @@ async function openFile(){
 
     name = name.substring(0 , name.lastIndexOf('.'));
 
-    var notesArray = localStorage.getItem('notes');
+    var notesArray = localStorage.getItem(`notes${userId}`);
     notesArray = JSON.parse(notesArray);
 
     var inArray = false;
@@ -110,7 +115,7 @@ async function openFile(){
         }
     }
 
-    var PinnedNotesArr = localStorage.getItem('pinnedNotes');
+    var PinnedNotesArr = localStorage.getItem(`pinnedNotes${userId}`);
     PinnedNotesArr = JSON.parse(PinnedNotesArr);
 
     for (var i = 0; i < PinnedNotesArr.length; i++){
@@ -136,17 +141,14 @@ async function openFile(){
 
     // adding to local storage
     localStorage.setItem(nameId, text);
-    localStorage.setItem('notes',JSON.stringify(notesArray));
-    localStorage.setItem('pinnedNotes',JSON.stringify(PinnedNotesArr));
+    localStorage.setItem(`notes${userId}`,JSON.stringify(notesArray));
+    localStorage.setItem(`pinnedNotes${userId}`,JSON.stringify(PinnedNotesArr));
 
 
     console.log(text);
     console.log(name);
 }
 
-async function openSpecificFile(){
-
-}
 
 async function saveFile(name, data){
     // suggesting name so is saved the same in local and computer storage
@@ -205,9 +207,6 @@ function passwordHash(password,salt){
     for (var i = 0; i < binaryPassword.length; i += 32){
         // splitting the binary password into 32 bit blocks
         binSlice = binaryPassword.slice(i,i+32);
-
-        //converting binary slices to decimal TODO delete? maybe redundant
-        decSlice = binToDec(binSlice);
 
         M[j] = binToDec(binSlice);
         j++;
@@ -273,7 +272,6 @@ function passwordHash(password,salt){
             var salt = userInfo[1];
             if(checkPassword(passwordIn, password, salt)){
                 // successful log in
-                alert('Logged in!');
                 document.getElementById("loginBox").reset();
                 // get users id
                 const userId = userInfo[2];
@@ -283,13 +281,15 @@ function passwordHash(password,salt){
                 homePage();
             }else{
                 // incorrect password
-                //console.log('incorrect password');
+                var dialogue = document.getElementById('invalidLoginAlert');
+                dialogue.showModal()
                 alert('Username or Password is incorrect');
                 document.getElementById("loginBox").reset();
             }
         }else{
             // incorrect username
-            alert('Username or Password is incorrect');
+            var dialogue = document.getElementById('invalidLoginAlert');
+            dialogue.showModal()
             document.getElementById("loginBox").reset();
         }
         
@@ -353,7 +353,9 @@ function createAccount(){
 
         // check if username already exists
         if (localStorage.getItem(usernameIn) != null){
-            alert('username already exists');
+            // tells user username exists
+            var dialogue = document.getElementById('copiedUsernameAlert');
+            dialogue.showModal()
             return;
         }
 
@@ -363,17 +365,19 @@ function createAccount(){
         // hashing password for user
         var password = passwordHash(passwordIn, salt);
 
-        // TODO generate unique random user ID
-        var userId = 1;
-        //var userId = Math.floor(Math.random()*1000);
+        // generate unique user id
+        var userId = crypto.randomUUID();
+        console.log(userId);
 
         // storing in local storage
         localStorage.setItem(usernameIn, JSON.stringify([password, salt, userId]));
         
         // creating note array in local storage
-        localStorage.setItem('notes', JSON.stringify(['Welcome To Lockd']))
+        localStorage.setItem(`notes${userId}`, JSON.stringify(['Welcome To Lockd']))
 
-        alert('account created');
+        // tells user account was created
+        var dialogue = document.getElementById('accountCreatedAlert');
+        dialogue.showModal()
 }
 
 function loginPage(){
@@ -601,7 +605,7 @@ function saveNote(){
         addNoteToList(noteTitle);
     }*/
 
-    var notesArray = localStorage.getItem('notes');
+    var notesArray = localStorage.getItem(`notes${userId}`);
     notesArray = JSON.parse(notesArray);
 
     var inArray = false;
@@ -613,13 +617,13 @@ function saveNote(){
             break;
         }else if (originalTitle == notesArray[i]){
             notesArray[i] = noteTitle;
-            changeNoteTitle(originalTitle, noteTitle, 'notes');
+            changeNoteTitle(originalTitle, noteTitle, `notes${userId}`);
             inArray = true;
             break;
         }
     }
 
-    var PinnedNotesArr = localStorage.getItem('pinnedNotes');
+    var PinnedNotesArr = localStorage.getItem(`pinnedNotes${userId}`);
     PinnedNotesArr = JSON.parse(PinnedNotesArr);
 
     for (var i = 0; i < PinnedNotesArr.length; i++){
@@ -640,8 +644,8 @@ function saveNote(){
         addNoteToList(noteTitle, 'allNotes');
     }
 
-    localStorage.setItem('notes',JSON.stringify(notesArray));
-    localStorage.setItem('pinnedNotes',JSON.stringify(PinnedNotesArr));
+    localStorage.setItem(`notes${userId}`,JSON.stringify(notesArray));
+    localStorage.setItem(`pinnedNotes${userId}`,JSON.stringify(PinnedNotesArr));
 
     // clearing local storage
     localStorage.removeItem('currentNote');
@@ -652,7 +656,7 @@ function saveNote(){
 
 function addNoteToList(title, list){
     // retrieving unordered list element
-    var ul = document.getElementById(list);
+    var ol = document.getElementById(list);
     // creating a new list element
     var li = document.createElement("li");
     // making it display the given title
@@ -663,14 +667,14 @@ function addNoteToList(title, list){
     li.setAttribute("id", title);
     li.classList.add("notes");
     li.classList.add("clickableText");
-    ul.appendChild(li);
+    ol.appendChild(li);
 }
 
 function changeNoteTitle(originalTitle, newTitle, list){
     var originalTitleId = originalTitle.replaceAll(" ", "");
     var li = document.getElementById(originalTitleId);
 
-    if (list == 'notes'){
+    if (list == `notes${userId}`){
         addNoteToList(newTitle, 'allNotes');
     }else{
         addNoteToList(newTitle, 'pinnedNotes');
@@ -693,10 +697,10 @@ function changeNoteTitle(originalTitle, newTitle, list){
 
 function changePinStatus(){
     var title = localStorage.getItem('currentNote');
-    var notesArray = localStorage.getItem('notes');
+    var notesArray = localStorage.getItem(`notes${userId}`);
     notesArray = JSON.parse(notesArray);
 
-    var PinnedNotesArr = localStorage.getItem('pinnedNotes');
+    var PinnedNotesArr = localStorage.getItem(`pinnedNotes${userId}`);
     PinnedNotesArr = JSON.parse(PinnedNotesArr);
 
     var pinned = true;
@@ -719,20 +723,20 @@ function changePinStatus(){
         // removes from notes array
         var index = notesArray.indexOf(title);
         notesArray.splice(index, 1);
-        localStorage.setItem('notes', JSON.stringify(notesArray));
+        localStorage.setItem(`notes${userId}`, JSON.stringify(notesArray));
         // add to pinned array
         PinnedNotesArr.push(title);
-        localStorage.setItem('pinnedNotes', JSON.stringify(PinnedNotesArr));
+        localStorage.setItem(`pinnedNotes${userId}`, JSON.stringify(PinnedNotesArr));
     }else {
         // adds note to unpinned list
         addNoteToList(title, 'allNotes');
         // removes from pinned array
         var index = PinnedNotesArr.indexOf(title);
         PinnedNotesArr.splice(index, 1);
-        localStorage.setItem('pinnedNotes', JSON.stringify(PinnedNotesArr));
+        localStorage.setItem(`pinnedNotes${userId}`, JSON.stringify(PinnedNotesArr));
         // add to unpinned array
         notesArray.push(title);
-        localStorage.setItem('notes', JSON.stringify(notesArray));
+        localStorage.setItem(`notes${userId}`, JSON.stringify(notesArray));
     }
 }
 
@@ -767,10 +771,10 @@ function deleteNote(){
     localStorage.removeItem(noteTitleId);
 
     //removing item from array
-    var PinnedNotesArr = localStorage.getItem('pinnedNotes');
+    var PinnedNotesArr = localStorage.getItem(`pinnedNotes${userId}`);
     PinnedNotesArr = JSON.parse(PinnedNotesArr);
 
-    var notesArray = localStorage.getItem('notes');
+    var notesArray = localStorage.getItem(`notes${userId}`);
     notesArray = JSON.parse(notesArray);
 
     var pinned = true;
@@ -780,7 +784,7 @@ function deleteNote(){
             // removes from notes array
             var index = notesArray.indexOf(title);
             notesArray.splice(index, 1);
-            localStorage.setItem('notes', JSON.stringify(notesArray));
+            localStorage.setItem(`notes${userId}`, JSON.stringify(notesArray));
             break;
         }
     }
@@ -790,7 +794,7 @@ function deleteNote(){
             // removes from pinned array
             var index = PinnedNotesArr.indexOf(title);
             PinnedNotesArr.splice(index, 1);
-            localStorage.setItem('pinnedNotes', JSON.stringify(PinnedNotesArr));
+            localStorage.setItem(`pinnedNotes${userId}`, JSON.stringify(PinnedNotesArr));
         }
     }
 
@@ -1057,20 +1061,6 @@ function changeLanguage(){
 
         localStorage.setItem('language','Svenska');
     }
-/*
-    switch (pageDisplayed){
-        case 'log in':
-            loginPage();
-            break;
-        case 'sign up':
-            signUpPage();
-            break;
-        default:
-            //errorPage();
-            alert("an error has occured");
-            break;
-    }
-    */
 }
 
 //document.getElementById('noteFontSize').addEventListener('change', () => {
