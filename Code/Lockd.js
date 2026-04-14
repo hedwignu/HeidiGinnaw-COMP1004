@@ -85,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function(){
 })
 
 async function openFile(){
+    var userId = sessionStorage.getItem('currentUser');
+    
     // user selects file
     let [fileHandle] = await window.showOpenFilePicker({
         // only allowing JSON files
@@ -134,8 +136,6 @@ async function openFile(){
         return;
     }
     
-    // retrieving current user's id
-    const userId = sessionStorage.getItem('currentUser')
     // adding id to end of note title to create unique id
     var nameId = name.concat(userId);
 
@@ -165,6 +165,7 @@ async function saveFile(name, data){
     const writable = await fileHandle.createWritable();
     await writable.write(data);
     await writable.close();
+    console.log('hello');
 }
 
 
@@ -448,10 +449,16 @@ function previewClicked(selectedTitle){
 
     var currentNoteId = currentNote.replaceAll(" ", "");
 
-    // retrieving note title
-    var noteTitle = document.getElementById(currentNoteId).innerHTML;
-
-    previewPage();
+    try{
+        // retrieving note title
+        var noteTitle = document.getElementById(currentNoteId).innerHTML;
+    }catch (error){
+        var dialogue = document.getElementById('errorAlert');
+        dialogue.showModal();
+        // clearing local storage
+        localStorage.removeItem('currentNote');
+        return;
+    }
 
     var title = noteTitle;
 
@@ -460,7 +467,18 @@ function previewClicked(selectedTitle){
 
     // retreived stored data based on selected note title
     var storedData = localStorage.getItem(noteTitle);
-    storedData = JSON.parse(storedData);
+
+    try{
+        storedData = JSON.parse(storedData);
+    }catch (error){
+        var dialogue = document.getElementById('errorAlert');
+        dialogue.showModal()
+        // clearing local storage
+        localStorage.removeItem('currentNote');
+        return;
+    }
+    
+    previewPage();
 
     // checking data is stored
     if (storedData != null){
@@ -521,19 +539,8 @@ function createNote(){
 }
 
 function shutNote(){
-    if (confirm("Exit without saving?")) {
-        // clearing local storage for current note value
-        localStorage.setItem('currentNote', '');
-        // clearing notes input boxes
-        document.getElementById('noteTitle').value = '';
-        document.getElementById('noteData').value = '';
-        // returning to the home page
-        homePage();
-        return;
-    } else {
-        // exit function as user selected cancel
-        return;
-    }
+    var dialogue = document.getElementById('unsavedAlert');
+    dialogue.showModal()
 }
 
 function checkValidSave(){
@@ -673,6 +680,8 @@ function addNoteToList(title, list){
 function changeNoteTitle(originalTitle, newTitle, list){
     var originalTitleId = originalTitle.replaceAll(" ", "");
     var li = document.getElementById(originalTitleId);
+    
+    var userId = sessionStorage.getItem('currentUser');
 
     if (list == `notes${userId}`){
         addNoteToList(newTitle, 'allNotes');
@@ -681,9 +690,6 @@ function changeNoteTitle(originalTitle, newTitle, list){
     }
     
     li.remove();
-
-    // retrieving current userid
-    const userId = sessionStorage.getItem('currentUser');
 
     // removing old note from local storage
     originalTitle = originalTitle.concat(userId);
@@ -697,6 +703,8 @@ function changeNoteTitle(originalTitle, newTitle, list){
 
 function changePinStatus(){
     var title = localStorage.getItem('currentNote');
+    var userId = sessionStorage.getItem('currentUser');
+
     var notesArray = localStorage.getItem(`notes${userId}`);
     notesArray = JSON.parse(notesArray);
 
@@ -755,6 +763,20 @@ function checkValidDelete(){
 function confirmDelete(){
     closeDialog('deleteAlert');
     deleteNote();
+    return;
+}
+
+function confirmExit(){
+    closeDialog('unsavedAlert');
+
+    // clearing local storage for current note value
+    localStorage.setItem('currentNote', '');
+    // clearing notes input boxes
+    document.getElementById('noteTitle').value = '';
+    document.getElementById('noteData').value = '';
+
+    // returning to the home page
+    homePage();
     return;
 }
 

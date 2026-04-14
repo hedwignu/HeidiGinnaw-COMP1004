@@ -231,6 +231,13 @@
         <button lang="sv" type="button" onclick="closeDialog('accountCreatedAlert')" autofocus>Okej</button>
     </dialog>
 
+    <dialog id="errorAlert">
+        <h3>Error</h3>
+        <p>An unknown error has occured</p>
+        <button lang="en" type="button" onclick="closeDialog('errorAlert')" autofocus>Okay</button>
+        <button lang="sv" type="button" onclick="closeDialog('errorAlert')" autofocus>Okej</button>
+    </dialog>
+
     <dialog id="deleteAlert">
         <h2>File Deletion</h2>
         <ul>
@@ -238,10 +245,23 @@
             <li> To delete it from your device you will need to do it through your file manager. </li>
             <li> If you want to access this file unencrypted you will need to upload it to the website again. </li>
         </ul>
-        <button lang="en" type="button" onclick="confirmDelete('deleteAlert')" autofocus>Okay</button>
-        <button lang="sv" type="button" onclick="confirmDelete('deleteAlert')" autofocus>Okej</button>
+        <button lang="en" type="button" onclick="confirmDelete()" autofocus>Okay</button>
+        <button lang="sv" type="button" onclick="confirmDelete()" autofocus>Okej</button>
         <button lang="en" type="button" onclick="closeDialog('deleteAlert')" autofocus>Cancel</button>
         <button lang="sv" type="button" onclick="closeDialog('deleteAlert')" autofocus>Avbryt</button>
+    </dialog>
+
+    <dialog id="unsavedAlert">
+        <h3>Unsaved Changes</h3>
+        <ul>
+            <p>Exit without saving?</p>
+        </ul>
+        <div class = "d-flex p-2 justify-content-center">
+            <button lang="en" type="button" onclick="confirmExit()" autofocus>Okay</button>
+            <button lang="sv" type="button" onclick="confirmExit()" autofocus>Okej</button>
+            <button lang="en" type="button" onclick="closeDialog('unsavedAlert')" autofocus>Cancel</button>
+            <button lang="sv" type="button" onclick="closeDialog('unsavedAlert')" autofocus>Avbryt</button>
+        </div>
     </dialog>
 
 <!--
