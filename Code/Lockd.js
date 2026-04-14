@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', function(){
+    // if user isn't logged in then reroute to the log in page
     if (sessionStorage.getItem('currentUser') == null){
         loginPage();
     }
+    // logging what page is displayed
     var currSection = localStorage.getItem('pageDisplayed');
-    console.log(currSection);
+    //console.log(currSection);
+
     // making sure settings drop down is not visible
     var settingsBar = document.getElementById("settingsBar");
     settingsBar.style.display = "none";
-
-    var userId = sessionStorage.getItem('currentUser');
-    console.log(userId);
 
     // setting theme based on local storage
     if (localStorage.getItem('theme') === 'dark'){
@@ -37,32 +37,6 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     if (localStorage.getItem('fontSize') === 'Small'){
         decreaseFontSize();
-    }
-
-    // adding all notes from storage as html elements
-    var notesArray = localStorage.getItem(`notes${userId}`);
-    notesArray = JSON.parse(notesArray);
-    
-    if (localStorage.getItem(`notes${userId}`) == null){
-        localStorage.setItem(`notes${userId}`, JSON.stringify([]));
-    }else {
-        for (i = 0; i < notesArray.length; i++){
-            var noteTitle = notesArray[i];
-            addNoteToList(noteTitle, 'allNotes');
-        }
-    }
-
-    var PinnedNotesArr = localStorage.getItem(`pinnedNotes${userId}`);
-    PinnedNotesArr = JSON.parse(PinnedNotesArr);
-    
-    // checking there is a pinned notes array in local storage
-    if (localStorage.getItem(`pinnedNotes${userId}`) == null){
-        localStorage.setItem(`pinnedNotes${userId}`, JSON.stringify([]));
-    }else {
-        for (i = 0; i < PinnedNotesArr.length; i++){
-            var noteTitle = PinnedNotesArr[i];
-            addNoteToList(noteTitle, 'pinnedNotes');
-        }
     }
 
     switch(currSection){
@@ -278,6 +252,7 @@ function passwordHash(password,salt){
                 const userId = userInfo[2];
                 // set logged in user in local storage
                 sessionStorage.setItem('currentUser', userId);
+
                 // call the home page
                 homePage();
             }else{
@@ -324,6 +299,38 @@ function logOut(){
 // brings up home page
 function homePage(){
     localStorage.setItem('pageDisplayed', 'homePage');
+    
+    // retreiving user id
+    var userId = sessionStorage.getItem('currentUser');
+
+    // clearing note html elements
+    clearLists();
+
+    // adding all notes from storage as html elements
+    var notesArray = localStorage.getItem(`notes${userId}`);
+    notesArray = JSON.parse(notesArray);
+    
+    if (localStorage.getItem(`notes${userId}`) == null){
+        localStorage.setItem(`notes${userId}`, JSON.stringify([]));
+    }else {
+        for (i = 0; i < notesArray.length; i++){
+            var noteTitle = notesArray[i];
+            addNoteToList(noteTitle, 'allNotes');
+        }
+    }
+
+    var PinnedNotesArr = localStorage.getItem(`pinnedNotes${userId}`);
+    PinnedNotesArr = JSON.parse(PinnedNotesArr);
+    
+    // checking there is a pinned notes array in local storage
+    if (localStorage.getItem(`pinnedNotes${userId}`) == null){
+        localStorage.setItem(`pinnedNotes${userId}`, JSON.stringify([]));
+    }else {
+        for (i = 0; i < PinnedNotesArr.length; i++){
+            var noteTitle = PinnedNotesArr[i];
+            addNoteToList(noteTitle, 'pinnedNotes');
+        }
+    }
 
     // enabling new note button
     document.getElementById("newNoteButton").disabled = false;
@@ -675,6 +682,28 @@ function addNoteToList(title, list){
     li.classList.add("notes");
     li.classList.add("clickableText");
     ol.appendChild(li);
+}
+
+function clearLists(){
+
+    // retrieving unordered list element
+    var ol = document.getElementById('pinnedNotes').childNodes;
+
+    console.log(ol.length);
+
+    while (ol.length > 0){
+        console.log('hi');
+        var li = ol[0];
+        li.parentNode.removeChild(li);
+    }
+
+    ol = document.getElementById('allNotes').childNodes;
+
+    while (ol.length > 0){
+        var li = ol[0];
+        li.parentNode.removeChild(li);
+    }
+
 }
 
 function changeNoteTitle(originalTitle, newTitle, list){
