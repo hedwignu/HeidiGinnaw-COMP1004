@@ -303,6 +303,9 @@ function homePage(){
     // retreiving user id
     var userId = sessionStorage.getItem('currentUser');
 
+    // clearing current note from local storage
+    localStorage.removeItem('currentNote');
+
     // clearing note html elements
     clearLists();
 
@@ -332,9 +335,11 @@ function homePage(){
         }
     }
 
-    // enabling new note button
+    // enabling new note and upload buttons
     document.getElementById("newNoteButton").disabled = false;
     document.getElementById("newNoteButton1").disabled = false;
+    document.getElementById("uploadButton").disabled = false;
+    document.getElementById("uploadButton1").disabled = false;
     
     const sections = document.querySelectorAll('section');
 
@@ -391,6 +396,11 @@ function createAccount(){
 function loginPage(){
     localStorage.setItem('pageDisplayed','log in');
     
+    // disabling new note and upload buttons
+    document.getElementById("newNoteButton").disabled = true;
+    document.getElementById("newNoteButton1").disabled = true;
+    document.getElementById("uploadButton").disabled = true;
+    document.getElementById("uploadButton1").disabled = true;
 
     const sections = document.querySelectorAll('section');
     
@@ -408,6 +418,12 @@ function loginPage(){
 function notePage(){
     // letting browser know note page is open
     localStorage.setItem('pageDisplayed','note');
+
+    // disabling new note and upload buttons
+    document.getElementById("newNoteButton").disabled = true;
+    document.getElementById("newNoteButton1").disabled = true;
+    document.getElementById("uploadButton").disabled = true;
+    document.getElementById("uploadButton1").disabled = true;
 
     const sections = document.querySelectorAll('section');
 
@@ -429,6 +445,12 @@ function notePage(){
 function previewPage(){
     // letting browser know note page is open
     localStorage.setItem('pageDisplayed','preview');
+    
+    // disabling new note and upload buttons
+    document.getElementById("newNoteButton").disabled = true;
+    document.getElementById("newNoteButton1").disabled = true;
+    document.getElementById("uploadButton").disabled = true;
+    document.getElementById("uploadButton1").disabled = true;
 
     const sections = document.querySelectorAll('section');
 
@@ -460,10 +482,8 @@ function previewClicked(selectedTitle){
         // retrieving note title
         var noteTitle = document.getElementById(currentNoteId).innerHTML;
     }catch (error){
-        var dialogue = document.getElementById('errorAlert');
+        var dialogue = document.getElementById('invalidNoteAlert');
         dialogue.showModal();
-        // clearing local storage
-        localStorage.removeItem('currentNote');
         return;
     }
 
@@ -478,10 +498,8 @@ function previewClicked(selectedTitle){
     try{
         storedData = JSON.parse(storedData);
     }catch (error){
-        var dialogue = document.getElementById('errorAlert');
+        var dialogue = document.getElementById('invalidNoteAlert');
         dialogue.showModal()
-        // clearing local storage
-        localStorage.removeItem('currentNote');
         return;
     }
     
@@ -552,15 +570,19 @@ function shutNote(){
 
 function checkValidSave(){
     var noteTitle = document.getElementById('noteTitle').value;
-    console.log('I hate you')
+    console.log('Here');
     console.log(noteTitle);
+
+    var userId = sessionStorage.getItem('currentUser');
+    var noteTitleId = noteTitle.concat(userId);
 
     if (noteTitle == ""){
         var dialogue = document.getElementById('noTitleAlert');
         dialogue.showModal()
         return;
     // checking if note is already in local storage
-    }else if (localStorage.getItem(noteTitle) == true && localStorage.getItem('currentNote') != noteTitle){
+    }else if (localStorage.getItem(noteTitleId) != null && localStorage.getItem('currentNote') != noteTitle){
+        console.log('hello');
         var dialogue = document.getElementById('duplicateTitleAlert');
         dialogue.showModal();
         return;
@@ -603,8 +625,6 @@ function saveNote(){
 
     // saving file to computer
     saveFile(noteTitle, JSON.stringify([preview, noteData, key]));
-
-    homePage();
 
     // setting note name on home page
     
@@ -661,11 +681,10 @@ function saveNote(){
     localStorage.setItem(`notes${userId}`,JSON.stringify(notesArray));
     localStorage.setItem(`pinnedNotes${userId}`,JSON.stringify(PinnedNotesArr));
 
-    // clearing local storage
-    localStorage.removeItem('currentNote');
-
     document.getElementById('noteTitle').value = '';
     document.getElementById('noteData').value = '';
+    
+    homePage();
 }
 
 function addNoteToList(title, list){
@@ -718,7 +737,7 @@ function changeNoteTitle(originalTitle, newTitle, list){
         addNoteToList(newTitle, 'pinnedNotes');
     }
     
-    li.remove();
+    //li.remove();
 
     // removing old note from local storage
     originalTitle = originalTitle.concat(userId);
@@ -751,8 +770,14 @@ function changePinStatus(){
 
     // remove note from other list
     var titleId = title.replaceAll(" ", "");
-    var li = document.getElementById(titleId);
-    li.remove();
+    try{
+        var li = document.getElementById(titleId);
+        li.remove();
+    }catch (error){
+        var dialogue = document.getElementById('pinAlert');
+        dialogue.showModal();
+        return;
+    }
     
     if (pinned == false){
         // pins the note to the top of the list
@@ -810,9 +835,9 @@ function confirmExit(){
 }
 
 function deleteNote(){
-    // deletes note from storage 
-    // getting title of note to be deleted
-    var title = document.getElementById('noteTitle').value;
+    // deletes note from browser local storage 
+    // retreving current note
+    var title = localStorage.getItem('currentNote');
     // getting current users id
     var userId = sessionStorage.getItem('currentUser');
     // adding id to end of note title to create unique id
@@ -865,6 +890,10 @@ function deleteNote(){
     homePage();
 }
 
+function deleteCorrupt(){
+    deleteNote();
+    closeDialog('invalidNoteAlert');
+}
 
 // opens drop down for settings
 function settingsDropdown(){

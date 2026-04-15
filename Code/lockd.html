@@ -18,8 +18,8 @@
                             <button lang="sv" type="button" class="button" id="newNoteButton1" disabled="true" onclick="createNote()">Ny Anteckning</button>
                         </div>
                         <div class="p-2 bd-highlight" id="navItem">
-                            <button lang="en" type="button" class="button" id="uploadButton" onclick="openFile()">Upload</button>
-                            <button lang="sv" type="button" class="button" id="upload1Button" onclick="openFile()">Ladda Upp</button>
+                            <button lang="en" type="button" class="button" id="uploadButton" disabled="true" onclick="openFile()">Upload</button>
+                            <button lang="sv" type="button" class="button" id="uploadButton1" disabled="true" onclick="openFile()">Ladda Upp</button>
                         </div>
                         <div class="ms-auto p-2 bd-highlight" id="navItem">
                             <button lang="en" class="button" type="button" id="settingsButton" onclick="settingsDropdown()">Settings</button>
@@ -238,6 +238,13 @@
         <button lang="sv" type="button" onclick="closeDialog('errorAlert')" autofocus>Okej</button>
     </dialog>
 
+    <dialog id="pinAlert">
+        <h3>Error</h3>
+        <p>Please save your file before trying to pin it</p>
+        <button lang="en" type="button" onclick="closeDialog('pinAlert')" autofocus>Okay</button>
+        <button lang="sv" type="button" onclick="closeDialog('pinAlert')" autofocus>Okej</button>
+    </dialog>
+
     <dialog id="deleteAlert">
         <h2>File Deletion</h2>
         <ul>
@@ -261,6 +268,19 @@
             <button lang="sv" type="button" onclick="confirmExit()" autofocus>Okej</button>
             <button lang="en" type="button" onclick="closeDialog('unsavedAlert')" autofocus>Cancel</button>
             <button lang="sv" type="button" onclick="closeDialog('unsavedAlert')" autofocus>Avbryt</button>
+        </div>
+    </dialog>
+
+    <dialog id="invalidNoteAlert">
+        <h3>Corrupt File</h3>
+        <ul>
+            <p>This file is unable to be opened with this application. <br> You can delete the file here if you want to.</p>
+        </ul>
+        <div class = "d-flex p-2 justify-content-center">
+            <button lang="en" type="button" onclick="deleteCorrupt()" autofocus>Delete</button>
+            <button lang="sv" type="button" onclick="deleteCorrupt()" autofocus>Ta Bort</button>
+            <button lang="en" type="button" onclick="closeDialog('invalidNoteAlert')" autofocus>Cancel</button>
+            <button lang="sv" type="button" onclick="closeDialog('invalidNoteAlert')" autofocus>Avbryt</button>
         </div>
     </dialog>
 
