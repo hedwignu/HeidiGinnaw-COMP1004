@@ -1,53 +1,56 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.0.3 Chrome/140.0.7339.249 Electron/38.7.0 Safari/537.36" version="29.0.3">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Page-1" id="n88PQQfsOjBr0mbF47BY">
-    <mxGraphModel dx="786" dy="562" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="670" dy="608" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="130" width="630" height="370" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="370" width="630" x="60" y="130" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="130" width="630" height="30" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="630" x="60" y="130" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-3" value="Settings" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="640" y="130" width="50" height="30" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Settings" vertex="1">
+          <mxGeometry height="30" width="50" x="640" y="130" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-4" value="Note Name" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" vertex="1" parent="1">
-          <mxGeometry x="90" y="190" width="170" height="90" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" value="Note Name" vertex="1">
+          <mxGeometry height="90" width="170" x="90" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-14" value="Note Name" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" vertex="1" parent="1">
-          <mxGeometry x="290" y="190" width="170" height="90" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" value="Note Name" vertex="1">
+          <mxGeometry height="90" width="170" x="290" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-15" value="Note Name" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" vertex="1" parent="1">
-          <mxGeometry x="490" y="190" width="170" height="90" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" value="Note Name" vertex="1">
+          <mxGeometry height="90" width="170" x="490" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-16" value="Note Name" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" vertex="1" parent="1">
-          <mxGeometry x="90" y="310" width="170" height="90" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" value="Note Name" vertex="1">
+          <mxGeometry height="90" width="170" x="90" y="310" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-17" value="Note Name" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" vertex="1" parent="1">
-          <mxGeometry x="290" y="310" width="170" height="90" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" value="Note Name" vertex="1">
+          <mxGeometry height="90" width="170" x="290" y="310" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-18" value="Note Name" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" vertex="1" parent="1">
-          <mxGeometry x="490" y="310" width="170" height="90" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" value="Note Name" vertex="1">
+          <mxGeometry height="90" width="170" x="490" y="310" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-19" value="Note Name" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" vertex="1" parent="1">
-          <mxGeometry x="90" y="420" width="170" height="80" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" value="Note Name" vertex="1">
+          <mxGeometry height="80" width="170" x="90" y="420" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-20" value="Note Name" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" vertex="1" parent="1">
-          <mxGeometry x="290" y="420" width="170" height="80" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" value="Note Name" vertex="1">
+          <mxGeometry height="80" width="170" x="290" y="420" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-21" value="Note Name" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" vertex="1" parent="1">
-          <mxGeometry x="490" y="420" width="170" height="80" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontColor=light-dark(#808080, #ededed);" value="Note Name" vertex="1">
+          <mxGeometry height="80" width="170" x="490" y="420" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-22" value="New Note" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="130" width="70" height="30" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="New Note" vertex="1">
+          <mxGeometry height="30" width="70" x="60" y="130" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-23" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="680" y="160" width="10" height="340" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-23" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="340" width="10" x="680" y="160" as="geometry" />
         </mxCell>
-        <mxCell id="wVub6fS0JjtvvSDs4g-O-24" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="1">
-          <mxGeometry x="680" y="164" width="10" height="40" as="geometry" />
+        <mxCell id="wVub6fS0JjtvvSDs4g-O-24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" value="" vertex="1">
+          <mxGeometry height="40" width="10" x="680" y="164" as="geometry" />
+        </mxCell>
+        <mxCell id="IHqq6KjBhmURFgakDmk1-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Upload" vertex="1">
+          <mxGeometry height="30" width="70" x="130" y="130" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

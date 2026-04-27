@@ -88,7 +88,7 @@ button:active{
     border-color: rgb(168, 168, 168);
 }
 
-#loginBox{
+.formBox{
     width: fit-content;
     height: fit-content;
     padding: 60px;
@@ -99,7 +99,7 @@ button:active{
     z-index: 0;
 }
 
-#loginBox.darkTheme {
+.formBox.darkTheme {
     background-color: rgb(28, 70, 31);
     border: 2px solid #efefef;
 }

@@ -1,6 +1,6 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Page-1" id="zNLSl8VSH4jF58sWly_y">
-    <mxGraphModel dx="772" dy="547" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="670" dy="608" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -26,19 +26,19 @@
           <mxGeometry height="20" width="560" x="100" y="150" as="geometry" />
         </mxCell>
         <mxCell id="22yXzxD9XRe2sFoRK-Pn-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Pin Note" vertex="1">
-          <mxGeometry height="20" width="140" x="100" y="130" as="geometry" />
+          <mxGeometry height="20" width="170" x="100" y="130" as="geometry" />
         </mxCell>
         <mxCell id="22yXzxD9XRe2sFoRK-Pn-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Save Note" vertex="1">
           <mxGeometry height="20" width="70" x="590" y="390" as="geometry" />
         </mxCell>
-        <mxCell id="22yXzxD9XRe2sFoRK-Pn-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Font Size" vertex="1">
-          <mxGeometry height="20" width="140" x="240" y="130" as="geometry" />
+        <mxCell id="22yXzxD9XRe2sFoRK-Pn-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Clear" vertex="1">
+          <mxGeometry height="20" width="160" x="270" y="130" as="geometry" />
         </mxCell>
-        <mxCell id="aBvZOfBbsehbPk7ixCa7-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Bullet Points" vertex="1">
-          <mxGeometry height="20" width="140" x="380" y="130" as="geometry" />
+        <mxCell id="aBvZOfBbsehbPk7ixCa7-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Delete" vertex="1">
+          <mxGeometry height="20" width="170" x="430" y="130" as="geometry" />
         </mxCell>
-        <mxCell id="aBvZOfBbsehbPk7ixCa7-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Check Boxes" vertex="1">
-          <mxGeometry height="20" width="140" x="520" y="130" as="geometry" />
+        <mxCell id="aBvZOfBbsehbPk7ixCa7-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="X" vertex="1">
+          <mxGeometry height="20" width="60" x="600" y="130" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

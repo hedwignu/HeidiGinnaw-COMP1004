@@ -277,6 +277,7 @@ function signUpPage(){
 
     const sections = document.querySelectorAll('section');
     
+    document.getElementById("signUpBox").reset()
 
     sections.forEach(item => {
         item.style.display = 'none';
@@ -909,9 +910,11 @@ function settingsDropdown(){
 function themeButton(){
     // main body
     document.body.classList.toggle('darkTheme');
-    // login box
-    const loginBox = document.getElementById('loginBox');
-    loginBox.classList.toggle('darkTheme');
+    // login and sign up boxes
+    const loginBox = document.getElementsByClassName('formBox');
+    for (var i = 0; i < loginBox.length; i++){
+        loginBox[i].classList.toggle('darkTheme');
+    }
     // settings box
     const settingsBox = document.getElementById('settingsBar');
     settingsBox.classList.toggle('darkTheme');
