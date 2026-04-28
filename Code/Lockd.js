@@ -1223,7 +1223,7 @@ function closeDialog(dialogId){
 // --------------- security functions ----------------
 
 
-
+// TODO - change this pls
 // does bitwise calculation depending on what iteration it is
 function f(B,C,D,i){
     if (i >= 0 && i <= 15){
