@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function(){
     // setting language based on local storage
     if (localStorage.getItem('language') === 'Svenska'){
         var textElements = document.querySelectorAll('[lang="en"]');
-        console.log(document.querySelectorAll('[lang="en"]'));
-        console.log(document.querySelectorAll('#logInSection'));
+        //console.log(document.querySelectorAll('[lang="en"]'));
+        //console.log(document.querySelectorAll('#logInSection'));
         for (var i = 0; i < textElements.length; i++){
             textElements[i].style.display = "none";
         }
@@ -94,6 +94,7 @@ async function openFile(){
     var PinnedNotesArr = localStorage.getItem(`pinnedNotes${userId}`);
     PinnedNotesArr = JSON.parse(PinnedNotesArr);
 
+    // checking if it's in pinned array
     for (var i = 0; i < PinnedNotesArr.length; i++){
         if (noteTitle == PinnedNotesArr[i]){
             inArray = true;
@@ -101,12 +102,12 @@ async function openFile(){
         }
     }
 
-    // if not in notes array then adds it
+    // if not in either array then adds it
     if (inArray == false){
         notesArray.push(name);
         addNoteToList(name, 'allNotes');
     } else {
-        console.log('file has already been uploaded')
+        //console.log('file has already been uploaded')
         return;
     }
     
@@ -119,8 +120,8 @@ async function openFile(){
     localStorage.setItem(`pinnedNotes${userId}`,JSON.stringify(PinnedNotesArr));
 
 
-    console.log(text);
-    console.log(name);
+    //console.log(text);
+    //console.log(name);
 }
 
 
@@ -139,7 +140,7 @@ async function saveFile(name, data){
     const writable = await fileHandle.createWritable();
     await writable.write(data);
     await writable.close();
-    console.log('hello');
+    //console.log('hello');
 }
 
 
@@ -259,7 +260,6 @@ function passwordHash(password,salt){
                 // incorrect password
                 var dialogue = document.getElementById('invalidLoginAlert');
                 dialogue.showModal()
-                alert('Username or Password is incorrect');
                 document.getElementById("loginBox").reset();
             }
         }else{
@@ -268,10 +268,9 @@ function passwordHash(password,salt){
             dialogue.showModal()
             document.getElementById("loginBox").reset();
         }
-        
-    
     };
 
+// loads the sign up page
 function signUpPage(){
     localStorage.setItem('pageDisplayed', 'signUpSection');
 
@@ -279,10 +278,12 @@ function signUpPage(){
     
     document.getElementById("signUpBox").reset()
 
+    // hiding all html sections
     sections.forEach(item => {
         item.style.display = 'none';
     });
 
+    // displaying the needed html sections
     document.getElementById('allPages').style.display = '';
     document.getElementById('signUpSection').style.display = '';
     document.getElementById('logOutButton').style.display = 'none';
@@ -348,6 +349,7 @@ function homePage(){
         item.style.display = 'none';
     });
 
+    // displaying the needed html sections
     document.getElementById('allPages').style.display = '';
     document.getElementById('homeSection').style.display = '';
 
@@ -381,7 +383,7 @@ function createAccount(){
 
         // generate unique user id
         var userId = crypto.randomUUID();
-        console.log(userId);
+        //console.log(userId);
 
         // storing in local storage
         localStorage.setItem(usernameIn, JSON.stringify([password, salt, userId]));
@@ -557,7 +559,7 @@ function noteClicked(){
 
 // brings up thing to write a new note in
 function createNote(){
-    console.log('opening note window');
+    //console.log('opening note window');
     notePage();
 
     localStorage.setItem('currentNote', 'Untitled');
@@ -571,19 +573,20 @@ function shutNote(){
 
 function checkValidSave(){
     var noteTitle = document.getElementById('noteTitle').value;
-    console.log('Here');
-    console.log(noteTitle);
+    //console.log('Here');
+    //console.log(noteTitle);
 
+    // retreiving user id
     var userId = sessionStorage.getItem('currentUser');
     var noteTitleId = noteTitle.concat(userId);
 
-    if (noteTitle == ""){
+    if (noteTitle == ""){ // if no title has been given
         var dialogue = document.getElementById('noTitleAlert');
         dialogue.showModal()
         return;
     // checking if note is already in local storage
     }else if (localStorage.getItem(noteTitleId) != null && localStorage.getItem('currentNote') != noteTitle){
-        console.log('hello');
+        //console.log('hello');
         var dialogue = document.getElementById('duplicateTitleAlert');
         dialogue.showModal();
         return;
@@ -593,8 +596,10 @@ function checkValidSave(){
 }
 
 function saveNote(){
+    // saving the title of the note before the save
     var originalTitle = localStorage.getItem('currentNote');
 
+    // storing current note title
     var noteTitle = document.getElementById('noteTitle').value;
     localStorage.setItem('currentNote', noteTitle);
 
@@ -617,17 +622,15 @@ function saveNote(){
     // encrypt preview
     preview = encryptDecrypt(preview, key);
 
-    console.log(preview);
-    console.log(noteData);
-    console.log(noteTitleId);
+    //console.log(preview);
+    //console.log(noteData);
+    //console.log(noteTitleId);
 
     // saving file in local storage
     localStorage.setItem(noteTitleId, JSON.stringify([preview, noteData, key]));
 
     // saving file to computer
     saveFile(noteTitle, JSON.stringify([preview, noteData, key]));
-
-    // setting note name on home page
     
     // retrieving note title
     var currentNote = localStorage.getItem('currentNote');
@@ -661,6 +664,7 @@ function saveNote(){
     var PinnedNotesArr = localStorage.getItem(`pinnedNotes${userId}`);
     PinnedNotesArr = JSON.parse(PinnedNotesArr);
 
+    // checks if in pinned notes array
     for (var i = 0; i < PinnedNotesArr.length; i++){
         if (noteTitle == PinnedNotesArr[i]){
             inArray = true;
@@ -679,6 +683,7 @@ function saveNote(){
         addNoteToList(noteTitle, 'allNotes');
     }
 
+    // updating the arrays of notes
     localStorage.setItem(`notes${userId}`,JSON.stringify(notesArray));
     localStorage.setItem(`pinnedNotes${userId}`,JSON.stringify(PinnedNotesArr));
 
@@ -704,21 +709,23 @@ function addNoteToList(title, list){
     ol.appendChild(li);
 }
 
+// clears all notes on the home page so no duplicates when reloaded
 function clearLists(){
 
     // retrieving unordered list element
     var ol = document.getElementById('pinnedNotes').childNodes;
 
-    console.log(ol.length);
+    //console.log(ol.length);
 
+    // iterates through all pinned notes and removes
     while (ol.length > 0){
-        console.log('hi');
+        //console.log('hi');
         var li = ol[0];
         li.parentNode.removeChild(li);
     }
 
     ol = document.getElementById('allNotes').childNodes;
-
+    // iterates through all notes and removes
     while (ol.length > 0){
         var li = ol[0];
         li.parentNode.removeChild(li);
@@ -732,28 +739,23 @@ function changeNoteTitle(originalTitle, newTitle, list){
     
     var userId = sessionStorage.getItem('currentUser');
 
+    // adding the note to the correct list
     if (list == `notes${userId}`){
         addNoteToList(newTitle, 'allNotes');
     }else{
         addNoteToList(newTitle, 'pinnedNotes');
     }
-    
-    //li.remove();
 
     // removing old note from local storage
     originalTitle = originalTitle.concat(userId);
     localStorage.removeItem(originalTitle);
-
-    // removing old note from local storage
-    originalTitle = originalTitle.concat(sessionStorage.getItem('currentUser'));
-    localStorage.removeItem(originalTitle);
-
 }
 
 function changePinStatus(){
     var title = localStorage.getItem('currentNote');
     var userId = sessionStorage.getItem('currentUser');
 
+    // retreiving the arrays from storage
     var notesArray = localStorage.getItem(`notes${userId}`);
     notesArray = JSON.parse(notesArray);
 
@@ -762,6 +764,7 @@ function changePinStatus(){
 
     var pinned = true;
 
+    // checking if the note is already pinned
     for (var i = 0; i < notesArray.length; i++){
         if (notesArray[i] == title){
             pinned = false;
@@ -978,10 +981,6 @@ function increaseFontSize(){
         for (var i = 0; i < smallButton.length; i++){
             smallButton[i].style.fontSize = "8px";
         }
-
-        // sign up button
-        //var signUpButton = document.getElementById('signUpButton');
-        //signUpButton.style.fontSize = "12px";
         
         // small text
         var smallText = document.getElementsByClassName('smallText');
@@ -1015,10 +1014,6 @@ function increaseFontSize(){
         for (var i = 0; i < smallButton.length; i++){
             smallButton[i].style.fontSize = "12px";
         }
-
-        // sign up button
-        //var signUpButton = document.getElementById('signUpButton');
-        //signUpButton.style.fontSize = "16px";
         
         // small text
         var smallText = document.getElementsByClassName('smallText');
@@ -1057,20 +1052,12 @@ function decreaseFontSize(){
             smallButton[i].style.fontSize = "6px";
         }
 
-        // sign up button
-       // var signUpButton = document.getElementById('signUpButton');
-        //signUpButton.style.fontSize = "8px";
-        
         // small text
         var smallText = document.getElementsByClassName('smallText');
         // looping round all small text
         for (var i = 0; i < smallText.length; i++){
             smallText[i].style.fontSize = "6px";
         }
-        /*
-        // change display text
-        document.querySelector('#fontSize').innerHTML = 'Small';
-*/
         // change display text
         document.querySelector('#fontSize1').innerHTML = 'Små';
         document.querySelector('#fontSize').innerHTML = 'Small';
@@ -1096,10 +1083,6 @@ function decreaseFontSize(){
             smallButton[i].style.fontSize = "8px";
         }
 
-        // sign up button
-        //var signUpButton = document.getElementById('signUpButton');
-        //signUpButton.style.fontSize = "12px";
-        
         // small text
         var smallText = document.getElementsByClassName('smallText');
         // looping round all small text
@@ -1146,6 +1129,8 @@ function changeLanguage(){
     }
 }
 
+// function not in use as there was too many issues with trying to get textarea to change font size
+/* 
 //document.getElementById('noteFontSize').addEventListener('change', () => {
 function setFontSize(){
     // retreiving textarea element
@@ -1157,14 +1142,14 @@ function setFontSize(){
     const text = textArea.innerHTML;
     // retreiving user selected data from textarea
     var selectedText = (textArea.innerHTML).substring(selStart,selEnd);
-    console.log(selectedText);
+    //console.log(selectedText);
     //console.log(selectedText);
     var selection = document.getSelection();
-    console.log(selection)
+    //console.log(selection)
     // retrieving user inputted new font size
     var newFontSize = document.getElementById('noteFontSize').value;
     newFontSize = newFontSize.concat("px");
-    console.log(newFontSize);
+    //console.log(newFontSize);
     // creating new element to change font
     var newText = document.createElement('span');
     // adding font size to new element
@@ -1177,41 +1162,7 @@ function setFontSize(){
     textArea.innerHTML = text.substring(0, selStart) + newText + text.substring(selEnd);
     
     //console.log(selection.toString());
-    
-    // creating new node with selected text in it
-    //const node = document.createTextNode(selectedText);
-    // adding text to new span element
-    //newText.appendChild(node);
-    // adding new element to textarea
-    //textArea.appendChild(newText);
-    
-
-    //var range = selection.getRangeAt(0);
-    //range.deleteContents();
-    //range.insertNode(node);
-    //console.log('ughhhh')
-    //selectedText.deleteFromDocument();
-   
-
-}
-
-function changeText(tag){
-    var textArea = document.getElementById('noteData');
-
-    const selStart = textArea.selectionStart;
-    const selEnd = textArea.selectionEnd;
-    const text = textArea.value;
-
-    var selectedText = text.substring(selStart,selEnd);
-
-    // creating new text to input with tags to change the display
-    selectedText = tag + selectedText + tag;   
-
-    console.log(text.substring(0, selStart));
-    textArea.value = text.substring(0, selStart) + selectedText + text.substring(selEnd);
-
-    textArea.focus();
-}
+}*/
 
 // closes chosen dialogue box
 function closeDialog(dialogId){
@@ -1222,24 +1173,17 @@ function closeDialog(dialogId){
 
 // --------------- security functions ----------------
 
-
-// TODO - change this pls
 // does bitwise calculation depending on what iteration it is
 function f(B,C,D,i){
     if (i >= 0 && i <= 15){
         return (B & C) | ((~B) & D);
-    }else{
-        return B;
-    }
-
-    /*
     }else if (i >= 16 && i <= 31){
         return (B & D) | (C & (~D));
     }else if (i >= 32 && i >= 47){
         return (B ^ C ^ D);
     }else {
         return C ^ (B | (~D));
-    }*/
+    }
 }
 
 function stringToBinary(str){
@@ -1276,12 +1220,6 @@ function binaryToString(bin){
 
 function hexToDec(hex){
     var dec = parseInt(hex, 16);
-    // converting to a string
-    /*
-    dec = dec.toFixed()
-    const bin = stringToBinary(dec);
-    return bin;
-    */
    return dec;
 }
 
@@ -1291,12 +1229,11 @@ function decToHex(dec){
 }
 
 function binToDec(binary){
-    binary = binary;
     var dec = parseInt(binary, 2);
-
     return dec;
 }
 
+// generates salt/key
 function generateSalt(){
     var salt = "";
     // generate 16 char long salt
