@@ -4,7 +4,7 @@ I will develop a notes application that will use the necessary encryption to ens
 
 ### Potential issues and challenges
 - password can be accessed by unauthorised users - use salting and hashing to store the password
-- The notes could be accessed by unauthorised users - use AES-256 to encrypt
+- The notes could be accessed by unauthorised users - use my own encryption algorithm
 
 Heidi Ginnaw - Year 1 Cyber Security student
 
