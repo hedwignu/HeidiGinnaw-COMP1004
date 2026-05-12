@@ -143,13 +143,8 @@ async function saveFile(name, data){
     //console.log('hello');
 }
 
-
-
     // function to hash the password
 function passwordHash(password,salt){
-    // generate random salt w/ approved random generator
-    //const salt = generateSalt();
-
     // add salt to the inputted password
     var saltedPassword = salt.concat(password);
 
@@ -367,6 +362,9 @@ function createAccount(){
         var usernameIn = document.getElementById('username1').value;
         var passwordIn = document.getElementById('password1').value;
 
+        // clearing the form
+        document.getElementById("signUpBox").reset();
+
         // check if username already exists
         if (localStorage.getItem(usernameIn) != null){
             // tells user username exists
@@ -388,8 +386,28 @@ function createAccount(){
         // storing in local storage
         localStorage.setItem(usernameIn, JSON.stringify([password, salt, userId]));
         
+        // title for welcome note
+        var noteTitle = "Welcome to Lockd";
+
         // creating note array in local storage
-        localStorage.setItem(`notes${userId}`, JSON.stringify(['Welcome To Lockd']))
+        localStorage.setItem(`notes${userId}`, JSON.stringify([noteTitle]))
+            
+        // creating data for the welcome note
+        noteData = 'Welcome to Lockd. A secure notes application for all your note taking needs. \nWhether you\'re looking to store birthday present ideas, your deepest secrets or just any though that pops in to your head then Lockd is the place for you. \nWith all notes encrypted before being stored and the ability to delete your notes from our storage and keep them on your device, you should feel safe in the knowledge that only YOU will have access to your notes. \n With Lockd you can upload notes from your device; pin notes so you can find then with ease; and use the settings to change the website design to suite your needs. I hope you enjoy my app. \n - Heidi';
+        preview = 'Welcome to Lockd. A secure notes application...';
+
+        // encrypt note data
+        var key = generateSalt();
+        noteData = encryptDecrypt(noteData, key);
+
+        // encrypt preview
+        preview = encryptDecrypt(preview, key);
+
+        // creating note id
+        var noteTitleId = noteTitle.concat(userId);
+
+        // saving file in local storage
+        localStorage.setItem(noteTitleId, JSON.stringify({"preview": preview, "wholeNote": noteData, "key": key}));
 
         // tells user account was created
         var dialogue = document.getElementById('accountCreatedAlert');
@@ -511,9 +529,9 @@ function previewClicked(selectedTitle){
     // checking data is stored
     if (storedData != null){
         // add stored data into displayed note
-        var preview = storedData[0];
-        var note = storedData[1];
-        var key = storedData[2];
+        var preview = storedData.preview;
+        var note = storedData.wholeNote;
+        var key = storedData.key;
 
         preview = encryptDecrypt(preview, key);
         
@@ -546,8 +564,8 @@ function noteClicked(){
     // checking data is stored
     if (storedData != null){
         // add stored data into displayed note
-        var note = storedData[1];
-        var key = storedData[2];
+        var note = storedData.wholeNote;
+        var key = storedData.key;
 
         note = encryptDecrypt(note, key);
 
@@ -627,10 +645,10 @@ function saveNote(){
     //console.log(noteTitleId);
 
     // saving file in local storage
-    localStorage.setItem(noteTitleId, JSON.stringify([preview, noteData, key]));
+    localStorage.setItem(noteTitleId, JSON.stringify({"preview": preview, "wholeNote": noteData, "key": key}));
 
     // saving file to computer
-    saveFile(noteTitle, JSON.stringify([preview, noteData, key]));
+    saveFile(noteTitle, JSON.stringify({"preview": preview, "wholeNote": noteData, "key": key}));
     
     // retrieving note title
     var currentNote = localStorage.getItem('currentNote');
